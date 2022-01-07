@@ -192,7 +192,8 @@ namespace styles{
             "   text-align: center;"
             "   color: "+COLOR_PRIMARY+";"
 
-            "}";
+            "}"
+            "QFrame {""background: transparent""}";
 
 
 
@@ -254,7 +255,8 @@ namespace styles{
             "}"
             "QPushButton:hover {"
             "background-color:"+COLOR_BUTTON_PRESSED+";"
-            "}";
+            "}"
+            "QFrame {""background: transparent""}";
 
     static const QString BUTTON_SOLID_DELETE =
             "QPushButton {"
@@ -277,7 +279,6 @@ namespace styles{
                 "background-color:"+COLOR_BACKGROUND+";"
                 "padding:10px 20px;"
                 "border-radius:10px;"
-                "cursor:pointer;"
 
                  "text-transform:underline;"
 
@@ -285,10 +286,9 @@ namespace styles{
                 "}"
                 "QPushButton:hover {"
                 "background-color:red;"
-                "cursor:pointer;"
+
                 "}"
-                "QFrame {""background: transparent""}"
-        "QCursor {""cursor: pointer""}";
+                "QFrame {""background: transparent""}";
 
     static const QString BUTTON_DISABLED =
             "QPushButton {"
@@ -301,7 +301,8 @@ namespace styles{
             "}"
             "QPushButton:hover {"
             "background-color:"+COLOR_BORDER+";"
-            "}";
+            "}"
+            "QFrame {""background: transparent""}";
 
     static const QString BUTTON_EMPTY =
             "QPushButton {"

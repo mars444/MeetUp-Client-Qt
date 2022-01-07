@@ -507,6 +507,7 @@ void Groups::onHttpResult(QNetworkReply *reply) {
             GroupsFrame->setStyleSheet(GROUPS_FRAME);
 
             GroupsFrame->setLayout(GroupContainer2);
+            GroupsFrame->setMaximumHeight(200);
 
 
 

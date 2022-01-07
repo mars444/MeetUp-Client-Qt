@@ -269,9 +269,6 @@ Group::Group() {
 Group::~Group() {
 
 
-    //delete loading;
-    delete GrouptitleLabel;
-    //networkManager->clearAccessCache();
 }
 
 void Group::getMeets() {
@@ -416,6 +413,7 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
                 qDebug() << friendName2 << endl;
 
                 friendName2->setStyleSheet(FRIEND_NAME_SURNAME);
+                friendName2->setContentsMargins(0,15,0,0);
 
 
                 QLabel *friendOnlineStatusLabel2 = new QLabel("");
@@ -455,7 +453,10 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
 
 
 
-
+                friendImageLabel2->setStyleSheet("QFrame {""background: transparent""}");
+                friendImageLabel2->setContentsMargins(0,15,0,0);
+                friendOnlineStatusLabel2->setStyleSheet("QFrame {""background: transparent""}");
+                friendImageLabel2->setContentsMargins(0,15,0,0);
 
 
                 friendContainer2->addWidget(friendImageLabel2);
@@ -467,7 +468,15 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
                connect(deleteFriendButton2, &QPushButton::clicked, this, &Group::deleteFriendPressed);
 
                // friendContainer2->setAlignment(Qt::AlignCenter);
-                stackList->addLayout(friendContainer2);
+
+
+               QFrame  *FriendFrame = new QFrame;
+
+                FriendFrame->setStyleSheet(GROUPS_FRAME);
+
+                FriendFrame->setLayout(friendContainer2);
+
+                stackList->addWidget(FriendFrame);
 
 
                 mButtonToLayoutMap.insert(deleteFriendButton2,friendContainer2);
@@ -706,7 +715,7 @@ void Group::onHttpResultDeleteGroup(QNetworkReply *reply){
 
             newRootScreen(MAIN_TAG);
 
-            std::cout << "delete friebd: " << delete_group_result << std::endl;
+            std::cout << "delete group: " << delete_group_result << std::endl;
 
 }
 

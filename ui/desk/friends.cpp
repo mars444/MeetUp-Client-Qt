@@ -80,13 +80,13 @@ Friends::Friends() {
 
     connect(addFriendEdit, &QLineEdit::textChanged, this, &Friends::checkNameFriend);
 
-    addFriendEdit->setMaximumWidth(355);                                          // поле ввода логина длна 355
+                                         // поле ввода логина длна 355
     addFriendEdit->setStyleSheet(EDIT_TEXT);
     addFriendEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     addFriendEdit->setPlaceholderText(tr("NickName"));
 
-    addFriendEdit->setMaximumWidth(400);
-    addFriendEdit->setMinimumWidth(400);
+    addFriendEdit->setMaximumWidth(800);
+    addFriendEdit->setMinimumWidth(600);
 
 
 
