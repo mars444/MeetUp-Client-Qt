@@ -1,4 +1,9 @@
 #include "loginfragment.h"
+#include "nlohmann/json.hpp"
+#include <iostream>
+#include <set>
+
+#include "user_data.h"
 
 #include <QJsonValue>
 #include <QLabel>
@@ -13,6 +18,12 @@
 #include <QMessageBox>
 #include <QNetworkAccessManager>
 #include <QSettings>
+#include <QString>
+
+
+using namespace userData;
+
+
 
 #include "style/stylecontainer.h"
 using namespace styles;
@@ -20,6 +31,8 @@ using namespace styles;
 using namespace screens;
 
 LoginFragment::LoginFragment() {
+
+
 
 
     qDebug("SplashFragnebt crete");                                             // строка для дебага
@@ -145,17 +158,18 @@ void LoginFragment::onLoginPressed() {
 
         QNetworkRequest request(QUrl(SERVER_URL + ""));
         request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json;charset=utf-8"));
+                          QStringLiteral("application/json"));
         qDebug() << "request data"<< QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact) << endl;
         networkManager->post(
             request,
-            QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact)
+             QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact)
         );
         qDebug() << "request send" << endl;
     }
 }
 
 void LoginFragment::onHttpResult(QNetworkReply *reply) {
+
     qDebug() << "http finished" << endl;
     loading->stop();
     loadingContaiter->hide();
@@ -179,6 +193,8 @@ void LoginFragment::onHttpResult(QNetworkReply *reply) {
         }
         if (obj["success"].toBool()) {
 
+
+
             newRootScreen(MAIN_TAG);
         } else {
             qDebug("login error");
@@ -187,7 +203,33 @@ void LoginFragment::onHttpResult(QNetworkReply *reply) {
     } else {
         QMessageBox::warning(this, "Ошибка",
             "При подключениии произошла ошибка.\n");
-        newRootScreen(MAIN_TAG);
+
+
+
+
+        str = "{\"userID\":\"666666\",\"userName\":\"MeetUser\"}";
+
+        nlohmann::json j = nlohmann::json::parse(str);
+
+
+        nlohmann::json value = j;
+
+
+        std::cout << userNameData.toStdString() << std::endl;
+        std::cout << userIDData.toStdString() << std::endl;
+
+        std::string nameValue = value["userName"];
+        std::string IDValue = value["userID"];
+
+        userNameData = QString::fromUtf8(nameValue.c_str());
+        userIDData = QString::fromUtf8(IDValue.c_str());
+
+        std::cout << userNameData.toStdString() << std::endl;
+        std::cout << userIDData.toStdString() << std::endl;
+
+             newRootScreen(MAIN_TAG);
+
+
     }
     reply->deleteLater();
 }
@@ -202,4 +244,36 @@ void LoginFragment::checkData() {
 
 void LoginFragment::onBackPressed() {
     back();
+
+
+//    //QString request = "{\"registration\":{\"login\":\"bogjan\",\"password\":\"887471\"}}";
+
+//    nlohmann::json j =nlohmann::json::parse("{\"registration\":{\"login\":\"bogjan\",\"password\":\"887471\"}}");
+
+//    std::cout << j.size() << std::endl;
+//    std::cout << j << std::endl;
+
+//    nlohmann::json::iterator it = j.begin();
+//    std::cout << it.key() << std::endl;
+
+//    std::string key = it.key();
+
+//    nlohmann::json value = j[key];
+
+//    std::cout << value["login"] << std::endl;
+
+//    std::cout << value["password"] << std::endl;
+
+//    std::set<std::string> s_friends;
+
+//    for (auto& element : j[key]["friends"]) {
+//        s_friends.insert(element.dump());
+//    }
+
+//    for (auto& f: s_friends) {
+//        std::cout << "friend:" << f << std::endl;
+
+
+//    };
+
 }

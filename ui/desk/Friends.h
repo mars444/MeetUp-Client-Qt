@@ -20,21 +20,35 @@ class Friends : public BaseFragment{
     Q_OBJECT
 
 private:
-    QString token;
 
+    QHash<QPushButton*,QHBoxLayout*> mButtonToLayoutMap;
+
+
+
+    std::string str;
 
 
     QVBoxLayout *mainVLayout;
+
     QVBoxLayout *inputContainerFriends;
 
     WaitingSpinnerWidget *loading;
 
     QLabel *titleLabel;
 
+    QHBoxLayout *friendContainer2;
+
+    QPushButton *inviteGroupButton2;
+    QPushButton *deleteFriendButton2;
+
+    QLabel *friendImageLabel2;
+
+
+    QPushButton *addFriendButton;
     QLineEdit *addFriendEdit;
     QPlainTextEdit *descriptionEdit;
     QPushButton *createButton;
-    QPushButton *addFriendButton;
+
     QNetworkAccessManager *networkManager;
 
         QNetworkAccessManager *addManagerFriend;
@@ -42,6 +56,8 @@ private:
 public:
     Friends();
     ~Friends();
+
+     QLabel *friendName2;
 
 
 public slots:
@@ -51,6 +67,10 @@ public slots:
 
     void onBackPressed();
 
+    void deleteFriendPressed();
+
+
+
     void addFriendButtonPressed();
     void checkNameFriend();
 
@@ -58,6 +78,9 @@ public slots:
 
 
     void onHttpResult(QNetworkReply *reply);
+
+    void onHttpResultDeleteFriend(QNetworkReply *reply);
+
 
     /**
      * @brief checkData

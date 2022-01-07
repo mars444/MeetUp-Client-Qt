@@ -516,6 +516,8 @@ void Shedule::calendar_btn(const QDate &date) {
     if(!strDinamicckeck.contains(strdate) && date !=   QDate::currentDate()){
 
         strDinamicckeck = strDinamicckeck + strdate;
+        QDynamicButton *button = new QDynamicButton(this);  // Создаем объект динамической кнопки
+        inputContainer->addLayout(button);
 
     }
 

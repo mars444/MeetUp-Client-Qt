@@ -1,5 +1,9 @@
 #include "mainfragment.h"
 
+#include "auth/user_data.h"
+
+using namespace userData;
+
 #include "ui/auth/loginfragment.h"
 
 #include "style/stylecontainer.h"
@@ -37,10 +41,10 @@ MainFragment::MainFragment() {
     QPushButton *myGroupsButton = new QPushButton("Мои группы");
     QPushButton *mySettingsButton = new QPushButton("Настройки");
 
-     QPushButton *mySettingsButton1 = new QPushButton("qwrqwrewrwer");
+    // QPushButton *mySettingsButton1 = new QPushButton("qwrqwrewrwer");
 
 
-        connect(mySettingsButton1, &QPushButton::clicked, this, &MainFragment::Group);
+        //connect(mySettingsButton1, &QPushButton::clicked, this, &MainFragment::Group);
     exitButton = new QPushButton("Выйти из профиля");
 
     userContainer = new QVBoxLayout;
@@ -49,7 +53,9 @@ MainFragment::MainFragment() {
     profileImageLabel->setPixmap(profileImage);
 
     QHBoxLayout *fuckContainer = new QHBoxLayout;
-    userName = new QLabel("Mars_444");
+
+//    QString strq = QString::fromUtf8(userNameData.c_str());  // преобразование std string в QString
+    userName = new QLabel(userNameData);
 
 
     QLabel *mainTitle = new QLabel("Лента новостей:");
@@ -124,12 +130,24 @@ MainFragment::MainFragment() {
     exitButton->setMinimumWidth(270);
     connect(exitButton, &QPushButton::clicked, this, &MainFragment::onExit);
 
+
+
+//    QLabel *centerContainer = new QLabel("");
+//    //QPixmap profileImage(":/resc/resc/loader.gif");
+//    //centerContainer->setPixmap(profileImage);
+
+
+//    QMovie *movie = new QMovie( ":/resc/resc/loader3.gif" );
+//    centerContainer->setMovie(movie); // label имеет тип QLabel*
+//    movie->start();
+
+
     profileContainer->addLayout(userContainer);
     profileContainer->addWidget(mySheduleButton);
     profileContainer->addWidget(myFriendsButton);
     profileContainer->addWidget(myGroupsButton);
     profileContainer->addWidget(mySettingsButton);
-        profileContainer->addWidget(mySettingsButton1);
+        //profileContainer->addWidget(mySettingsButton1);
     profileContainer->addWidget(exitButton);
     profileContainer->addWidget(loadingExitContainer);
     profileContainer->setAlignment(Qt::AlignTop);
@@ -196,7 +214,7 @@ void MainFragment::onExit() {
         ""
     );
     reply->setProperty("type", EXIT);
-    navigateTo(LOGIN_TAG);
+    navigateTo(START_TAG);
 }
 
 void MainFragment::myFriends() {

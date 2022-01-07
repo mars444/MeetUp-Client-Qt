@@ -4,6 +4,10 @@
 using namespace styles;
 #include "screensfactory.h"
 
+#include "nlohmann/json.hpp"
+#include <iostream>
+#include <set>
+
 #include <QLabel>
 #include <QNetworkAccessManager>
 #include <QPlainTextEdit>
@@ -18,6 +22,10 @@ using namespace styles;
 using namespace screens;
 Settings::Settings() {
 
+
+
+
+
     QVBoxLayout *mainVLayout = new QVBoxLayout;
    QHBoxLayout *inputContainer = new QHBoxLayout;
 
@@ -27,6 +35,9 @@ Settings::Settings() {
 
 
      QVBoxLayout *settingsInner = new QVBoxLayout;
+
+
+
 
 
 
@@ -175,7 +186,13 @@ Settings::Settings() {
     networkManager = new QNetworkAccessManager();
     connect(networkManager, &QNetworkAccessManager::finished, this, &Settings::onHttpResult);
 
-    getSettings();
+
+    networkManagerSetSettings = new QNetworkAccessManager();
+    connect(networkManagerSetSettings, &QNetworkAccessManager::finished, this, &Settings::onHttpResultSetSettings);
+
+        getSettings();
+
+
 }
 
 Settings::~Settings() {
@@ -188,25 +205,44 @@ Settings::~Settings() {
 
 
 void Settings::getSettings() {
-    QJsonObject loadSettingsJson;
-    QJsonObject userIDJson;
-    userIDJson.insert("userID", "213564544");
-    loadSettingsJson.insert("getSettings", userIDJson);
-
-        qDebug() << "create request" << endl;
 
 
+  str = "{\"userAdress\":\"moscow\",\"userAge\":\"34\",\"userID\":\"213564544\",\"userMail\":\"eml@mail.ru\",\"userName\":\"piter\",\"userSurname\":\"pamuj\"}";
 
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json;charset=utf-8"));
-        qDebug() << "request data"<< QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact) << endl;
-        networkManager->post(
-            request,
-            QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
-    }
+    //str = "{\"userID\":\"666666\",\"userName\":\"MeetUser\"}";
+       nlohmann::json j = nlohmann::json::parse(str);
+
+
+        nlohmann::json value = j;
+
+
+        userAdressEdit->setText(QString::fromStdString(value["userAdress"]).remove('"'));
+        userAgeEdit->setText(QString::fromStdString(value["userAge"]).remove('"'));
+        userMailEdit->setText(QString::fromStdString(value["userMail"]).remove('"'));
+        userNameEdit->setText(QString::fromStdString(value["userName"]).remove('"'));
+        userSurnameEdit->setText(QString::fromStdString(value["userSurname"]).remove('"'));
+
+
+
+//    QJsonObject loadSettingsJson;
+//    QJsonObject userIDJson;
+//    userIDJson.insert("userID", "213564544");
+//    loadSettingsJson.insert("getSettings", userIDJson);
+
+//        qDebug() << "create request" << endl;
+
+
+
+//        QNetworkRequest request(QUrl(SERVER_URL + ""));
+//        request.setHeader(QNetworkRequest::ContentTypeHeader,
+//                          QStringLiteral("application/json;charset=utf-8"));
+//        qDebug() << "request data"<< QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact) << endl;
+//        networkManager->post(
+//            request,
+//            QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact)
+//        );
+//        qDebug() << "request send" << endl;
+}
 
 
 void Settings::setSettings() {
@@ -271,6 +307,10 @@ void Settings::onCreatePressed() {
 }
 
 void Settings::onHttpResult(QNetworkReply *reply) {
+
+}
+
+void Settings::onHttpResultSetSettings(QNetworkReply *reply) {
 
 }
 

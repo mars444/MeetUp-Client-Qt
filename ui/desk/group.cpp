@@ -4,6 +4,11 @@
 using namespace styles;
 #include "screensfactory.h"
 
+#include "nlohmann/json.hpp"
+#include <iostream>
+#include <set>
+
+
 #include <QLabel>
 #include <QNetworkAccessManager>
 #include <QPlainTextEdit>
@@ -32,6 +37,8 @@ Group::Group() {
 
     QHBoxLayout *GroupContainerMain = new QHBoxLayout;
 
+
+
     QLabel *groupEventDateLabelMain = new QLabel("Дата");
     QLabel *groupEventMain = new QLabel("Начало встречи");
     QLabel *groupEventendMain = new QLabel("Конец встречи");
@@ -48,6 +55,25 @@ Group::Group() {
 
 
 
+    QHBoxLayout *groupButtonsContainer = new QHBoxLayout;
+
+    groupList = new QPushButton("Участники");
+
+    groupMeets = new QPushButton("Встречи");
+
+      connect(groupList, &QPushButton::clicked, this, &Group::groupListPressed);
+
+        connect(groupMeets, &QPushButton::clicked, this, &Group::groupMeetsPressed);
+
+
+
+    groupMeets->setStyleSheet(BUTTON_SOLID);
+    groupList->setStyleSheet(BUTTON_DISABLED);
+
+
+    groupButtonsContainer->addWidget(groupMeets);
+      groupButtonsContainer->addWidget(groupList);
+
 
     QHBoxLayout *GroupContainer = new QHBoxLayout;
 
@@ -61,6 +87,10 @@ Group::Group() {
     GroupContainer->addWidget(groupEventDateLabel);
     GroupContainer->addWidget(groupEventstart);
     GroupContainer->addWidget(groupEventend);
+
+
+
+
 
 
 
@@ -85,10 +115,40 @@ Group::Group() {
 
     inputContainer->setAlignment(Qt::AlignTop);
     inputContainer->addLayout(titleContainer);
+
+    QVBoxLayout *stackMeets = new QVBoxLayout;
+
+    stackMeets->addLayout(GroupContainerMain);
+    stackMeets->addLayout(GroupContainer);
+
+
+    stackList = new QVBoxLayout;
+
+    stack = new QStackedWidget;
+
+    QFrame *stackMeetsWidget = new QFrame;
+    stackMeetsWidget->setLayout(stackMeets);
+
+
+   stackListWidget = new QFrame;
+   stackListWidget->setLayout(stackList);
+
+
+    stack->addWidget(stackMeetsWidget);
+    stack->addWidget(stackListWidget);
+    stack->setCurrentIndex(0);
+
+
     mainVLayout->setAlignment(Qt::AlignLeft);
+
     mainVLayout->addLayout(inputContainer);
-       mainVLayout->addLayout(GroupContainerMain);
-    mainVLayout->addLayout(GroupContainer);
+
+    mainVLayout->addLayout(groupButtonsContainer);
+
+    mainVLayout->addWidget(stack);
+
+
+
 
 
 
@@ -101,12 +161,18 @@ Group::Group() {
     this->setStyleSheet(BACK_WHITE);
     this->setObjectName("fragment");
 
-    checkData();
 
-    networkManager = new QNetworkAccessManager();
-    connect(networkManager, &QNetworkAccessManager::finished, this, &Group::onHttpResult);
+    networkManagerGetList = new QNetworkAccessManager();
+    connect(networkManagerGetList, &QNetworkAccessManager::finished, this, &Group::onHttpResultnetworkManagerGetList);
 
-    loadGroup();
+    networkManagerGetMeets = new QNetworkAccessManager();
+    connect(networkManagerGetMeets, &QNetworkAccessManager::finished, this, &Group::onHttpResultnetworkManagerGetMeets);
+
+    networkManagerDeleteFriendFromGroup = new QNetworkAccessManager();
+    connect(networkManagerDeleteFriendFromGroup, &QNetworkAccessManager::finished, this, &Group::onHttpResultnetworkManagerDeleteFriendFromGroup);
+
+
+  getMeets();
 }
 
 Group::~Group() {
@@ -114,10 +180,32 @@ Group::~Group() {
 
     //delete loading;
     delete GrouptitleLabel;
-    networkManager->clearAccessCache();
+    //networkManager->clearAccessCache();
 }
 
-void Group::checkData() {
+void Group::getMeets() {
+
+
+    QJsonObject getMeetsJson;
+    QJsonObject bodyJson;
+    bodyJson.insert("groupName", (GrouptitleLabel->text()));
+
+    getMeetsJson.insert("getMeets", bodyJson);
+
+        qDebug() << "create request" << endl;
+
+
+
+        QNetworkRequest request(QUrl(SERVER_URL + ""));
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                          QStringLiteral("application/json"));
+        qDebug() << "request data"<< QJsonDocument(getMeetsJson).toJson(QJsonDocument::Compact) << endl;
+        networkManagerGetMeets->post(
+            request,
+            QJsonDocument(getMeetsJson).toJson(QJsonDocument::Compact)
+        );
+        qDebug() << "request send" << endl;
+
 
 }
 
@@ -126,31 +214,221 @@ void Group::onBackPressed() {
 }
 
 
+void Group::groupMeetsPressed() {
+
+    getMeets();
+
+
+    QHBoxLayout *layout2 = friendContainer2;
+        while (layout2->count() != 0) {
+            QLayoutItem *item = layout2->takeAt(0);
+            delete item->widget();
+        }
+
+
+    QVBoxLayout *layout = stackList;
+        while (layout->count() != 0) {
+            QLayoutItem *item = layout->takeAt(0);
+            delete item->widget();
+            delete item;
+        }
+
+
+
+    groupMeets->setStyleSheet(BUTTON_SOLID);
+    groupList->setStyleSheet(BUTTON_DISABLED);
+        stack->setCurrentIndex(0);
+}
+
+
+void Group::groupListPressed() {
+
+
+    groupMeets->setStyleSheet(BUTTON_DISABLED);
+    groupList->setStyleSheet(BUTTON_SOLID);
+        stack->setCurrentIndex(1);
+
+
+        QJsonObject getGroupMembersJson;
+        QJsonObject bodyJson;
+
+        bodyJson.insert("groupName", GrouptitleLabel->text());
+
+        getGroupMembersJson.insert("getGroupMembers", bodyJson);
+
+            qDebug() << "create request" << endl;
+
+
+
+            QNetworkRequest request(QUrl(SERVER_URL + ""));
+            request.setHeader(QNetworkRequest::ContentTypeHeader,
+                              QStringLiteral("application/json"));
+            qDebug() << "request data"<< QJsonDocument(getGroupMembersJson).toJson(QJsonDocument::Compact) << endl;
+            networkManagerGetList->post(
+                request,
+                QJsonDocument(getGroupMembersJson).toJson(QJsonDocument::Compact)
+            );
+            qDebug() << "request send" << endl;
+
+
+}
+
+
+
 
 void Group::onHttpResult(QNetworkReply *reply) {
 
 }
 
-void Group::loadGroup() {
-    QJsonObject loadGroupJson;
-    QJsonObject userIDJson;
-    userIDJson.insert("userID", "213564544");
-    loadGroupJson.insert("getGroup", userIDJson);
+void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
 
-        qDebug() << "create request" << endl;
+    str = "{\"userID\":\"213564544\",\"Friends\":[\"Misha1991\", \"Igor\",  \"Alex\",  \"qwe\", \"piotr\"]}";
+
+    nlohmann::json j = nlohmann::json::parse(str);
 
 
+    std::cout << j.size() << std::endl;
+    std::cout << j << std::endl;
 
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json;charset=utf-8"));
-        qDebug() << "request data"<< QJsonDocument(loadGroupJson).toJson(QJsonDocument::Compact) << endl;
-        networkManager->post(
-            request,
-            QJsonDocument(loadGroupJson).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
+    nlohmann::json::iterator it = j.begin();
+    std::cout << it.key() << std::endl;
+
+    std::string key = it.key();
+
+    nlohmann::json value = j[key];
+
+    std::cout << value << std::endl;
+
+
+    std::set<std::string> s_friends;
+
+    for (auto& element : j["Friends"]) {
+
+
+
+
+        friendContainer2 = new QHBoxLayout;
+        QLabel *friendImageLabel2 = new QLabel("");
+        QPixmap friendImage2(":/resc/resc/user_circle.svg");
+        friendImageLabel2->setPixmap(friendImage2);
+        friendImageLabel2->setStyleSheet(FRIEND_IMAGE);
+
+
+
+
+
+        friendName2 = new QLabel(QString::fromStdString(element.dump()).remove('"'));
+
+        friendName2->setStyleSheet(FRIEND_NAME_SURNAME);
+
+
+        QLabel *friendOnlineStatusLabel2 = new QLabel("");
+        QPixmap friendOnlineStatusImage2(":/resc/resc/online_status_off.svg");
+        friendOnlineStatusLabel2->setPixmap(friendOnlineStatusImage2.scaled(15,15, Qt::KeepAspectRatio));
+
+        friendOnlineStatusLabel2->setStyleSheet(ONLINE_STATUS);
+
+
+
+        QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
+
+        QPushButton *deleteFriendButton2 = new QPushButton("Удалить из группы");
+
+
+        inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
+
+
+        deleteFriendButton2->setStyleSheet(BUTTON_SOLID);
+
+        QHBoxLayout *friendButtonContainer2 = new QHBoxLayout;
+
+
+        //friendButtonContainer2->addWidget(inviteGroupButton2);
+        friendButtonContainer2->addWidget(deleteFriendButton2);
+
+
+
+        friendContainer2->addWidget(friendImageLabel2);
+        friendContainer2->addWidget(friendName2);
+
+        friendContainer2->addWidget(friendOnlineStatusLabel2);
+        friendContainer2->addLayout(friendButtonContainer2);
+
+       connect(deleteFriendButton2, &QPushButton::clicked, this, &Group::deleteFriendPressed);
+
+
+
+
+
+
+        stackList->addLayout(friendContainer2);
+
+
+        mButtonToLayoutMap.insert(deleteFriendButton2,friendContainer2);
+
+}
+}
+
+void Group::onHttpResultnetworkManagerGetMeets(QNetworkReply *reply) {
+
+}
+
+void Group::onHttpResultnetworkManagerDeleteFriendFromGroup(QNetworkReply *reply) {
+
+}
+
+void Group::deleteFriendPressed() {
+
+
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+
+    QHBoxLayout *layout = mButtonToLayoutMap.take(button);
+
+
+    QWidget * widget =  layout->itemAt(1)->widget();
+
+
+
+    QLabel* xxx = dynamic_cast<QLabel*>(widget);
+
+
+    QString aaa = xxx->text();
+
+    QJsonObject deleteFriendJson;
+        QJsonObject bodyJson;
+        bodyJson.insert("userID", "213564544");
+        bodyJson.insert("friendName", (aaa));
+        bodyJson.insert("groupName", (GrouptitleLabel->text()));
+        deleteFriendJson.insert("deleteFriendFromGroup", bodyJson);
+
+            qDebug() << "create request" << endl;
+
+
+
+            QNetworkRequest request(QUrl(SERVER_URL + ""));
+            request.setHeader(QNetworkRequest::ContentTypeHeader,
+                              QStringLiteral("application/json;charset=utf-8"));
+            qDebug() << "request data"<< QJsonDocument(deleteFriendJson).toJson(QJsonDocument::Compact) << endl;
+            networkManagerDeleteFriendFromGroup->post(
+                request,
+                QJsonDocument(deleteFriendJson).toJson(QJsonDocument::Compact)
+            );
+            qDebug() << "request send" << endl;
+
+    while (layout->count() != 0) {
+        QLayoutItem *item = layout->takeAt(0);
+        delete item->widget();
+        delete item;
     }
+
+    delete button;
+    delete layout;
+
+}
+
+void Group::loadGroup() {
+
+}
 
 
 

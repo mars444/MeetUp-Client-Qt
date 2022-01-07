@@ -10,12 +10,16 @@
 
 #include <ui/view/waitingspinnerwidget.h>
 
+
+
 class LoginFragment: public BaseFragment {
     Q_OBJECT
 private:
     QLineEdit *loginEdit;
     QLineEdit *passwordEdit;
     QPushButton *loginButton;
+
+    std::string str;
 
 
     WaitingSpinnerWidget *loading;

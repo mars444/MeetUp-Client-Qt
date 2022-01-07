@@ -22,6 +22,7 @@ private:
     QLineEdit *userNameEdit;
     QLabel *userNameLabel;
 
+    std::string str;
     QLineEdit *userSurnameEdit;
     QLabel *userSurnameLabel;
 
@@ -43,6 +44,8 @@ private:
 
     QNetworkAccessManager *networkManager;
 
+    QNetworkAccessManager *networkManagerSetSettings;
+
     void setData(BaseModel* model) override;
 public:
     Settings();
@@ -57,6 +60,7 @@ public slots:
     void setSettings();
     void getSettings();
     void onHttpResult(QNetworkReply *reply);
+    void onHttpResultSetSettings(QNetworkReply *reply);
 
     /**
      * @brief checkData

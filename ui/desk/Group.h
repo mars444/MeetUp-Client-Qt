@@ -7,6 +7,7 @@
 #include <QNetworkReply>
 #include <QPlainTextEdit>
 #include <QLabel>
+#include <QStackedWidget>
 
 #include <common/base/basefragment.h>
 
@@ -21,25 +22,56 @@ class Group : public BaseFragment{
 
 private:
 
+    QHash<QPushButton*,QHBoxLayout*> mButtonToLayoutMap;
+
     QLabel *groupEventDateLabel;
     QLabel *groupEventstart;
     QLabel *groupEventend;
 
 
+    QVBoxLayout *inputContainerGroups;
+
+    QFrame *stackListWidget;
+
+    QVBoxLayout *stackList;
+
+       std::string str;
+
+       QLabel *friendName2;
+
+         QHBoxLayout *friendContainer2;
+
+    QPushButton *addFriendButton;
+    QLineEdit *addFriendEdit;
+
+        QVBoxLayout *inputContainerFriends;
+
+     QLabel *GrouptitleLabel;
+
+     QStackedWidget *stack;
 
     QVBoxLayout *mainVLayout;
 
+        QPushButton *groupMeets;
+
+            QPushButton *groupList;
 
 
-    QLabel *GrouptitleLabel;
+
+
     QLineEdit *titleEdit;
     QPlainTextEdit *descriptionEdit;
     QPushButton *createButton;
-    QNetworkAccessManager *networkManager;
+    QNetworkAccessManager *networkManagerGetList;
+    QNetworkAccessManager *networkManagerGetMeets;
+    QNetworkAccessManager *networkManagerDeleteFriendFromGroup;
+
 
 public:
     Group();
     ~Group();
+
+
 
 
 public slots:
@@ -49,6 +81,20 @@ public slots:
 
     void onBackPressed();
 
+    void groupListPressed();
+
+     void groupMeetsPressed();
+
+     void deleteFriendPressed();
+
+
+      void onHttpResultnetworkManagerGetList(QNetworkReply *reply);
+
+       void onHttpResultnetworkManagerGetMeets(QNetworkReply *reply);
+
+       void onHttpResultnetworkManagerDeleteFriendFromGroup(QNetworkReply *reply);
+
+    void getMeets();
     void onHttpResult(QNetworkReply *reply);
 
 
@@ -59,5 +105,5 @@ public slots:
      * проверка введенных данных
      * на корректность.
      */
-    void checkData();
+
 };

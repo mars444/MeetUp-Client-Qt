@@ -23,7 +23,7 @@ namespace styles{
             "QLabel {"
             "   text-align: center;"
             "   border-radius:50px;"
-            "   margin:20px 50px;"
+            "   margin:20px 30px;"
             "}";
 
     static const QString SETTINGS_LABEL  =
@@ -69,7 +69,7 @@ namespace styles{
 
     static const QString FRIEND_IMAGE  =
             "QLabel {"
-            "   margin-right: 20px;"
+            "   margin-right: 10px;"
 
 
             "}";
@@ -122,6 +122,21 @@ namespace styles{
             "}"
             "QPushButton:hover {"
             "background-color:"+COLOR_BUTTON_PRESSED+";"
+            "}";
+
+
+    static const QString BUTTON_WHITE =
+            "QPushButton {"
+            "color: "+COLOR_PRIMARY+";"
+            "background-color:"+COLOR_BACKGROUND+";"
+            "border:2px solid #fff;"
+            "margin-right:50px;"
+             "text-transform:underline;"
+            "padding:0px;"
+            "font-size:25px;"
+            "}"
+            "QPushButton:hover {"
+            "border-bottom: 2px solid #8046A4;"
             "}";
 
     static const QString BUTTON_DISABLED =

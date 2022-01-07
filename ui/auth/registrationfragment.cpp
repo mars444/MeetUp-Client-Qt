@@ -4,6 +4,8 @@
 using namespace styles;
 #include "screensfactory.h"
 
+#include "user_data.h"
+
 #include <QSvgWidget>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -143,34 +145,45 @@ void RegistrationFragment::onRegPressed() {
          QMessageBox::warning(this,"Регистрация","Пароли не совпадают!");
     } else {
 
-        QJsonObject param;
-        QJsonObject logpass;
-        logpass.insert("login", loginEdit->text());
-        logpass.insert("password", passwordEdit->text());
-        param.insert("registration", logpass);
-        if (loginEdit->text().length() >= 4 && passwordEdit->text().length() >= 8 && repeatPasswordEdit->text().length() >= 8) {
+        QJsonObject loginPasswordValues;
+        QJsonObject loginPasswordValues1;
+        loginPasswordValues1.insert("login", loginEdit->text());
+        loginPasswordValues1.insert("password", passwordEdit->text());
+
+        loginPasswordValues.insert("registration", loginPasswordValues1);
+        if (loginEdit->text().length() >= 4 && passwordEdit->text().length() >= 8) {
             loadingContaiter->show();
             loading->start();
+
             loginButton->setDisabled(true);
             loginButton->setStyleSheet(BUTTON_DISABLED);
 
-            QNetworkRequest request(QUrl(SERVER_URL + "/registration/"+repeatPasswordEdit->text()));
+            qDebug() << "create request" << endl;
+
+
+
+            QNetworkRequest request(QUrl(SERVER_URL + ""));
             request.setHeader(QNetworkRequest::ContentTypeHeader,
-                              QStringLiteral("application/json;charset=utf-8"));
+                              QStringLiteral("application/json"));
+            qDebug() << "request data"<< QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact) << endl;
             networkManager->post(
                 request,
-                QJsonDocument(param).toJson(QJsonDocument::Compact)
+                 QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact)
             );
+            qDebug() << "request send" << endl;
         }
-
-
-
-
     }
 
-}
+
+
+
+
+ }
+
+
 
 void RegistrationFragment::onRegResult(QNetworkReply *reply) {
+
     loading->stop();
     loadingContaiter->hide();
     loginButton->setDisabled(false);

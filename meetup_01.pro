@@ -39,7 +39,9 @@ SOURCES += \
     ui/auth/loginfragment.cpp \
     ui/auth/registrationfragment.cpp \
     ui/auth/startfragment.cpp \
+    ui/auth/user_data.cpp \
     ui/desk/Layouts/friendlayout.cpp \
+    ui/desk/Layouts/shedule_generation.cpp \
     ui/desk/friends.cpp \
     ui/desk/group.cpp \
     ui/desk/groups.cpp \
@@ -62,14 +64,56 @@ HEADERS += \
     models/deskmodel.h \
     models/historymodel.h \
     models/usermodel.h \
+    nlohmann/adl_serializer.hpp \
+    nlohmann/byte_container_with_subtype.hpp \
+    nlohmann/detail/conversions/from_json.hpp \
+    nlohmann/detail/conversions/to_chars.hpp \
+    nlohmann/detail/conversions/to_json.hpp \
+    nlohmann/detail/exceptions.hpp \
+    nlohmann/detail/hash.hpp \
+    nlohmann/detail/input/binary_reader.hpp \
+    nlohmann/detail/input/input_adapters.hpp \
+    nlohmann/detail/input/json_sax.hpp \
+    nlohmann/detail/input/lexer.hpp \
+    nlohmann/detail/input/parser.hpp \
+    nlohmann/detail/input/position_t.hpp \
+    nlohmann/detail/iterators/internal_iterator.hpp \
+    nlohmann/detail/iterators/iter_impl.hpp \
+    nlohmann/detail/iterators/iteration_proxy.hpp \
+    nlohmann/detail/iterators/iterator_traits.hpp \
+    nlohmann/detail/iterators/json_reverse_iterator.hpp \
+    nlohmann/detail/iterators/primitive_iterator.hpp \
+    nlohmann/detail/json_pointer.hpp \
+    nlohmann/detail/json_ref.hpp \
+    nlohmann/detail/macro_scope.hpp \
+    nlohmann/detail/macro_unscope.hpp \
+    nlohmann/detail/meta/call_std/begin.hpp \
+    nlohmann/detail/meta/call_std/end.hpp \
+    nlohmann/detail/meta/cpp_future.hpp \
+    nlohmann/detail/meta/detected.hpp \
+    nlohmann/detail/meta/identity_tag.hpp \
+    nlohmann/detail/meta/is_sax.hpp \
+    nlohmann/detail/meta/type_traits.hpp \
+    nlohmann/detail/meta/void_t.hpp \
+    nlohmann/detail/output/binary_writer.hpp \
+    nlohmann/detail/output/output_adapters.hpp \
+    nlohmann/detail/output/serializer.hpp \
+    nlohmann/detail/string_escape.hpp \
+    nlohmann/detail/value_t.hpp \
+    nlohmann/json.hpp \
+    nlohmann/json_fwd.hpp \
+    nlohmann/ordered_map.hpp \
+    nlohmann/thirdparty/hedley/hedley.hpp \
+    nlohmann/thirdparty/hedley/hedley_undef.hpp \
     screensfactory.h \
     single_include/nlohmann/json.hpp \
     style/stylecontainer.h \
     ui/auth/googleauth.h \
+    ui/auth/user_data.h \
     ui/desk/Friends.h \
     ui/desk/Group.h \
     ui/desk/Groups.h \
-    ui/desk/Layouts/shedule_generation.h \
+    ui/desk/Layouts/Shedule_generation.h \
     ui/desk/Layouts/friendlayout.h \
     ui/desk/Settings.h \
     ui/desk/Shedule.h \

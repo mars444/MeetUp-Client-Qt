@@ -1,58 +1,106 @@
 #pragma once
+
+#include <QLineEdit>
+#include <QNetworkAccessManager>
+#include <QPushButton>
+#include <QWidget>
+#include <QNetworkReply>
+#include <QPlainTextEdit>
+#include <QLabel>
+
 #include <common/base/basefragment.h>
 
-#include <QLabel>
-#include <QNetworkAccessManager>
-#include <QScrollBar>
-#include <QVBoxLayout>
-#include <QLineEdit>
-#include <QPushButton>
 
-#include <models/cardmodel.h>
+
+#include <ui/view/waitingspinnerwidget.h>
+
 #include <models/deskmodel.h>
 
-class Groups: public BaseFragment {
+class Groups : public BaseFragment{
     Q_OBJECT
+
 private:
+
+    QHash<QPushButton*,QHBoxLayout*> mButtonToLayoutMap;
+
+
+
+
+    std::string str;
+
+
+    QVBoxLayout *mainVLayout;
+    QVBoxLayout *inputContainerGroups;
+
+    WaitingSpinnerWidget *loading;
+
     QLabel *titleLabel;
-    QLabel *description;
-    QLabel *users;
-    QLabel *progress;
 
-    QVBoxLayout *inputContainer;
+     QHBoxLayout *GroupContainer2;
 
-    QVBoxLayout *mainHLayout;
+    QPushButton *inviteGroupButton2;
+    QPushButton *deleteGroupButton2;
 
-    QPushButton *addGroupButton;
+    QLabel *GroupImageLabel2;
+
+    QVBoxLayout *friendContainer2;
+
     QLineEdit *addGroupEdit;
+    QPlainTextEdit *descriptionEdit;
+    QPushButton *createButton;
+    QPushButton *addGroupButton;
+    QNetworkAccessManager *networkManager;
 
-    const QString LOAD_DATA = "load_data";
-    const QString CHECK = "check";
+    QNetworkAccessManager *addManagerFriendtoGroup;
 
-    DeskModel *model;
-    QNetworkAccessManager *networkManagerGroup;
+    QPushButton *friendName2;
+
+
+    QString groupNameString;
 
     QNetworkAccessManager *addManagerGroup;
+
+    QPushButton *GroupNameButton;
 
 public:
     Groups();
     ~Groups();
 
 
-    void loadData();
+
+
 public slots:
-    void onBackPressed();
+
+
+     void friendName2Pressed();
+
 
     void loadGroups();
 
+    void onBackPressed();
+
+    void inviteGroupPressed();
+
+        void goToGroup();
 
     void addGroupButtonPressed();
-
     void checkNameGroup();
+
+    void onHttpResultGroup(QNetworkReply *reply);
 
 
     void onHttpResult(QNetworkReply *reply);
 
-      void onHttpResultsetGroup(QNetworkReply *reply);
+    void onHttpResultDeleteGroup(QNetworkReply *reply);
 
+    void onHttpResultAddFriendtoGroup(QNetworkReply *reply);
+
+
+    /**
+     * @brief checkData
+     *
+     * проверка введенных данных
+     * на корректность.
+     */
+    void checkData();
 };
