@@ -182,12 +182,12 @@ namespace styles{
             "background-color:"+COLOR_TEXT_RED+";"
             "border:none;"
             "padding:12px;"
-            "border-radius:22px;"
+            "border-radius:8px;"
             "font-size:16px;"
             "}"
 
             "QFrame {"
-            "border-radius:22px;"
+            "border-radius:10px;"
             "}";
 
 

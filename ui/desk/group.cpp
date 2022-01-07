@@ -77,7 +77,7 @@ Group::Group() {
 
     groupMeets = new QPushButton(tr("Meets"));
 
-    groupDelete = new QPushButton(tr("Delete group  "));
+    groupDelete = new QPushButton(tr("             Delete group         "));
 
     QPixmap pixmapgroupDelete(":/resc/resc/cross.svg");
     QIcon ButtonIcongroupDelete(pixmapgroupDelete);
@@ -87,10 +87,12 @@ Group::Group() {
     groupDelete-> setStyleSheet("text-align: right");
     groupDelete->setIconSize(QSize(20,20));
     groupDelete->setStyleSheet(BUTTON_PROFILE_RED);
-    groupDelete->setMaximumWidth(180);
+    groupDelete->setMaximumWidth(227);
+    groupDelete->setMinimumWidth(227);
 
     deleteLabel = new QLabel(tr("You are sure?"));
-    groupDeleteYes = new QSvgButton(":/resc/resc/check.svg", QSize(30,30));
+    deleteLabel->setContentsMargins(0,0,0,3); // чтобы при нажатии delete group  выровнять слои хз почему разная высота
+    groupDeleteYes = new QSvgButton(":/resc/resc/check.svg", QSize(35,35));
     groupDeleteNo = new QSvgButton(":/resc/resc/cross.svg", QSize(30,30));
 
 
@@ -99,12 +101,10 @@ Group::Group() {
 
 
     deleteLabel->setAlignment(Qt::AlignCenter);
+    deleteLabel->setMaximumWidth(150);
 
 
-    groupDeleteYes->setStyleSheet( "   margin:30px;"
-                                   "   font-size: 18px;");
 
-    groupDeleteNo->setStyleSheet("border-radius:15px;");
 
     //groupDeleteNo->setContentsMargins(30,0,0,0);
 
@@ -128,8 +128,9 @@ Group::Group() {
 
     deleteLabel->setStyleSheet(DELETE_GROUP_FRAME);
 
-    deleteLayout->addWidget(deleteLabel);
     deleteLayout->addWidget(groupDeleteYes);
+    deleteLayout->addWidget(deleteLabel);
+
     deleteLayout->addWidget(groupDeleteNo);
 
     deleteLabel->hide();
