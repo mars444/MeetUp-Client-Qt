@@ -27,6 +27,9 @@ private:
 
     std::string str;
 
+    QMovie *movieloading;
+
+    QLabel *centerContainer;
 
     QVBoxLayout *mainVLayout;
 

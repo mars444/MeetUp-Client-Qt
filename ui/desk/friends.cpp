@@ -44,6 +44,9 @@ Friends::Friends() {
 
 
 
+
+
+
     //QFrame *loadingContaiter = new QFrame;
    // loading = new WaitingSpinnerWidget(loadingContaiter, true, false);
     //loading->setColor(QT_COLOR_PRIMARY);
@@ -138,6 +141,10 @@ Friends::Friends() {
 
 
 
+    loading = new WaitingSpinnerWidget(scrolContainer, true, false);
+    loading->setColor(QT_COLOR_PRIMARY);
+
+    loading->start();
 
 
     inputContainerFriends = new QVBoxLayout;
@@ -199,7 +206,7 @@ void Friends::onBackPressed() {
 void Friends::onHttpResult(QNetworkReply *reply) {
 
 
-
+   loading->stop();
 
     str = "{\"userID\":\"213564544\",\"Friends\":[\"Misha1991\", \"Igor\",  \"Alex\",  \"qwe\", \"piotr\"]}";
 

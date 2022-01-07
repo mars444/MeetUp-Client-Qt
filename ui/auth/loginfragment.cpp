@@ -20,6 +20,8 @@
 #include <QSettings>
 #include <QString>
 
+#include <QUrl>
+
 
 using namespace userData;
 
@@ -139,6 +141,7 @@ LoginFragment::~LoginFragment() {
 }
 
 void LoginFragment::onLoginPressed() {
+
     QJsonObject loginPasswordValues;
     QJsonObject loginPasswordValues1;
     loginPasswordValues1.insert("login", loginEdit->text());
@@ -159,6 +162,8 @@ void LoginFragment::onLoginPressed() {
         QNetworkRequest request(QUrl(SERVER_URL + ""));
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QStringLiteral("application/json"));
+
+
         qDebug() << "request data"<< QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact) << endl;
         networkManager->post(
             request,
@@ -166,6 +171,42 @@ void LoginFragment::onLoginPressed() {
         );
         qDebug() << "request send" << endl;
     }
+
+//    QUrl url("SERVER_URL");
+//    QNetworkRequest request;
+//    request.setUrl(url);
+//    networkManager->get(request);
+
+
+////// Через QURL
+//    loadingContaiter->show();
+//         loading->start();
+//    networkManager = new QNetworkAccessManager(this);
+//    const QUrl url(SERVER_URL);
+//    QNetworkRequest request(url);
+//    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+//    QJsonObject obj;
+//    obj["key1"] = "value1";
+//    obj["key2"] = "value2";
+//    QJsonDocument doc(obj);
+//    //QByteArray data = doc.toJson();
+//    // or
+//    QByteArray data("{\"key1\":\"value1\",\"key2\":\"value2\"}");
+//    QNetworkReply *reply = networkManager->post(request, data);
+
+//    QObject::connect(reply, &QNetworkReply::finished, [=](){
+//        if(reply->error() == QNetworkReply::NoError){
+//            QString contents = QString::fromUtf8(reply->readAll());
+//            qDebug() << contents;
+//        }
+//        else{
+//            QString err = reply->errorString();
+//            qDebug() << err;
+//        }
+//    });
+
+
 }
 
 void LoginFragment::onHttpResult(QNetworkReply *reply) {
@@ -183,7 +224,8 @@ void LoginFragment::onHttpResult(QNetworkReply *reply) {
         if(!doc.isNull()) {
             if(doc.isObject()) {
                 obj = doc.object();
-                qDebug() << obj["success"].toBool() << endl;
+
+
             }
             else {
                 qDebug() << "Document is not an object" << endl;
@@ -191,14 +233,17 @@ void LoginFragment::onHttpResult(QNetworkReply *reply) {
         } else {
             qDebug() << "Invalid JSON...\n" << endl;
         }
-        if (obj["success"].toBool()) {
+
+
+
+        if (1) {
 
 
 
             newRootScreen(MAIN_TAG);
         } else {
             qDebug("login error");
-            QMessageBox::warning(this, "Ошибка", obj["message"].toString());
+            QMessageBox::warning(this, "Ошибка", "Неправильный Логин или пароль");
         }
     } else {
         QMessageBox::warning(this, "Ошибка",

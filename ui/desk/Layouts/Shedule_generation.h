@@ -31,12 +31,15 @@ public slots:
 
     void checkBoxTitle();
     void checkData();
+
+    void onCreatePressed();
 private:
     int buttonID = 0;   // Локальная переменная, номер кнопки
-    QLineEdit *cardTitleEdit;
+    QLineEdit *eventTitleEdit;
     QSvgButton *addBoxTitleButton;
     QList<QString> titleList;
      QSvgButton *deleteTaskButton;
+      QLineEdit *cardTitleEdit;
        QLabel *timeLabelTask;
         QLabel *boxTitleTask;
          QSvgWidget *mainImageTask;

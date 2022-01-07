@@ -154,7 +154,7 @@ Group::Group() {
 
 
 
-
+    mainVLayout->setAlignment(Qt::AlignTop);
     mainVLayout->addStretch();
 
     this->setLayout(mainVLayout);

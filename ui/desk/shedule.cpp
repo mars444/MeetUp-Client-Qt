@@ -445,6 +445,8 @@ void Shedule::onBoxTitleAdd() {
 
     timeLabelTask = new QLabel;
 
+
+
     QTime time_begin = left->time();
     QTime time_end = right->time();
 
@@ -458,23 +460,26 @@ void Shedule::onBoxTitleAdd() {
 
 
 
-    timeLabelTask->setText(QString("Начало: %1 Конец: %2.").arg(time_begin_string, time_end_string));
+    timeLabelTask->setText(QString("begin %1 \n end: %2.").arg(time_begin_string, time_end_string));
 
 
     titleList.append(cardTitleEdit->text());
     boxTitleTask = new QLabel(cardTitleEdit->text());
-    boxTitleTask->setStyleSheet(TEXT_DARK_LABLE);
+    boxTitleTask->setStyleSheet(TASK_PADDING);
 
     mainImageTask = new QSvgWidget(":/resc/resc/done_outline.svg");
     mainImageTask->setMinimumSize(QSize(24,24));
     mainImageTask->setMaximumSize(QSize(24,24));
 
+
     task_container = new QHBoxLayout;
 
+    //task_container->setAlignment(Qt::AlignCenter);
     task_container->addWidget(mainImageTask);
     task_container->addWidget(boxTitleTask);
     task_container->addWidget(timeLabelTask);
     task_container->addWidget(deleteTaskButton);
+    task_container->setContentsMargins(125,0,0,0);
 
     titleWidgetList->addLayout(task_container);
     cardTitleEdit->setText("");
@@ -516,8 +521,7 @@ void Shedule::calendar_btn(const QDate &date) {
     if(!strDinamicckeck.contains(strdate) && date !=   QDate::currentDate()){
 
         strDinamicckeck = strDinamicckeck + strdate;
-        QDynamicButton *button = new QDynamicButton(this);  // Создаем объект динамической кнопки
-        inputContainer->addLayout(button);
+
 
     }
 

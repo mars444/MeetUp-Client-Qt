@@ -142,6 +142,10 @@ Groups::Groups() {
 
 
 
+    loading = new WaitingSpinnerWidget(scrolContainer, true, false);
+    loading->setColor(QT_COLOR_PRIMARY);
+
+    loading->start();
 
 
     inputContainerGroups = new QVBoxLayout;
@@ -211,9 +215,9 @@ void Groups::onBackPressed() {
 void Groups::onHttpResult(QNetworkReply *reply) {
 
 
+    loading->stop();
 
-
-    str = "{\"userID\":\"213564544\",\"Groups\":[\"Group 1\", \"Group 2\",  \"Group 3\",  \"Group 4\", \"Group 5\"]}";
+    str = "{\"userID\":\"213564544\",\"Groups\":[\"Group 1\", \"Group 2\"]}";
 
     nlohmann::json j = nlohmann::json::parse(str);
 
@@ -569,6 +573,7 @@ void Groups::friendName2Pressed(){
 
 
     QPushButton *button = qobject_cast<QPushButton*>(sender());
+
 
     QString friendq = button->text();
 

@@ -127,8 +127,7 @@ Settings::Settings() {
     setSettingsButton->setMaximumWidth(355);
     setSettingsButton->setMinimumWidth(355);
 
-    setSettingsButton->setStyleSheet(BUTTON_DISABLED);
-     setSettingsButton->setDisabled(true);
+
 
      connect(setSettingsButton, &QPushButton::clicked, this, &Settings::setSettings);
 
@@ -170,9 +169,14 @@ Settings::Settings() {
     mainVLayout->setAlignment(Qt::AlignTop);
 
 
+
+
     this->setLayout(mainVLayout);
     this->setStyleSheet(BACK_WHITE);
     this->setObjectName("fragment");
+
+    setSettingsButton->setStyleSheet(BUTTON_DISABLED);
+     setSettingsButton->setDisabled(true);
 
     connect(userMailEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
     connect(userNameEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
@@ -293,7 +297,7 @@ void Settings::checkSettings() {
             (userNameEdit->text().length() >= 4) &&
             (userSurnameEdit->text().length() >= 4) &&
             (userAdressEdit->text().length() >= 4) &&
-            (userAgeEdit->text().length() >= 2)) {
+            (userAgeEdit->text().length() == 2 && userAgeEdit->text() >='0' && userAgeEdit->text() <= '9')) {
         setSettingsButton->setStyleSheet(BUTTON_SOLID);
          setSettingsButton->setDisabled(false);
     } else {

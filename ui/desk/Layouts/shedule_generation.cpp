@@ -57,6 +57,7 @@ QDynamicButton::QDynamicButton(QWidget *parent) :
     QHBoxLayout *buttonBoxContainer = new QHBoxLayout;
     QPushButton *createButton_1 = new QPushButton("Отправить расписание");
     QPushButton *createButton_2= new QPushButton("Отправить расписание");
+     createButton_2->setStyleSheet(BUTTON_DISABLED);
 
     QFrame *loadingContaiter = new QFrame;
     WaitingSpinnerWidget *loading = new WaitingSpinnerWidget(loadingContaiter, true, false);
@@ -97,63 +98,26 @@ QDynamicButton::QDynamicButton(QWidget *parent) :
     QFrame *day1Widjet = new QFrame;
     QVBoxLayout *day1Layout = new QVBoxLayout;
 
-    QFrame *day2Widget = new QFrame;
-    QVBoxLayout *day2Layout = new QVBoxLayout;
-
-    QFrame *day3Widget = new QFrame;
-    QVBoxLayout *day3Layout = new QVBoxLayout;
-
-    QFrame *day4Widget = new QFrame;
-    QVBoxLayout *day4Layout = new QVBoxLayout;
-
-    QFrame *day5Widget = new QFrame;
-    QVBoxLayout *day5Layout = new QVBoxLayout;
-
-    QFrame *day6Widget = new QFrame;
-    QVBoxLayout *day6Layout = new QVBoxLayout;
-
-    QFrame *day7Widget = new QFrame;
-    QVBoxLayout *day7Layout = new QVBoxLayout;
-
 
     day1Widjet->setLayout(day1Layout);
     day1Layout->setAlignment(Qt::AlignTop);
 
-    day2Widget->setLayout(day2Layout);
-    day2Layout->setAlignment(Qt::AlignTop);
 
-    day3Widget->setLayout(day3Layout);
-    day3Layout->setAlignment(Qt::AlignTop);
-
-    day4Widget->setLayout(day4Layout);
-    day4Layout->setAlignment(Qt::AlignTop);
-
-    day5Widget->setLayout(day5Layout);
-    day5Layout->setAlignment(Qt::AlignTop);
-
-    day6Widget->setLayout(day6Layout);
-    day6Layout->setAlignment(Qt::AlignTop);
-
-    day7Widget->setLayout(day7Layout);
-    day7Layout->setAlignment(Qt::AlignTop);
 
     stack->addWidget(day1Widjet);
-    stack->addWidget(day2Widget);
-    stack->addWidget(day3Widget);
-    stack->addWidget(day4Widget);
-    stack->addWidget(day5Widget);
-    stack->addWidget(day6Widget);
-    stack->addWidget(day7Widget);
+
 
     stack->setCurrentIndex(0);
 
     stack->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
+    connect(createButton_2, &QPushButton::clicked, this, &QDynamicButton::onCreatePressed);
+
 
     // стак для деk
-   cardTitleEdit = new QLineEdit;
+   eventTitleEdit = new QLineEdit;
 
-    //connect(cardTitleEdit, &QLineEdit::textChanged, this, &QDynamicButton::checkBoxTitle);
+    //connect(eventTitleEdit, &QLineEdit::textChanged, this, &QDynamicButton::checkBoxTitle);
 
     QHBoxLayout *titleEditContainer = new QHBoxLayout;
 
@@ -169,12 +133,12 @@ QDynamicButton::QDynamicButton(QWidget *parent) :
     QVBoxLayout *titleWidgetList = new QVBoxLayout;
     titleWidgetList->setAlignment(Qt::AlignTop);
     addBoxTitleButton->hide();
-    cardTitleEdit->setStyleSheet(EDIT_TEXT);
-    cardTitleEdit->setPlaceholderText("Дело...");
-
+    eventTitleEdit->setStyleSheet(EDIT_TEXT);
+    eventTitleEdit->setPlaceholderText("Дело...");
+    connect(addBoxTitleButton, &QSvgButton::clicked, this, &QDynamicButton::onCreatePressed);
 
     form->addWidget(left);
-    form->addWidget(cardTitleEdit);
+    form->addWidget(eventTitleEdit);
     form->addWidget(right);
 
     titleEditContainer->addLayout(form);
@@ -197,7 +161,6 @@ QDynamicButton::QDynamicButton(QWidget *parent) :
 
     buttoContainer->setAlignment(Qt::AlignRight);
 
-    createButton_2->setStyleSheet(BUTTON_SOLID);
     createButton_2->setMaximumWidth(335);
     createButton_2->setMinimumWidth(335);
 
@@ -219,9 +182,10 @@ QDynamicButton::QDynamicButton(QWidget *parent) :
     mainLayout->setAlignment(Qt::AlignHCenter);
     mainLayout->addWidget(deskScrollArea);
 
+    addBoxTitleButton->show();
+
 
     this->addWidget(stack);
-
 
 
 }
@@ -238,7 +202,7 @@ void QDynamicButton::checkData() {
 
 
 void QDynamicButton::checkBoxTitle() {
-    if (cardTitleEdit->text().length() >= 3 && cardTitleEdit->text().length() <= 30) {
+    if (eventTitleEdit->text().length() >= 3 && eventTitleEdit->text().length() <= 30) {
         addBoxTitleButton->show();
     } else {
         addBoxTitleButton->hide();
@@ -256,6 +220,39 @@ int QDynamicButton::getID()
 {
     return buttonID;
 }
+
+void QDynamicButton::onCreatePressed()
+{
+//    titleList.append(cardTitleEdit->text());
+
+//    timeLabelTask = new QLabel;
+
+
+
+//    deleteTaskButton = new QSvgButton(":/resc/resc/bin.svg", QSize(24,24));
+
+//    titleList.append(cardTitleEdit->text());
+//    boxTitleTask = new QLabel(cardTitleEdit->text());
+//    boxTitleTask->setStyleSheet(TEXT_DARK_LABLE);
+
+//    mainImageTask = new QSvgWidget(":/resc/resc/done_outline.svg");
+//    mainImageTask->setMinimumSize(QSize(24,24));
+//    mainImageTask->setMaximumSize(QSize(24,24));
+
+//    task_container = new QHBoxLayout;
+
+//    task_container->addWidget(mainImageTask);
+//    task_container->addWidget(boxTitleTask);
+//    task_container->addWidget(timeLabelTask);
+//    task_container->addWidget(deleteTaskButton);
+
+//    titleWidgetList->addLayout(task_container);
+//    cardTitleEdit->setText("");
+//    checkBoxTitle();
+//    checkData();
+
+    }
+
 
 /* Инициализация статической переменной класса.
  * Статическая переменная класса должна инициализироваться в обязательном порядке

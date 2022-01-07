@@ -26,6 +26,14 @@ namespace styles{
             "   margin:20px 30px;"
             "}";
 
+
+    static const QString TASK_PADDING  =
+            "QLabel {"
+            "   padding-right: 20px;"
+            "   font-size: 25px;"
+
+            "}";
+
     static const QString SETTINGS_LABEL  =
             "QLabel {"
 
