@@ -54,7 +54,7 @@ Shedule::Shedule() {
     QHBoxLayout *titleContainer = new QHBoxLayout;
     titleContainer->setAlignment(Qt::AlignTop);
     QSvgButton *backButton = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(24,24));
-    QLabel *titleLabel = new QLabel(tr("My Sheduleqqqqqqqqqqqq"));
+    QLabel *titleLabel = new QLabel(tr("My Shedule"));
 
 
     calendar = new QCalendarWidget;
@@ -818,6 +818,12 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
     dateToHTTP = calendar->selectedDate().toString("MM-dd-yyyy");
 
+    time_begin = left->time();
+    time_end = right->time();
+
+    time_begin_string = time_begin.toString("hh:mm");
+    time_end_string = time_end.toString("hh:mm");
+
     QJsonObject addEventJson;
     QJsonObject bodyJson;
     bodyJson.insert("user_id", ID_QSTRING);
@@ -825,7 +831,7 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
     bodyJson.insert("event_date", dateToHTTP);
     bodyJson.insert("time_begin", time_begin_string);
     bodyJson.insert("time_end", time_end_string);
-    bodyJson.insert("description", cardTitleEdit->text());
+    bodyJson.insert("description", cardDescriptionEdit->text());
 
 
     QJsonArray eventArray;
