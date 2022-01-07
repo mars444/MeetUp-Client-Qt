@@ -7,7 +7,7 @@
 #include <QNetworkReply>
 #include <QPlainTextEdit>
 #include <QLabel>
-
+#include <QStackedWidget>
 #include <common/base/basefragment.h>
 
 
@@ -22,6 +22,7 @@ class Groups : public BaseFragment{
 private:
 
     QHash<QPushButton*,QHBoxLayout*> mButtonToLayoutMap;
+    QHash<QPushButton*,QHBoxLayout*>mButtonBackToLayoutMap;
 
 
 
@@ -55,6 +56,14 @@ private:
 
     QPushButton *friendName2;
 
+    QStackedWidget *stack;
+
+
+    QPushButton *inviteGroupButton;
+    QVBoxLayout *innerScrollFriends;
+
+    QPushButton *backAddtoGroup;
+
 
     QString groupNameString;
 
@@ -78,6 +87,8 @@ public slots:
     void loadGroups();
 
     void onBackPressed();
+
+    void backAddtoGroupPressed();
 
     void inviteGroupPressed();
 
