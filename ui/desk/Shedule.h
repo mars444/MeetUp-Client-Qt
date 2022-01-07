@@ -97,6 +97,8 @@ private:
 
     QSvgButton *deleteTaskButton;
 
+    QSvgButton *updateTaskButton;
+
     QSvgButton *doneButton;
 
     QSvgButton *doneButtonYes;
@@ -186,6 +188,7 @@ public slots:
     void calendar_btn(const QDate &date);
     void setButtonDate(void);
     void sendShedulePressed();
+    void updateTaskButton_pressed();
 
     void clearTasks();
 

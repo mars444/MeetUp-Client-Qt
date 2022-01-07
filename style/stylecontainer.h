@@ -38,6 +38,25 @@ namespace styles{
 
             "}";
 
+    static const QString GROUPS_FRAME =
+              "QFrame {"
+              "   border-radius:50px;"
+              "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #fff, stop:1 #8046A4);"
+
+              "   margin-bottom:15px;"
+
+              "}";
+
+
+    static const QString EVENT_STYLE_LOAD =
+            "QFrame {"
+            "   border-radius:20px;"
+            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #ff0005, stop:1 #8046A4);"
+            "   margin-bottom:15px;"
+            "   padding:10px 0px;"
+
+            "}";
+
 
     static const QString EVENT_READY_STYLE =
             "QFrame {"
@@ -46,15 +65,6 @@ namespace styles{
 
             "   padding-left:10px;"
             "   padding-right:10px;"
-
-            "   margin-bottom:15px;"
-
-            "}";
-
-    static const QString GROUPS_FRAME =
-            "QFrame {"
-            "   border-radius:50px;"
-            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #fff, stop:1 #8046A4);"
 
             "   margin-bottom:15px;"
 
@@ -262,23 +272,23 @@ namespace styles{
 
 
     static const QString BUTTON_WHITE =
-            "QPushButton {"
-            "color: "+COLOR_PRIMARY+";"
-            "background-color:"+COLOR_BACKGROUND+";"
-            "padding:10px 20px;"
-            "border-radius:10px;"
-            "cursor:pointer;"
+                "QPushButton {"
+                "color: "+COLOR_PRIMARY+";"
+                "background-color:"+COLOR_BACKGROUND+";"
+                "padding:10px 20px;"
+                "border-radius:10px;"
+                "cursor:pointer;"
 
-             "text-transform:underline;"
+                 "text-transform:underline;"
 
-            "font-size:25px;"
-            "}"
-            "QPushButton:hover {"
-            "background-color:red;"
-            "cursor:pointer;"
-            "}"
-            "QFrame {""background: transparent""}"
-    "QCursor {""cursor: pointer""}";
+                "font-size:25px;"
+                "}"
+                "QPushButton:hover {"
+                "background-color:red;"
+                "cursor:pointer;"
+                "}"
+                "QFrame {""background: transparent""}"
+        "QCursor {""cursor: pointer""}";
 
     static const QString BUTTON_DISABLED =
             "QPushButton {"
@@ -375,23 +385,22 @@ namespace styles{
             "}";
 
     static const QString SCROL_BAR =
-            "QFrame {""background: transparent""}"
             "QScrollBar:vertical {"
             "   border: 0px solid "+COLOR_BORDER+";"
-            "   background: transparent;"
-            "   width: 0px;"
+            "   background: "+COLOR_BORDER+";"
+            "   width: 4px;"
             "   margin: 0px 0px 0px 0px;"
             "}"
             "QScrollBar:horizontal {"
             "   border: 0px solid "+COLOR_BORDER+";"
-            "   background: transparent;"
+            "   background: "+COLOR_BORDER+";"
             "   height: 0px;"
             "   margin: 0px 0px 0px 0px;"
             "}"
             "QScrollBar::handle {"
-            "   background: transparent;"
-            "   border: 0px solid "+COLOR_BORDER+";"
-            "   border-radius: 0px;"
+            "   background: "+COLOR_BORDER+";"
+            "   border: 3px solid "+COLOR_BORDER+";"
+            "   border-radius: 6px;"
             "}"
             "QScrollBar::add-line:vertical {"
             "   height: 0px;"

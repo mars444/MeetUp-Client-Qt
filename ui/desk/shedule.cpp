@@ -222,6 +222,8 @@ Shedule::Shedule() {
     inputContainer->addLayout(selectorContainer);
     inputContainer->addLayout(buttonBoxContainer);
 
+
+
     cardTitleEdit = new QLineEdit;
 
     cardDescriptionEdit = new QLineEdit;
@@ -262,6 +264,7 @@ Shedule::Shedule() {
     cardTitleEdit->setStyleSheet(EDIT_TEXT_EVENT_TITLE);
     cardTitleEdit->setMaximumWidth(200);
     cardTitleEdit->setPlaceholderText(tr("Task title..."));
+    cardTitleEdit->setAlignment(Qt::AlignCenter);
 
     cardDescriptionEdit->setStyleSheet(EDIT_TEXT_SMALL);
     cardDescriptionEdit->setPlaceholderText(tr("Description..."));
@@ -274,7 +277,7 @@ Shedule::Shedule() {
     connect(cardDescriptionEdit, &QLineEdit::textChanged, this, &Shedule::checkBoxTitle);
 
 
-    cardTitleEdit->setAlignment(Qt::AlignCenter);
+
     cardDescriptionEdit->setAlignment(Qt::AlignCenter);
 
     left->setAlignment(Qt::AlignCenter);
@@ -459,6 +462,7 @@ void Shedule::doneButton_pressed() {
 
 
     QPushButton *button = qobject_cast<QPushButton*>(sender());
+
     button->hide();
 
     QPushButton *button1 = doneButtonToLayoutMap.value(button);
@@ -729,10 +733,6 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
     timeLabelTask->setAlignment(Qt::AlignLeft);
 
-    titleList.append(cardTitleEdit->text());
-    titleList.append(time_begin_string);
-    titleList.append(time_end_string);
-
 
     boxTitleTask = new QLabel(cardTitleEdit->text());
 
@@ -850,6 +850,13 @@ void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
 
 
      networkManageraddEvent->clearAccessCache();
+
+
+}
+
+
+void Shedule::updateTaskButton_pressed() {
+
 
 
 }
@@ -1665,124 +1672,113 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
                      std::cout << time_end_str << std::endl;
                 }
 
-
-
-
-
- qDebug()<<4444444444<<endl;
-                timeLabelTask = new QLabel;
-
-
-
-                time_begin_string = QString::fromUtf8(time_begin_str.c_str());
-                time_end_string = QString::fromUtf8(time_end_str.c_str());
-
-
                 deleteTaskButton = new QSvgButton(":/resc/resc/cross.svg", QSize(25,25));
-
                 deleteTaskButton->setStyleSheet("border-radius:5px;");
-
-
                 connect(deleteTaskButton, &QSvgButton::clicked, this, &Shedule::deleteButton_pressed);
 
- qDebug()<<55555555555<<endl;
+
+                updateTaskButton = new QSvgButton(":/resc/resc/arrow_up.svg", QSize(40,40));
+                updateTaskButton->setStyleSheet("border-radius:20px;");
+                connect(updateTaskButton, &QSvgButton::clicked, this, &Shedule::updateTaskButton_pressed);
 
                 doneButtonYes = new QSvgButton(":/resc/resc/checkbox-checked.svg", QSize(30,30));
-
                 doneButtonYes->hide();
-
-
                 doneButtonYes->setStyleSheet("border-radius:5px;");
-
                 connect(doneButtonYes, &QSvgButton::clicked, this, &Shedule::doneButtonYes_pressed);
 
-                //doneButtonYes->hide();
-
-
                 doneButton = new QSvgButton(":/resc/resc/checkbox-unchecked.svg", QSize(30,30));
-
                 doneButton->setStyleSheet("border-radius:5px;");
-
                 connect(doneButton, &QSvgButton::clicked, this, &Shedule::doneButton_pressed);
 
- qDebug()<<6666666666<<endl;
-                timeLabelTask->setText(QString("%1----%2").arg(time_begin_string, time_end_string));
-
-
-                QString titleEvent = QString::fromUtf8(event_name.c_str());
-
-                //QString descriptionEvent = QString::fromUtf8(event_description.c_str());
-
-                QString descriptionEvent = "Hellow";
-
-                boxTitleTask = new QLabel(titleEvent);
-                QLabel *descriptionLabel = new QLabel(descriptionEvent);
-                boxTitleTask->setStyleSheet(TASK_PADDING);
-
- qDebug()<<77777777777<<endl;
-
-                task_container = new QHBoxLayout;
-
-                //task_container->setAlignment(Qt::AlignCenter);
-
-                QLabel *idLabel  = new QLabel("");
-
-                idLabel->setText(titleEvent);
-
-                idLabel->hide();
-
-                 qDebug()<<888888888<<endl;
-
-
+                timeLabelTask = new QLabel;
                 timeLabelTask->setStyleSheet("QFrame {""background: transparent""}");
                 timeLabelTask->setAlignment(Qt::AlignCenter);
                 timeLabelTask->setAlignment(Qt::AlignVCenter);
                 timeLabelTask->setContentsMargins(0,15,0,0);
-
-                boxTitleTask->setStyleSheet(TASK_PADDING);
-                boxTitleTask->setAlignment(Qt::AlignCenter);
-                boxTitleTask->setAlignment(Qt::AlignVCenter);
-                boxTitleTask->setContentsMargins(0,15,0,0);
+                time_begin_string = QString::fromUtf8(time_begin_str.c_str());
+                time_end_string = QString::fromUtf8(time_end_str.c_str());
+                timeLabelTask->setText(QString("%1----%2").arg(time_begin_string, time_end_string));
 
 
-                descriptionLabel->setStyleSheet("QFrame {""background: transparent""}");
-                descriptionLabel->setAlignment(Qt::AlignCenter);
-                descriptionLabel->setAlignment(Qt::AlignVCenter);
-                descriptionLabel->setContentsMargins(0,15,0,0);
+                QString titleEvent = QString::fromUtf8(event_name.c_str());
+                QString descriptionEvent = "Hellow";
 
-                    qDebug()<<999999<<endl;
+                QLabel *idLabel  = new QLabel("");
 
-                task_container->addWidget(doneButtonYes);
+                idLabel->setText(titleEvent);
+                idLabel->hide();
 
-                task_container->addWidget(doneButton);
+                QLineEdit *cardTitleEdit = new QLineEdit;
 
-                task_container->addWidget(idLabel);
+                 QLineEdit *cardDescriptionEdit = new QLineEdit;
 
-                task_container->addWidget(timeLabelTask);
+                //QHBoxLayout *titleEditContainerLoad = new QHBoxLayout;
 
-                task_container->addWidget(boxTitleTask);
+                QHBoxLayout *form = new QHBoxLayout;
 
-                task_container->addWidget(descriptionLabel);
+                TimeEdit *left = new TimeEdit;
+                TimeEdit *right = new TimeEdit;
 
-                task_container->addWidget(deleteTaskButton);
+                QTime defaultTime(0,15);
 
-                task_container->setAlignment(Qt::AlignVCenter);
+                right->setTime(defaultTime);
 
-                //task_container->setContentsMargins(125,0,0,0);
+                connect(left, &QTimeEdit::timeChanged, this,&Shedule::setTimeRightTimeEdit);
 
-                //inputContainer->insertLayout(3,task_container);
+                left->setStyleSheet(Qtimestyle);
+                right->setStyleSheet(Qtimestyle);
+
+                left->setMaximumWidth(100);
+                right->setMaximumWidth(100);
+
+                cardTitleEdit->setStyleSheet(EDIT_TEXT_EVENT_TITLE);
+                cardTitleEdit->setMaximumWidth(200);
+                cardTitleEdit->setText(titleEvent);
+                cardTitleEdit->setAlignment(Qt::AlignCenter);
+
+                cardDescriptionEdit->setStyleSheet(EDIT_TEXT_SMALL);
+                cardDescriptionEdit->setText(descriptionEvent);
+                cardDescriptionEdit->setMaximumWidth(500);
+                cardDescriptionEdit->setMinimumHeight(50);
+                cardDescriptionEdit->setMaximumHeight(50);
+
+                cardDescriptionEdit->setAlignment(Qt::AlignCenter);
+
+                left->setAlignment(Qt::AlignCenter);
+                right->setAlignment(Qt::AlignCenter);
+
+                QHBoxLayout *timeInner = new QHBoxLayout;
+
+                timeInner->addWidget(left);
+
+                timeInner->addWidget(right);
+
+                form->addWidget(doneButtonYes);  //0
+
+                form->addWidget(doneButton);   //1
+
+                form->addWidget(idLabel);   //2
+
+                form->addWidget(cardTitleEdit);   //3
+
+                form->addWidget(cardDescriptionEdit);   //4
+
+                form->addLayout(timeInner);  //5
+
+                form->addWidget(updateTaskButton);   //6
+
+                form->addWidget(deleteTaskButton);   //7
+
+                QFrame *formFrame = new QFrame;
+
+                formFrame->setStyleSheet(EVENT_STYLE_LOAD);
+
+                formFrame->setLayout(form);
 
 
 
-                QFrame *eventReadyFrame = new QFrame;
 
-                eventReadyFrame->setStyleSheet(EVENT_READY_STYLE);
-
-                eventReadyFrame->setLayout(task_container);
-
-
-
-                task_container_inner->addWidget(eventReadyFrame);
+                task_container_inner->addWidget(formFrame);
 
                 deleteTaskButtonToLayoutMap.insert(deleteTaskButton,task_container);
                 doneButtonToLayoutMap.insert(doneButton,doneButtonYes);
