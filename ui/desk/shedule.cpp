@@ -1690,14 +1690,28 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
                 doneButton->setStyleSheet("border-radius:5px;");
                 connect(doneButton, &QSvgButton::clicked, this, &Shedule::doneButton_pressed);
 
-                timeLabelTask = new QLabel;
-                timeLabelTask->setStyleSheet("QFrame {""background: transparent""}");
-                timeLabelTask->setAlignment(Qt::AlignCenter);
-                timeLabelTask->setAlignment(Qt::AlignVCenter);
-                timeLabelTask->setContentsMargins(0,15,0,0);
+//                timeLabelTask = new QLabel;
+//                timeLabelTask->setStyleSheet("QFrame {""background: transparent""}");
+//                timeLabelTask->setAlignment(Qt::AlignCenter);
+//                timeLabelTask->setAlignment(Qt::AlignVCenter);
+//                timeLabelTask->setContentsMargins(0,15,0,0);
+
+
                 time_begin_string = QString::fromUtf8(time_begin_str.c_str());
                 time_end_string = QString::fromUtf8(time_end_str.c_str());
-                timeLabelTask->setText(QString("%1----%2").arg(time_begin_string, time_end_string));
+
+                std::string time_begin_hours = time_begin_string.toStdString().substr(0,2);
+                std::string time_begin_minuts = time_begin_string.toStdString().substr(3,4);
+
+                int time_begin_hours_int =  std::stoi( time_begin_hours );
+                int time_begin_minuts_int =  std::stoi( time_begin_minuts );
+
+                std::string time_end_hours = time_end_string.toStdString().substr(0,2);
+                std::string time_end_minuts = time_end_string.toStdString().substr(3,4);
+
+                int time_end_hours_int =  std::stoi( time_end_hours );
+                int time_end_minuts_int =  std::stoi( time_end_minuts );
+
 
 
                 QString titleEvent = QString::fromUtf8(event_name.c_str());
@@ -1719,11 +1733,12 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
                 TimeEdit *left = new TimeEdit;
                 TimeEdit *right = new TimeEdit;
 
-                QTime defaultTime(0,15);
 
-                right->setTime(defaultTime);
+                QTime leftTime(time_begin_hours_int,time_begin_minuts_int);
+                QTime rightTime(time_end_hours_int,time_end_minuts_int);
 
-                connect(left, &QTimeEdit::timeChanged, this,&Shedule::setTimeRightTimeEdit);
+                left->setTime(leftTime);
+                right->setTime(rightTime);
 
                 left->setStyleSheet(Qtimestyle);
                 right->setStyleSheet(Qtimestyle);
