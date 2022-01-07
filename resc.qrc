@@ -26,6 +26,10 @@
         <file>resc/user.svg</file>
         <file>resc/calendar.svg</file>
         <file>resc/key.svg</file>
+        <file>resc/bin_white.svg</file>
+        <file>resc/plus.svg</file>
+        <file>resc/plus_white.svg</file>
+        <file>resc/arrow_right.svg</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

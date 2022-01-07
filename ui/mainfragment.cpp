@@ -55,6 +55,7 @@ MainFragment::MainFragment() {
 
     QPixmap pixmapGroups(":/resc/resc/users.svg");
     QIcon ButtonIconGroups(pixmapGroups);
+
     myGroupsButton->setIcon(ButtonIconGroups);
     myGroupsButton->setIconSize(QSize(20,20));
 

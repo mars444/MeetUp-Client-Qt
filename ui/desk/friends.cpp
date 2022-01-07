@@ -90,7 +90,16 @@ Friends::Friends() {
 
 
 
-    addFriendButton = new QPushButton("Добавить друга");
+    addFriendButton = new QPushButton("                        Добавить                         ");
+
+    QPixmap pixmapaddFriend(":/resc/resc/plus.svg");
+    QIcon ButtonIconaddFriend(pixmapaddFriend);
+
+    addFriendButton->setIcon(ButtonIconaddFriend);
+    addFriendButton -> setLayoutDirection ( Qt :: RightToLeft );
+
+    addFriendButton->setIconSize(QSize(20,20));
+
 
     addFriendButton->setMaximumWidth(300);
     addFriendButton->setMinimumWidth(300);
@@ -98,7 +107,10 @@ Friends::Friends() {
 
     connect(addFriendButton, &QPushButton::clicked, this, &Friends::addFriendButtonPressed);
 
-    addFriendButton->setStyleSheet(BUTTON_DISABLED);
+    //addFriendButton->setStyleSheet(BUTTON_DISABLED);
+
+    addFriendButton->setStyleSheet("text-align: justify");
+
     addFriendButton->setDisabled(true);
 
 
@@ -279,7 +291,15 @@ void Friends::onHttpResult(QNetworkReply *reply) {
 
                     QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
 
-                    QPushButton *deleteFriendButton2 = new QPushButton("Удалить из друзей");
+                    QPushButton *deleteFriendButton2 = new QPushButton("Удалить из друзей   ");
+
+                    QPixmap pixmapdeleteFriend(":/resc/resc/bin_white.svg");
+                    QIcon ButtonIcondeleteFriend(pixmapdeleteFriend);
+
+                    deleteFriendButton2->setIcon(ButtonIcondeleteFriend);
+                    deleteFriendButton2 -> setLayoutDirection ( Qt :: RightToLeft );
+                    deleteFriendButton2 -> setStyleSheet("text-align: right");
+                    deleteFriendButton2->setIconSize(QSize(20,20));
 
                     inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
 
@@ -337,13 +357,6 @@ void Friends::onHttpResult(QNetworkReply *reply) {
 
 void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
 
-        friendsCount++;
-
-
-    if(friendsCount == 1) {
-
-        delete noFriendsLabel;
-    }
 
 
     qDebug() << "http finished" << endl;
@@ -368,6 +381,14 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
           std::string abc = j["add_friend"].get<std::string>();
 
           if(abc == "OK") {
+
+              friendsCount++;
+
+
+          if(friendsCount == 1) {
+
+              delete noFriendsLabel;
+          }
 
             std::string add_friend_result = j["add_friend"].get<std::string>();
 
@@ -397,7 +418,15 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
 
             inviteGroupButton2 = new QPushButton("Пригласить в группу");
 
-            deleteFriendButton2 = new QPushButton("Удалить из друзей");
+            deleteFriendButton2 = new QPushButton("Удалить из друзей   ");
+
+            QPixmap pixmapdeleteFriend(":/resc/resc/bin_white.svg");
+            QIcon ButtonIcondeleteFriend(pixmapdeleteFriend);
+
+            deleteFriendButton2->setIcon(ButtonIcondeleteFriend);
+            deleteFriendButton2 -> setLayoutDirection ( Qt :: RightToLeft );
+            deleteFriendButton2 -> setStyleSheet("text-align: right");
+            deleteFriendButton2->setIconSize(QSize(20,20));
 
 
 
@@ -602,9 +631,21 @@ void Friends::checkNameFriend() {
     if (addFriendEdit->text().length() >= 4) {
         addFriendButton->setStyleSheet(BUTTON_SOLID);
          addFriendButton->setDisabled(false);
+
+
+         QPixmap pixmapaddFriend(":/resc/resc/plus_white.svg");
+         QIcon ButtonIconaddFriend(pixmapaddFriend);
+
+         addFriendButton->setIcon(ButtonIconaddFriend);
+
     } else {
         addFriendButton->setStyleSheet(BUTTON_DISABLED);
          addFriendButton->setDisabled(true);
+
+         QPixmap pixmapaddFriend(":/resc/resc/plus.svg");
+         QIcon ButtonIconaddFriend(pixmapaddFriend);
+
+         addFriendButton->setIcon(ButtonIconaddFriend);
     }
 }
 

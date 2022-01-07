@@ -52,7 +52,6 @@ Settings::Settings() {
 
     QHBoxLayout *inputcountryInner = new QHBoxLayout;
     usercountryEdit = new QLineEdit;
-    usercountryEdit->setText("Russia");
     usercountryLabel = new QLabel("Country:");
     usercountryEdit->setMaximumWidth(355);
     usercountryEdit->setMinimumWidth(355);
@@ -67,7 +66,6 @@ Settings::Settings() {
 
     QHBoxLayout *inputindexInner = new QHBoxLayout;
     userindexEdit = new QLineEdit;
-    userindexEdit->setText("192431");
     userindexLabel = new QLabel("Index:");
     userindexEdit->setMaximumWidth(355);
     userindexEdit->setMinimumWidth(355);
@@ -81,7 +79,6 @@ Settings::Settings() {
 
     QHBoxLayout *inputdistrictInner = new QHBoxLayout;
     userdistrictEdit = new QLineEdit;
-    userdistrictEdit->setText("Lefortovo");
     userdistrictLabel = new QLabel("District:");
     userdistrictEdit->setMaximumWidth(355);
     userdistrictEdit->setMinimumWidth(355);
@@ -94,7 +91,6 @@ Settings::Settings() {
 
     QHBoxLayout *inputcityInner = new QHBoxLayout;
     usercityEdit = new QLineEdit;
-    usercityEdit->setText("Moscow");
     usercityLabel = new QLabel("City:");
     usercityEdit->setMaximumWidth(355);
     usercityEdit->setMinimumWidth(355);
@@ -108,7 +104,6 @@ Settings::Settings() {
 
     QHBoxLayout *inputstreetInner = new QHBoxLayout;
     userstreetEdit = new QLineEdit;
-    userstreetEdit->setText("Lenina");
     userstreetLabel = new QLabel("Street:");
     userstreetEdit->setMaximumWidth(355);
     userstreetEdit->setMinimumWidth(355);
@@ -121,7 +116,6 @@ Settings::Settings() {
 
     QHBoxLayout *inputhousingInner = new QHBoxLayout;
     userhousingEdit = new QLineEdit;
-    userhousingEdit->setText("5");
     userhousingLabel = new QLabel("Housing:");
     userhousingEdit->setMaximumWidth(355);
     userhousingEdit->setMinimumWidth(355);
@@ -136,7 +130,6 @@ Settings::Settings() {
 
     QHBoxLayout *inputbuildingInner = new QHBoxLayout;
     userbuildingEdit = new QLineEdit;
-    userbuildingEdit->setText("1");
     userbuildingLabel = new QLabel("Building:");
     userbuildingEdit->setMaximumWidth(355);
     userbuildingEdit->setMinimumWidth(355);
@@ -156,7 +149,7 @@ Settings::Settings() {
     settingsInnerRight->addLayout(inputcityInner);
     settingsInnerRight->addLayout(inputstreetInner);
     settingsInnerRight->addLayout(inputhousingInner);
-    settingsInnerRight->addLayout(inputbuildingInner);
+    //settingsInnerRight->addLayout(inputbuildingInner);
     settingsInnerRight->addLayout(inputindexInner);
 
 
@@ -166,7 +159,6 @@ Settings::Settings() {
 
      QHBoxLayout *inputNameInner = new QHBoxLayout;
      userNameEdit = new QLineEdit;
-     userNameEdit->setText("Piter");
 
      userNameLabel = new QLabel("Name:");
      userNameEdit->setMaximumWidth(355);
@@ -184,7 +176,6 @@ Settings::Settings() {
 
      QHBoxLayout *inputSurnameInner = new QHBoxLayout;
      userSurnameEdit = new QLineEdit;
-     userSurnameEdit->setText("Pamuzhak");
      userSurnameLabel = new QLabel("Surname:");
      userSurnameEdit->setMaximumWidth(355);
      userSurnameEdit->setMinimumWidth(355);
@@ -199,7 +190,6 @@ Settings::Settings() {
 
      QHBoxLayout *inputAgeInner = new QHBoxLayout;
      userAgeEdit = new QLineEdit;
-     userAgeEdit->setText("35");
      userAgeLabel = new QLabel("Age:");
      userAgeEdit->setMaximumWidth(355);
      userAgeEdit->setMinimumWidth(355);
@@ -212,7 +202,6 @@ Settings::Settings() {
 
      QHBoxLayout *inputStatusInner = new QHBoxLayout;
      userStatusEdit = new QLineEdit;
-     userStatusEdit->setText("work");
      userStatusLabel = new QLabel("Status:");
      userStatusEdit->setMaximumWidth(355);
      userStatusEdit->setMinimumWidth(355);
@@ -226,7 +215,6 @@ Settings::Settings() {
 
      QHBoxLayout *inputDescriptionInner = new QHBoxLayout;
      userDescriptionEdit = new QLineEdit;
-     userDescriptionEdit->setText("desk");
      userDescriptionLabel = new QLabel("Description:");
      userDescriptionEdit->setMaximumWidth(355);
      userDescriptionEdit->setMinimumWidth(355);
@@ -239,7 +227,6 @@ Settings::Settings() {
 
      QHBoxLayout *inputLabelInner = new QHBoxLayout;
      userLabelEdit = new QLineEdit;
-     userLabelEdit->setText("lab");
      userLabelLabel = new QLabel("Label:");
      userLabelEdit->setMaximumWidth(355);
      userLabelEdit->setMinimumWidth(355);
@@ -253,7 +240,6 @@ Settings::Settings() {
 
     QHBoxLayout *inputPhoneNumberInner = new QHBoxLayout;
      userPhoneNumberEdit = new QLineEdit;
-     userPhoneNumberEdit->setText("8-925-141-59-30");
      userPhoneNumberLabel = new QLabel("PhoneNumber:");
      userPhoneNumberEdit->setMaximumWidth(355);
      userPhoneNumberEdit->setMinimumWidth(355);
@@ -267,8 +253,6 @@ Settings::Settings() {
 
      QHBoxLayout *inputMailInner = new QHBoxLayout;
      userMailEdit = new QLineEdit;
-     userMailEdit->setText("petromars@GMAIL.COM");
-
      userMailLabel = new QLabel("Mail:");
      userMailEdit->setMinimumWidth(355);
      userMailEdit->setMaximumWidth(355);
@@ -415,20 +399,7 @@ Settings::Settings() {
 
 
 
-    connect(userMailEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
-    connect(userNameEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
-    connect(userSurnameEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
-    connect(userAgeEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
-    connect(userPhoneNumberEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
 
-
-    connect(userbuildingEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
-    connect(userhousingEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
-    connect(userstreetEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
-    connect(usercityEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
-    connect(userdistrictEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
-    connect(userindexEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
-    connect(usercountryEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
 
     setSettingsButton->setStyleSheet(BUTTON_DISABLED);
 
@@ -451,7 +422,6 @@ Settings::Settings() {
     connect(networkManagerSetSettingsRight, &QNetworkAccessManager::finished, this, &Settings::onHttpResultSetSettingsRight);
 
        getSettings();
-       //getSettingsRight();
 
 
 }
@@ -470,26 +440,26 @@ Settings::~Settings() {
 
 void Settings::getSettings() {
 
-//    QJsonObject loadSettingsJson;
-//    QJsonObject userIDJson;
-//    userIDJson.insert("user_id", ID_QSTRING);
-//    loadSettingsJson.insert("get_personal", userIDJson);
+    QJsonObject loadSettingsJson;
+    QJsonObject userIDJson;
+    userIDJson.insert("user_id", ID_QSTRING);
+    loadSettingsJson.insert("get_personal", userIDJson);
 
-//        qDebug() << "create request" << endl;
+        qDebug() << "create request" << endl;
 
 
 
-//        QNetworkRequest request(QUrl(SERVER_URL + ""));
-//        request.setHeader(QNetworkRequest::ContentTypeHeader,
-//                          QStringLiteral("application/json;charset=utf-8"));
-//        qDebug() << "request data"<< QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact) << endl;
+        QNetworkRequest request(QUrl(SERVER_URL + ""));
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                          QStringLiteral("application/json;charset=utf-8"));
+        qDebug() << "request data"<< QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact) << endl;
 
-//        request.setRawHeader("JSON_DATA", QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact));
-//        networkManager->post(
-//            request,
-//            QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact)
-//        );
-//        qDebug() << "request send" << endl;
+        request.setRawHeader("JSON_DATA", QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact));
+        networkManager->post(
+            request,
+            QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact)
+        );
+        qDebug() << "request send" << endl;
 
 
 }
@@ -497,51 +467,26 @@ void Settings::getSettings() {
 void Settings::getSettingsRight() {
 
 
-//    QJsonObject loadSettingsJson;
-//    QJsonObject userIDJson;
-//    userIDJson.insert("user_id", ID_QSTRING);
-//    loadSettingsJson.insert("get_adress", userIDJson);
+    QJsonObject loadSettingsJson;
+    QJsonObject userIDJson;
+    userIDJson.insert("user_id", ID_QSTRING);
+    loadSettingsJson.insert("get_address", userIDJson);
 
-//        qDebug() << "create request" << endl;
-
-
-
-//        QNetworkRequest request(QUrl(SERVER_URL + ""));
-//        request.setHeader(QNetworkRequest::ContentTypeHeader,
-//                          QStringLiteral("application/json;charset=utf-8"));
-//        qDebug() << "request data"<< QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact) << endl;
-
-//        request.setRawHeader("JSON_DATA", QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact));
-//        networkManagerRight->post(
-//            request,
-//            QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact)
-//        );
-//        qDebug() << "request send" << endl;
+        qDebug() << "create request" << endl;
 
 
 
+        QNetworkRequest request(QUrl(SERVER_URL + ""));
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                          QStringLiteral("application/json;charset=utf-8"));
+        qDebug() << "request data"<< QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact) << endl;
 
-
-
-//    nlohmann::json j = nlohmann::json::parse(abc);
-
-//     nlohmann::json value = j;
-
-
-
-//         userPhoneNumberEdit->setText(QString::fromStdString(value["phone_number"]).remove('"'));
-//         userAgeEdit->setText(QString::fromStdString(value["age"]).remove('"'));
-//         userLabelEdit->setText(QString::fromStdString(value["label"]).remove('"'));
-//         userStatusEdit->setText(QString::fromStdString(value["status"]).remove('"'));
-//         userSurnameEdit->setText(QString::fromStdString(value["surname"]).remove('"'));
-//         userNameEdit->setText(QString::fromStdString(value["first_name"]).remove('"'));
-//         userDescriptionEdit->setText(QString::fromStdString(value["description"]).remove('"'));
-//         userMailEdit->setText(QString::fromStdString(value["email"]).remove('"'));
-
-
-
-
-
+        request.setRawHeader("JSON_DATA", QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact));
+        networkManagerRight->post(
+            request,
+            QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact)
+        );
+        qDebug() << "request send" << endl;
 
 }
 
@@ -648,7 +593,7 @@ void Settings::checkSettings() {
 
 void Settings::checkSettingsRight() {
     if ((userMailEdit->text().length() >= 4) &&
-            (userbuildingEdit->text().length() >= 1 ) &&
+            //(userbuildingEdit->text().length() >= 1 ) &&
             (userhousingEdit->text().length() >= 1 ) &&
             (userstreetEdit->text().length() >= 4) &&
             (usercityEdit->text().length() >= 4) &&
@@ -673,54 +618,67 @@ void Settings::onCreatePressed() {
 
 void Settings::onHttpResult(QNetworkReply *reply) {
 
-//    qDebug() << "http finished" << endl;
+  qDebug() << "http finished" << endl;
 
 
-//    if(!reply->error()) {  //
-//        QByteArray resp = reply->readAll();
-//        qDebug() <<"ETO OTVET SERVERA GET CONTACTS for group layout :  " + resp  << endl;
-//        QJsonDocument doc = QJsonDocument::fromJson(resp);
-//        QJsonObject obj;
+    if(!reply->error()) {  //
+        QByteArray resp = reply->readAll();
+        qDebug() <<"ETO OTVET SERVERA GET settings :  " + resp  << endl;
+        QJsonDocument doc = QJsonDocument::fromJson(resp);
+        QJsonObject obj;
 
 
-//        std::string abc = resp.toStdString();
+        std::string abc = resp.toStdString();
 
-//        nlohmann::json j = nlohmann::json::parse(abc);
+          qDebug() << "1111111111111\n";
 
-//         nlohmann::json value = j;
+        nlohmann::json j = nlohmann::json::parse(abc);
 
-//         if(j["get_personal"] != "null"){
+              qDebug() << "22222222222222222222 \n";
 
-//             userPhoneNumberEdit->setText(QString::fromStdString(value["phone_number"]).remove('"'));
-//             userAgeEdit->setText(QString::fromStdString(value["age"]).remove('"'));
-//             userLabelEdit->setText(QString::fromStdString(value["label"]).remove('"'));
-//             userStatusEdit->setText(QString::fromStdString(value["status"]).remove('"'));
-//             userSurnameEdit->setText(QString::fromStdString(value["surname"]).remove('"'));
-//             userNameEdit->setText(QString::fromStdString(value["first_name"]).remove('"'));
-//             userDescriptionEdit->setText(QString::fromStdString(value["description"]).remove('"'));
-//             userMailEdit->setText(QString::fromStdString(value["email"]).remove('"'));
+         if(j["get_personal"] != nullptr){
 
-//         }
+             qDebug() << "33333333333333333 \n";
 
+             nlohmann::json value = j["get_personal"];
 
-//        } else {
+              qDebug() << "44444444444444 \n";
 
+             userPhoneNumberEdit->setText(QString::fromStdString(value["phone_number"]).remove('"'));
+             userAgeEdit->setText(QString::fromStdString(value["age"]).remove('"'));
+             userLabelEdit->setText(QString::fromStdString(value["label"]).remove('"'));
+             userStatusEdit->setText(QString::fromStdString(value["status"]).remove('"'));
+             userSurnameEdit->setText(QString::fromStdString(value["surname"]).remove('"'));
+             userNameEdit->setText(QString::fromStdString(value["first_name"]).remove('"'));
+             userDescriptionEdit->setText(QString::fromStdString(value["description"]).remove('"'));
+             userMailEdit->setText(QString::fromStdString(value["email"]).remove('"'));
 
-//        qDebug() << reply->errorString();
+                qDebug() << "5555555555555555 \n";
 
-//        qDebug() <<  reply->readAll() << endl;
-
-//        qDebug () << reply -> error ();
-
-//        QMessageBox::warning(this, "Ошибка",
-//            "При подключениии произошла ошибка.\n");
-
-//}
+         }
 
 
-//    reply->deleteLater();
+        } else {
 
-//    networkManager->clearAccessCache();
+
+        qDebug() << reply->errorString();
+
+        qDebug() <<  reply->readAll() << endl;
+
+        qDebug () << reply -> error ();
+
+        QMessageBox::warning(this, "Ошибка",
+            "При подключениии произошла ошибка.\n");
+
+}
+
+
+    reply->deleteLater();
+
+    networkManager->clearAccessCache();
+
+    getSettingsRight();
+
 
 
 }
@@ -732,7 +690,7 @@ void Settings::onHttpResultRight(QNetworkReply *reply) {
 
     if(!reply->error()) {  //
         QByteArray resp = reply->readAll();
-        qDebug() <<"ETO OTVET SERVERA GET CONTACTS for group layout :  " + resp  << endl;
+        qDebug() <<"ETO OTVET SERVERA GET sett right:  " + resp  << endl;
         QJsonDocument doc = QJsonDocument::fromJson(resp);
         QJsonObject obj;
 
@@ -741,11 +699,14 @@ void Settings::onHttpResultRight(QNetworkReply *reply) {
 
         nlohmann::json j = nlohmann::json::parse(abc);
 
-         nlohmann::json value = j;
 
-         if(j["get_adress"] != "null"){
 
-             userbuildingEdit->setText(QString::fromStdString(value["building"]).remove('"'));
+
+         if(j["get_address"] != nullptr){
+
+             nlohmann::json value = j["get_address"];
+
+//             userbuildingEdit->setText(QString::fromStdString(value["building"]).remove('"'));
              userhousingEdit->setText(QString::fromStdString(value["housing"]).remove('"'));
              userstreetEdit->setText(QString::fromStdString(value["street"]).remove('"'));
              usercityEdit->setText(QString::fromStdString(value["city"]).remove('"'));
@@ -774,6 +735,21 @@ void Settings::onHttpResultRight(QNetworkReply *reply) {
     reply->deleteLater();
 
     networkManagerRight->clearAccessCache();
+
+    connect(userMailEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
+    connect(userNameEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
+    connect(userSurnameEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
+    connect(userAgeEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
+    connect(userPhoneNumberEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
+
+
+    //connect(userbuildingEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
+    connect(userhousingEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
+    connect(userstreetEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
+    connect(usercityEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
+    connect(userdistrictEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
+    connect(userindexEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
+    connect(usercountryEdit, &QLineEdit::textChanged, this, &Settings::checkSettingsRight);
 
 }
 

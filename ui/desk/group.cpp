@@ -81,9 +81,9 @@ Group::Group() {
 
       connect(groupList, &QPushButton::clicked, this, &Group::groupListPressed);
 
-        connect(groupMeets, &QPushButton::clicked, this, &Group::groupMeetsPressed);
+      connect(groupMeets, &QPushButton::clicked, this, &Group::groupMeetsPressed);
 
-        connect(groupDelete, &QPushButton::clicked, this, &Group::groupDeletePressed);
+      connect(groupDelete, &QPushButton::clicked, this, &Group::groupDeletePressed);
 
 
     groupDelete->setStyleSheet(BUTTON_PROFILE_RED);
@@ -101,6 +101,7 @@ Group::Group() {
      groupButtonsContainer->addWidget(groupList);
 
      groupButtonsContainer->addWidget(groupDelete);
+
       QHBoxLayout *daysButtonsContainer = new QHBoxLayout;
       QDate date =   QDate::currentDate();
 
@@ -136,8 +137,6 @@ Group::Group() {
       connect(day5Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
       connect(day6Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
       connect(day7Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
-
-      groupMeets = new QPushButton("Встречи");
 
 
     QHBoxLayout *GroupContainer = new QHBoxLayout;
@@ -183,7 +182,9 @@ Group::Group() {
 
     QVBoxLayout *stackMeets = new QVBoxLayout;
 
+    stackMeets->addLayout(daysButtonsContainer);
     stackMeets->addLayout(GroupContainerMain);
+
     stackMeets->addLayout(GroupContainer);
 
 
@@ -197,6 +198,8 @@ Group::Group() {
 
    stackListWidget = new QFrame;
    stackListWidget->setLayout(stackList);
+
+   stackList->setAlignment(Qt::AlignCenter);
 
 
     stack->addWidget(stackMeetsWidget);
@@ -215,7 +218,7 @@ Group::Group() {
 
     mainVLayout->addLayout(groupButtonsContainer);
 
-    mainVLayout->addLayout(daysButtonsContainer);
+
 
     mainVLayout->addWidget(stack);
 
@@ -292,21 +295,26 @@ void Group::onBackPressed() {
 
 
 void Group::groupMeetsPressed() {
-    stack->setCurrentIndex(0);
+
+
 
     groupMeets->setStyleSheet(BUTTON_SOLID);
+
     groupList->setStyleSheet(BUTTON_DISABLED);
+
+    stack->setCurrentIndex(0);
 
 }
 
 
 void Group::groupListPressed() {
 
-     stack->setCurrentIndex(1);
 
     groupMeets->setStyleSheet(BUTTON_DISABLED);
 
     groupList->setStyleSheet(BUTTON_SOLID);
+
+    stack->setCurrentIndex(1);
 
 
 
@@ -433,7 +441,7 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
 
                connect(deleteFriendButton2, &QPushButton::clicked, this, &Group::deleteFriendPressed);
 
-
+               // friendContainer2->setAlignment(Qt::AlignCenter);
                 stackList->addLayout(friendContainer2);
 
 

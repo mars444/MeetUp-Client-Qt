@@ -26,6 +26,16 @@ namespace styles{
             "   margin:20px 30px;"
             "}";
 
+    static const QString TIMESTYLE  =
+            "QLabel {"
+            "   text-align: center;"
+            "   border:1px solid #ff0000;"
+            "   border-radius:5px;"
+
+            "}";
+
+
+
 
 
     static const QString GROUP_IMAGE  =
@@ -122,7 +132,7 @@ namespace styles{
 
     static const QString TITLE_LABLE =
             "color:" + COLOR_TEXT_PRIMARY + ";"
-            "font-size:24px;";
+            "font-size:30px;";
     static const QString HINT_LABLE =
             "color:" + COLOR_TEXT_HINT + ";"
             "font-size:14px;";

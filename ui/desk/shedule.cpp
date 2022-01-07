@@ -452,7 +452,11 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
 
 
-    timeLabelTask->setText(QString("begin %1 \n end: %2.").arg(time_begin_string, time_end_string));
+    timeLabelTask->setText(QString("%1---%2").arg(time_begin_string, time_end_string));
+
+    //timeLabelTask->setStyleSheet(TIMESTYLE);
+
+    timeLabelTask->setAlignment(Qt::AlignLeft);
 
     titleList.append(cardTitleEdit->text());
     titleList.append(time_begin_string);
@@ -460,7 +464,7 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
 
     boxTitleTask = new QLabel(cardTitleEdit->text());
-    boxTitleTask->setStyleSheet(TASK_PADDING);
+//    boxTitleTask->setStyleSheet(TASK_PADDING);
 
     mainImageTask = new QSvgWidget(":/resc/resc/done_outline.svg");
     mainImageTask->setMinimumSize(QSize(24,24));
@@ -469,14 +473,18 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
     task_container = new QHBoxLayout;
 
-    //task_container->setAlignment(Qt::AlignCenter);
+   //task_container->setAlignment(Qt::AlignJustify);
 
-    task_container->addWidget(mainImageTask);
-    task_container->addWidget(boxTitleTask);
+        task_container->addWidget(mainImageTask);
+
     task_container->addWidget(timeLabelTask);
 
+
+    task_container->addWidget(boxTitleTask);
+
+
     task_container->addWidget(deleteTaskButton);
-    task_container->setContentsMargins(125,0,0,0);
+    //task_container->setContentsMargins(125,0,0,0);
 
     inputContainer->addLayout(task_container);
 
