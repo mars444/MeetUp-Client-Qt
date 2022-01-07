@@ -55,7 +55,6 @@ MainFragment::MainFragment() {
     QPushButton *mySettingsButton = new QPushButton(tr("               Profile       "));
 
 
-
     QPixmap pixmapShedule(":/resc/resc/calendar.svg");
     QIcon ButtonIconShedule(pixmapShedule);
     mySheduleButton->setIcon(ButtonIconShedule);
