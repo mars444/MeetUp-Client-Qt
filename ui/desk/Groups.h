@@ -32,6 +32,10 @@ private:
 
     QVBoxLayout *mainVLayout;
     QVBoxLayout *inputContainerGroups;
+    QString ID_QSTRING;
+    QString NICK_QSTRING;
+
+    QString GROUP_TITLE_QSTRING;
 
     WaitingSpinnerWidget *loading;
 

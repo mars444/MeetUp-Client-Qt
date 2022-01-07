@@ -59,6 +59,7 @@ HEADERS += \
     models/basemodel.h \
     models/cardmodel.h \
     models/checkboxmodel.h \
+    models/deskmodel.h \
     models/historymodel.h \
     models/usermodel.h \
     nlohmann/adl_serializer.hpp \

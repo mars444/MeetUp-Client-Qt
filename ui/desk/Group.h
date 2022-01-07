@@ -29,6 +29,9 @@ private:
     QLabel *groupEventstart;
     QLabel *groupEventend;
 
+    QString ID_QSTRING;
+
+    QString GROUP_TITLE_QSTRING;
 
     QVBoxLayout *inputContainerGroups;
 

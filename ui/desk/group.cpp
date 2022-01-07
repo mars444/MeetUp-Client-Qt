@@ -20,21 +20,32 @@ using namespace styles;
 #include <QMessageBox>
 #include <QJsonArray>
 
+#include <iostream>
+#include <set>
+
 #include <ui/view/qsvgbutton.h>
 #include <ui/view/waitingspinnerwidget.h>
 using namespace screens;
 
-
+#include "ui/auth/user_data.h"
 
 
 Group::Group() {
+
+    std::string IDstd = GetId();
+
+    ID_QSTRING = QString::fromUtf8(IDstd.c_str());
+
+    std::string GroupTitil = GetGroupTitle();
+
+    GROUP_TITLE_QSTRING = QString::fromUtf8(GroupTitil.c_str());
 
     mainVLayout = new QVBoxLayout;
     QVBoxLayout *inputContainer = new QVBoxLayout;
 
     QHBoxLayout *titleContainer = new QHBoxLayout;
     QSvgButton *backButton = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(24,24));
-    GrouptitleLabel = new QLabel("Group 1");
+    GrouptitleLabel = new QLabel(GROUP_TITLE_QSTRING);
 
     createButton = new QPushButton("Добавить друзей");
 
@@ -307,26 +318,32 @@ void Group::groupListPressed() {
 
 void Group::loadFriends() {
 
+    //TEST get_group_data: {"get_data_group":{"title":"Texnosrac"}}
 
-    QJsonObject loadFriendsJson;
-    QJsonObject userIDJson;
+
+
+    QJsonObject loadFriendsGroupJson;
+    QJsonObject usernameGroupJson;
 
    // nlohmann::json aaa = nlohmann::json::parse(loadFriendsJson);
 
-    userIDJson.insert("userID", "213564544");
-    loadFriendsJson.insert("getFriend", userIDJson);
+    usernameGroupJson.insert("title", GROUP_TITLE_QSTRING);
+    loadFriendsGroupJson.insert("get_data_group", usernameGroupJson);
 
         qDebug() << "create request" << endl;
 
 
 
         QNetworkRequest request(QUrl(SERVER_URL + ""));
+
+        request.setRawHeader("JSON_DATA", QJsonDocument(loadFriendsGroupJson).toJson(QJsonDocument::Compact));
+
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QStringLiteral("application/json;charset=utf-8"));
-        qDebug() << "request data"<< QJsonDocument(loadFriendsJson).toJson(QJsonDocument::Compact) << endl;
+        qDebug() << "request data"<< QJsonDocument(loadFriendsGroupJson).toJson(QJsonDocument::Compact) << endl;
         networkManagerloadFriends->post(
             request,
-            QJsonDocument(loadFriendsJson).toJson(QJsonDocument::Compact)
+            QJsonDocument(loadFriendsGroupJson).toJson(QJsonDocument::Compact)
         );
         qDebug() << "request send" << endl;
     }
@@ -340,91 +357,114 @@ void Group::onHttpResult(QNetworkReply *reply) {
 
 void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
 
-    str = "{\"userID\":\"213564544\",\"Friends\":[\"Misha1991\", \"Igor\",  \"Alex\",  \"qwe\", \"piotr\"]}";
-
-    nlohmann::json j = nlohmann::json::parse(str);
-
-
-    std::cout << j.size() << std::endl;
-    std::cout << j << std::endl;
-
-    nlohmann::json::iterator it = j.begin();
-    std::cout << it.key() << std::endl;
-
-    std::string key = it.key();
-
-    nlohmann::json value = j[key];
-
-    std::cout << value << std::endl;
-
-
-    std::set<std::string> s_friends;
-
-    for (auto& element : j["Friends"]) {
+    //str = "{\"userID\":\"213564544\",\"Friends\":[\"66666\", \"Igor\",  \"Alex\",  \"qwe\", \"piotr\"]}";
 
 
 
+    qDebug() << "http finished" << endl;
 
-        friendContainer2 = new QHBoxLayout;
-        QLabel *friendImageLabel2 = new QLabel("");
-        QPixmap friendImage2(":/resc/resc/user_circle.svg");
-        friendImageLabel2->setPixmap(friendImage2);
-        friendImageLabel2->setStyleSheet(FRIEND_IMAGE);
+    if(!reply->error()) {
+        QByteArray resp = reply->readAll();
+        qDebug() <<"ETO OTVET SERVERA get_data_group :  " + resp  << endl;
+        QJsonDocument doc = QJsonDocument::fromJson(resp);
+        QJsonObject obj;
 
-
-
-
-
-        friendName2 = new QLabel(QString::fromStdString(element.dump()).remove('"'));
-
-        friendName2->setStyleSheet(FRIEND_NAME_SURNAME);
+        std::string str = resp.toStdString();
 
 
-        QLabel *friendOnlineStatusLabel2 = new QLabel("");
-        QPixmap friendOnlineStatusImage2(":/resc/resc/online_status_off.svg");
-        friendOnlineStatusLabel2->setPixmap(friendOnlineStatusImage2.scaled(15,15, Qt::KeepAspectRatio));
+        nlohmann::json j = nlohmann::json::parse(str);
 
-        friendOnlineStatusLabel2->setStyleSheet(ONLINE_STATUS);
+        nlohmann::json::iterator it = j.begin();
+
+        std::string key = it.key();
+
+        nlohmann::json value = j[key];
+
+        for (auto& element : value) {
+
+            nlohmann::json members = element["members"];
+
+            for (auto& member : members) {
+
+                friendContainer2 = new QHBoxLayout;
+                QLabel *friendImageLabel2 = new QLabel("");
+                QPixmap friendImage2(":/resc/resc/user_circle.svg");
+                friendImageLabel2->setPixmap(friendImage2);
+                friendImageLabel2->setStyleSheet(FRIEND_IMAGE);
+
+                friendName2 = new QLabel(QString::fromStdString(member.dump()).remove('"'));
+
+                qDebug() << friendName2 << endl;
+
+                friendName2->setStyleSheet(FRIEND_NAME_SURNAME);
 
 
+                QLabel *friendOnlineStatusLabel2 = new QLabel("");
+                QPixmap friendOnlineStatusImage2(":/resc/resc/online_status_off.svg");
+                friendOnlineStatusLabel2->setPixmap(friendOnlineStatusImage2.scaled(15,15, Qt::KeepAspectRatio));
 
-        QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
-
-        QPushButton *deleteFriendButton2 = new QPushButton("Удалить из группы");
-
-
-        inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
-
-
-        deleteFriendButton2->setStyleSheet(BUTTON_SOLID);
-
-        QHBoxLayout *friendButtonContainer2 = new QHBoxLayout;
-
-
-        //friendButtonContainer2->addWidget(inviteGroupButton2);
-        friendButtonContainer2->addWidget(deleteFriendButton2);
-
-
-
-        friendContainer2->addWidget(friendImageLabel2);
-        friendContainer2->addWidget(friendName2);
-
-        friendContainer2->addWidget(friendOnlineStatusLabel2);
-        friendContainer2->addLayout(friendButtonContainer2);
-
-       connect(deleteFriendButton2, &QPushButton::clicked, this, &Group::deleteFriendPressed);
+                friendOnlineStatusLabel2->setStyleSheet(ONLINE_STATUS);
 
 
 
+                QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
+
+                QPushButton *deleteFriendButton2 = new QPushButton("Удалить из группы");
+
+
+                inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
+
+
+                deleteFriendButton2->setStyleSheet(BUTTON_SOLID);
+
+                QHBoxLayout *friendButtonContainer2 = new QHBoxLayout;
+
+
+                //friendButtonContainer2->addWidget(inviteGroupButton2);
+                friendButtonContainer2->addWidget(deleteFriendButton2);
 
 
 
-        stackList->addLayout(friendContainer2);
+                friendContainer2->addWidget(friendImageLabel2);
+                friendContainer2->addWidget(friendName2);
+
+                friendContainer2->addWidget(friendOnlineStatusLabel2);
+                friendContainer2->addLayout(friendButtonContainer2);
+
+               connect(deleteFriendButton2, &QPushButton::clicked, this, &Group::deleteFriendPressed);
 
 
-        mButtonToLayoutMap.insert(deleteFriendButton2,friendContainer2);
+                stackList->addLayout(friendContainer2);
+
+
+                mButtonToLayoutMap.insert(deleteFriendButton2,friendContainer2);
+
+
+
+
+
+                std::cout << member.get<std::string>() << std::endl;  // выводит в cout участников всех групп. Если подается одна группа, то в рамках одной группы
+            }
+        }
+        }
+
+         else {
+
+        qDebug() << reply->errorString();
+
+        qDebug() << "Server answer: " +  reply->readAll() << endl;
+
+        qDebug () << reply -> error ();
+
+        QMessageBox::warning(this, "Ошибка",
+            "При подключениии произошла ошибка.\n");
+        // newRootScreen(MAIN_TAG);
 
 }
+    //newRootScreen(MAIN_TAG);
+    reply->deleteLater();
+    networkManagerloadFriends->clearAccessCache();
+
 }
 
 void Group::onHttpResultnetworkManagerGetMeets(QNetworkReply *reply) {
@@ -510,9 +550,9 @@ void Group::deleteFriendPressed() {
             QJsonObject bodyJson;
 
             QJsonArray arrayUsers;
-            arrayUsers.push_back("mars1234");
+            arrayUsers.push_back(nameGroup);
 
-            bodyJson.insert("group", nameGroup);
+            bodyJson.insert("title", GROUP_TITLE_QSTRING);
             bodyJson.insert("members", arrayUsers);
 
             deleFromGroupJson.insert("kick", bodyJson);

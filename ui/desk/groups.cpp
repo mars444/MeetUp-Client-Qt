@@ -27,6 +27,8 @@ using namespace styles;
 #include <QScrollBar>
 #include <QLabel>
 
+#include "ui/auth/user_data.h"
+
 
 #include <QRegularExpression>
 #include <ui/view/qsvgbutton.h>
@@ -34,6 +36,16 @@ using namespace styles;
 using namespace screens;
 
 Groups::Groups() {
+
+    std::string IDstd = GetId();
+
+    ID_QSTRING = QString::fromUtf8(IDstd.c_str());
+
+
+    std::string nickstd = GetNickname();
+
+    NICK_QSTRING = QString::fromUtf8(nickstd.c_str());
+
 
 //    connect(this, SIGNAL(sendGroupNameSignal(const QString &)),
 //            Group, SLOT(sendGroupnameSlot(const QString &)));
@@ -132,7 +144,7 @@ Groups::Groups() {
     scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
     deskScrollArea->setStyleSheet(SCROL_BAR);
     QHBoxLayout *content = new QHBoxLayout;
-    content->setAlignment(Qt::AlignLeft);
+    //content->setAlignment(Qt::AlignLeft);
     scrolContainer->setLayout(content);
     deskScrollArea->setWidget(scrolContainer);
     deskScrollArea->setWidgetResizable(true);
@@ -169,6 +181,11 @@ Groups::Groups() {
 
     mainVLayout->addWidget(deskScrollArea);
 
+    //mainVLayout->setAlignment(Qt::AlignCenter);
+    //inputContainerGroups->setAlignment(Qt::AlignCenter);
+    //inputContainer->setAlignment(Qt::AlignCenter);
+    //content->setAlignment(Qt::AlignCenter);
+
 
 
 
@@ -192,10 +209,11 @@ Groups::Groups() {
     ManagerAddFriendsLayout = new QNetworkAccessManager();
     connect(ManagerAddFriendsLayout, &QNetworkAccessManager::finished, this, &Groups::onHttpResultManagerAddFriendsLayout);
 
+
     loadFriends();
 
 
-    loadGroups();
+   loadGroups();
 
 
 }
@@ -229,46 +247,47 @@ void Groups::onHttpResult(QNetworkReply *reply) {
     if(!reply->error()) {    //
         QByteArray resp = reply->readAll();
         qDebug() <<"ETO OTVET SERVERA Groups :  " + resp  << endl;
+
         QJsonDocument doc = QJsonDocument::fromJson(resp);
         QJsonObject obj;
 
+        //QString abc = resp.remove("\"title\"");
+
+
+
         std::string strGroups = resp.toStdString();
+
 
         //strGroups = "{\"userID\":\"213564544\",\"Groups\":[\"Group 1\", \"Group 2\"]}";
 
         nlohmann::json j = nlohmann::json::parse(strGroups);
 
-        nlohmann::json val = j["get_groups"];
 
-        std::cout << "eto strika"<< j << endl;
-
-
-        if(j["get_groups"].is_string()){   // проверка есть ли groups в строке contains
+        if(j["get_groups"].is_string()){   // проверка если по ключу строка ошибки, а не массив групп
 
             noGroupsLabel = new QLabel("Вы не состоите в группе :(");
 
             inputContainerGroups->addWidget(noGroupsLabel);
 
             qDebug("NO GROUPS");
-            std::set<std::string> s_Groups;
-
 
 
 
         } else {
 
 
-        for (auto& element : val) {
+        for (auto& element :  j["get_groups"]) {
 
             GroupContainer2 = new QHBoxLayout;
             QLabel *GroupImageLabel2 = new QLabel("");
-            QPixmap GroupImage2(":/resc/resc/group.svg");
+            QPixmap GroupImage2(":/resc/resc/group3.svg");
             GroupImageLabel2->setPixmap(GroupImage2);
-            GroupImageLabel2->setStyleSheet(FRIEND_IMAGE);
+            GroupImageLabel2->setStyleSheet(GROUP_IMAGE);
 
-            GroupNameButton = new QPushButton(QString::fromStdString(element["title"].get<std::string>()));
+            GroupNameButton = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
 
-              connect(GroupNameButton, &QPushButton::clicked, this, &Groups::goToGroup);
+
+            connect(GroupNameButton, &QPushButton::clicked, this, &Groups::goToGroup);
 
             GroupNameButton->setStyleSheet(FRIEND_NAME_SURNAME);
 
@@ -341,99 +360,95 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
             std::cout<< "aaaaaaaaaaaaaaaaaaaaaaa  eto yaaa" << str << endl;
 
-            std::string strFriend = "{\"userID\":\"213564544\",\"Friends\":[\"mars123456\", \"user666666\",  \"Alex\",  \"qwe\", \"piotr\"]}";
+            std::string strFriend = "{\"get_contacts\":[\"bogdan111\",\"Alex12345\",\"Kostya44\",\"Danzan_45\"]}";
 
             //std::string strFriend = *str;
-            nlohmann::json j = nlohmann::json::parse(str);
 
 
-            std::cout << j.size() << std::endl;
-            std::cout << j << std::endl;
+            nlohmann::json j = nlohmann::json::parse(strFriend);
 
-            nlohmann::json::iterator it = j.begin();
-            std::cout << it.key() << std::endl;
-
-            std::string key = it.key();
-
-            nlohmann::json value = j[key];
-
-            std::cout << value << std::endl;
+            if(j["get_contacts"].is_string()){
 
 
-            std::set<std::string> s_friends;
-
-             friendContainer2 = new QVBoxLayout;
-
-             innerScrollFriends = new QVBoxLayout;
-             QLabel *friendNamesTitle = new QLabel("Выберите кого пригласить:");
-
-             //friendNamesTitle->setAlignment(Qt::AlignCenter);
-             //innerScroll->addWidget(friendNamesTitle);
-
-           //  innerScroll->setAlignment(Qt::AlignCenter);
-    //         innerScrollFriends->setAlignment(Qt::AlignRight);
-
-
-             QScrollArea *deskScrollArea = new QScrollArea;
-
-             deskScrollArea->setMaximumHeight(250);
-             deskScrollArea->setMaximumWidth(300);
-             deskScrollArea->setAlignment(Qt::AlignHCenter);
-             //deskScrollArea->setFrameShape(QFrame::NoFrame);
-             QWidget *scrolContainer = new QWidget;
-             scrolContainer->setObjectName("container");
-
-
-             scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
-             deskScrollArea->setStyleSheet(SCROL_BAR);
-             QHBoxLayout *content = new QHBoxLayout;
-             content->setAlignment(Qt::AlignCenter);
-             scrolContainer->setLayout(content);
-             deskScrollArea->setWidget(scrolContainer);
-             deskScrollArea->setWidgetResizable(true);
-             deskScrollArea->horizontalScrollBar()->setEnabled(false);
-
-
-    //         QSvgWidget *done = new QSvgWidget(":/resc/resc/done_outline.svg");
-    //        done->setMinimumSize(QSize(24,24));
-    //        done->setMaximumSize(QSize(24,24));
-
-            for (auto& element : j["get_contacts"]) {
-
-                friendName2 = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
-
-                friendName2->setStyleSheet(FRIEND_NAME_SURNAME);
-
-
-                friendName2->setStyleSheet(BUTTON_SOLID);
-                friendName2->setMinimumWidth(200);
-                  friendName2->setMaximumWidth(300);
+            } else {
 
 
 
-                friendContainer2->addWidget(friendNamesTitle);
-                friendContainer2->addWidget(friendName2);
+                 friendContainer2 = new QVBoxLayout;
+
+                 innerScrollFriends = new QVBoxLayout;
+                 QLabel *friendNamesTitle = new QLabel("Выберите кого пригласить:");
+
+                 //friendNamesTitle->setAlignment(Qt::AlignCenter);
+                 //innerScroll->addWidget(friendNamesTitle);
+
+               //  innerScroll->setAlignment(Qt::AlignCenter);
+        //         innerScrollFriends->setAlignment(Qt::AlignRight);
 
 
-                connect(friendName2, &QPushButton::clicked, this, &Groups::friendName2Pressed);
+                 QScrollArea *deskScrollArea = new QScrollArea;
+
+                 deskScrollArea->setMaximumHeight(250);
+                 deskScrollArea->setMaximumWidth(300);
+                 deskScrollArea->setAlignment(Qt::AlignHCenter);
+                 //deskScrollArea->setFrameShape(QFrame::NoFrame);
+                 QWidget *scrolContainer = new QWidget;
+                 scrolContainer->setObjectName("container");
 
 
-                innerScrollFriends->addWidget(friendName2);
+                 scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
+                 deskScrollArea->setStyleSheet(SCROL_BAR);
+                 QHBoxLayout *content = new QHBoxLayout;
+                 content->setAlignment(Qt::AlignCenter);
+                 scrolContainer->setLayout(content);
+                 deskScrollArea->setWidget(scrolContainer);
+                 deskScrollArea->setWidgetResizable(true);
+                 deskScrollArea->horizontalScrollBar()->setEnabled(false);
 
-                //content->addLayout(friendContainer2);
 
-                ///innerScroll->addLayout(friendContainer2);
+        //         QSvgWidget *done = new QSvgWidget(":/resc/resc/done_outline.svg");
+        //        done->setMinimumSize(QSize(24,24));
+        //        done->setMaximumSize(QSize(24,24));
+
+                for (auto& element : j["get_contacts"]) {
+
+                    friendName2 = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
+
+                    friendName2->setStyleSheet(FRIEND_NAME_SURNAME);
+
+
+                    friendName2->setStyleSheet(BUTTON_SOLID);
+                    friendName2->setMinimumWidth(200);
+                      friendName2->setMaximumWidth(300);
 
 
 
-                backLayout->addLayout(innerScrollFriends);
+                    friendContainer2->addWidget(friendNamesTitle);
+                    friendContainer2->addWidget(friendName2);
+
+
+                    connect(friendName2, &QPushButton::clicked, this, &Groups::friendName2Pressed);
+
+
+                    innerScrollFriends->addWidget(friendName2);
+
+                    //content->addLayout(friendContainer2);
+
+                    ///innerScroll->addLayout(friendContainer2);
+
+
+
+                    backLayout->addLayout(innerScrollFriends);
 
 
 
 
 
-            }
+                }
 
+
+
+}
 
             GroupContainer2->addWidget(stack);
 
@@ -445,8 +460,9 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
             mButtonToLayoutMap.insert(inviteGroupButton2,GroupContainer2);
 
+}
 
-        }
+
 
     }} else {
 
@@ -533,7 +549,7 @@ void Groups::loadGroups() {
 
     QJsonArray nickArray;
 
-    nickArray.push_back("mars1234");
+    nickArray.push_back(NICK_QSTRING);
 
     userIDJson.insert("members", nickArray);
 
@@ -566,7 +582,7 @@ void Groups::loadFriends() {
 
    // nlohmann::json aaa = nlohmann::json::parse(loadFriendsJson);
 
-    userIDJson.insert("user_id", "1");
+    userIDJson.insert("user_id", ID_QSTRING);
     loadFriendsJson.insert("get_contacts", userIDJson);
 
         qDebug() << "create request" << endl;
@@ -596,7 +612,7 @@ void Groups::addGroupButtonPressed() {
 
 
     QJsonArray arrayUsers;
-    arrayUsers.push_back("mars1234");
+    arrayUsers.push_back(NICK_QSTRING);
 
     bodyJson.insert("title", addGroupEdit->text());
     bodyJson.insert("members", arrayUsers);
@@ -624,9 +640,9 @@ void Groups::addGroupButtonPressed() {
 
         GroupContainer2 = new QHBoxLayout;
         QLabel *GroupImageLabel2 = new QLabel("");
-        QPixmap GroupImage2(":/resc/resc/group.svg");
+        QPixmap GroupImage2(":/resc/resc/group3.svg");
         GroupImageLabel2->setPixmap(GroupImage2);
-        GroupImageLabel2->setStyleSheet(FRIEND_IMAGE);
+        GroupImageLabel2->setStyleSheet(GROUP_IMAGE);
 
 
 
@@ -709,96 +725,104 @@ void Groups::addGroupButtonPressed() {
         //str = "{\"userID\":\"213564544\",\"Friends\":[\"mars123456\", \"user666666\",  \"Alex\",  \"qwe\", \"piotr\"]}";
 
 
-        std::string string = str;
-        nlohmann::json j = nlohmann::json::parse(string);
+
+        nlohmann::json j = nlohmann::json::parse(str);
+
+        if(j["get_contacts"].is_string()){
 
 
-        std::cout << j.size() << std::endl;
-        std::cout << j << std::endl;
+        } else {
 
-        nlohmann::json::iterator it = j.begin();
-        std::cout << it.key() << std::endl;
+            std::cout << j.size() << std::endl;
+            std::cout << j << std::endl;
 
-        std::string key = it.key();
+            nlohmann::json::iterator it = j.begin();
+            std::cout << it.key() << std::endl;
 
-        nlohmann::json value = j[key];
+            std::string key = it.key();
 
-        std::cout << value << std::endl;
+            nlohmann::json value = j[key];
 
-
-        std::set<std::string> s_friends;
-
-         friendContainer2 = new QVBoxLayout;
-
-         innerScrollFriends = new QVBoxLayout;
-         QLabel *friendNamesTitle = new QLabel("Выберите кого пригласить:");
-
-         //friendNamesTitle->setAlignment(Qt::AlignCenter);
-         //innerScroll->addWidget(friendNamesTitle);
-
-       //  innerScroll->setAlignment(Qt::AlignCenter);
-//         innerScrollFriends->setAlignment(Qt::AlignRight);
+            std::cout << value << std::endl;
 
 
-//         QScrollArea *deskScrollArea = new QScrollArea;
+            std::set<std::string> s_friends;
 
-//         deskScrollArea->setMaximumHeight(250);
-//         deskScrollArea->setMaximumWidth(300);
-//         deskScrollArea->setAlignment(Qt::AlignHCenter);
-//         //deskScrollArea->setFrameShape(QFrame::NoFrame);
-//         QWidget *scrolContainer = new QWidget;
-//         scrolContainer->setObjectName("container");
+             friendContainer2 = new QVBoxLayout;
 
+             innerScrollFriends = new QVBoxLayout;
+             QLabel *friendNamesTitle = new QLabel("Выберите кого пригласить:");
 
-//         scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
-//         deskScrollArea->setStyleSheet(SCROL_BAR);
-//         QHBoxLayout *content = new QHBoxLayout;
-//         content->setAlignment(Qt::AlignCenter);
-//         scrolContainer->setLayout(content);
-//         deskScrollArea->setWidget(scrolContainer);
-//         deskScrollArea->setWidgetResizable(true);
-//         deskScrollArea->horizontalScrollBar()->setEnabled(false);
+             //friendNamesTitle->setAlignment(Qt::AlignCenter);
+             //innerScroll->addWidget(friendNamesTitle);
+
+           //  innerScroll->setAlignment(Qt::AlignCenter);
+    //         innerScrollFriends->setAlignment(Qt::AlignRight);
 
 
-//         QSvgWidget *done = new QSvgWidget(":/resc/resc/done_outline.svg");
-//        done->setMinimumSize(QSize(24,24));
-//        done->setMaximumSize(QSize(24,24));
+    //         QScrollArea *deskScrollArea = new QScrollArea;
 
-        for (auto& element : j["get_contacts"]) {
-
-            friendName2 = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
-
-            friendName2->setStyleSheet(FRIEND_NAME_SURNAME);
-
-
-            friendName2->setStyleSheet(BUTTON_SOLID);
-            friendName2->setMinimumWidth(200);
-              friendName2->setMaximumWidth(300);
+    //         deskScrollArea->setMaximumHeight(250);
+    //         deskScrollArea->setMaximumWidth(300);
+    //         deskScrollArea->setAlignment(Qt::AlignHCenter);
+    //         //deskScrollArea->setFrameShape(QFrame::NoFrame);
+    //         QWidget *scrolContainer = new QWidget;
+    //         scrolContainer->setObjectName("container");
 
 
+    //         scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
+    //         deskScrollArea->setStyleSheet(SCROL_BAR);
+    //         QHBoxLayout *content = new QHBoxLayout;
+    //         content->setAlignment(Qt::AlignCenter);
+    //         scrolContainer->setLayout(content);
+    //         deskScrollArea->setWidget(scrolContainer);
+    //         deskScrollArea->setWidgetResizable(true);
+    //         deskScrollArea->horizontalScrollBar()->setEnabled(false);
 
-            friendContainer2->addWidget(friendNamesTitle);
-            friendContainer2->addWidget(friendName2);
+
+    //         QSvgWidget *done = new QSvgWidget(":/resc/resc/done_outline.svg");
+    //        done->setMinimumSize(QSize(24,24));
+    //        done->setMaximumSize(QSize(24,24));
+
+            for (auto& element : j["get_contacts"]) {
+
+                friendName2 = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
+
+                friendName2->setStyleSheet(FRIEND_NAME_SURNAME);
 
 
-            connect(friendName2, &QPushButton::clicked, this, &Groups::friendName2Pressed);
-
-
-            innerScrollFriends->addWidget(friendName2);
-
-            //content->addLayout(friendContainer2);
-
-            ///innerScroll->addLayout(friendContainer2);
+                friendName2->setStyleSheet(BUTTON_SOLID);
+                friendName2->setMinimumWidth(200);
+                  friendName2->setMaximumWidth(300);
 
 
 
-            backLayout->addLayout(innerScrollFriends);
+                friendContainer2->addWidget(friendNamesTitle);
+                friendContainer2->addWidget(friendName2);
+
+
+                connect(friendName2, &QPushButton::clicked, this, &Groups::friendName2Pressed);
+
+
+                innerScrollFriends->addWidget(friendName2);
+
+                //content->addLayout(friendContainer2);
+
+                ///innerScroll->addLayout(friendContainer2);
 
 
 
+                backLayout->addLayout(innerScrollFriends);
 
 
-        }
+            }
+
+
+
+}
+
+
+
 
 
         GroupContainer2->addWidget(stack);
@@ -833,7 +857,7 @@ void Groups::onHttpResultManagerAddFriendsLayout(QNetworkReply *reply) {
          str = abc;
 
 
-         //std::cout << "str  " << str << std::endl;
+         std::cout << "str  " << str << std::endl;
 
          } else {
 
@@ -963,11 +987,11 @@ void Groups::friendName2Pressed(){
 void Groups::goToGroup() {
        inviteGroupButton = qobject_cast<QPushButton*>(sender());
 
-        QString aaa = inviteGroupButton->text();
+        QString GroupName = inviteGroupButton->text();
 
+        std::string GroupNamestd = GroupName.toStdString();
+        WriteGroupTitle(GroupNamestd);
 
-
-             qDebug() << aaa << endl;
 
 
     navigateTo(GROUP);

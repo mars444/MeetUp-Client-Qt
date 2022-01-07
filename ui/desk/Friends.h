@@ -22,7 +22,7 @@ class Friends : public BaseFragment{
 private:
 
     QHash<QPushButton*,QHBoxLayout*> mButtonToLayoutMap;
-
+     QString ID_QSTRING;
 
 
     std::string str;

@@ -31,6 +31,7 @@ private:
     QString strDinamicckeck = "";
 
    QCalendarWidget *calendar;
+   QString ID_QSTRING;
 
     QLineEdit *titleEdit;
     QLineEdit *cardTitleEdit;
@@ -109,7 +110,7 @@ private:
     QTimeEdit* left;
     QTimeEdit* right;
 
-    QNetworkAccessManager *networkManager;
+    QNetworkAccessManager *networkManagerGetEvents;
     QNetworkAccessManager *networkManagerSendShedule;
 
     QNetworkAccessManager *networkManageraddEvent;
@@ -124,7 +125,7 @@ public:
 public slots:
     void onBackPressed();
     void onCreatePressed();
-    void onHttpResult(QNetworkReply *reply);
+    void onHttpResultGetEvents(QNetworkReply *reply);
 
     void onHttpResultSendShedule(QNetworkReply *reply);
 

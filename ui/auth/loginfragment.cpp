@@ -156,6 +156,8 @@ void LoginFragment::onLoginPressed() {
 //    networkManager->post(request, body);
 
 
+    std::string NizkName = loginEdit->text().toStdString();
+    WriteNickname(NizkName);
     QJsonObject RegJson;
     QJsonObject param;
        param.insert("nickname", loginEdit->text());
@@ -261,15 +263,7 @@ void LoginFragment::onHttpResult(QNetworkReply *reply) {
 
             std::cout << "ID: " << IDValue << std::endl;
 
-             QFile file("C:\\user_id.txt");
-
-             if (file.open(QIODevice::WriteOnly))
-             {
-                 file.write("Test string\n");
-
-                 file.close();
-             }
-
+            WriteId(IDValue);
 
             newRootScreen(MAIN_TAG);
 

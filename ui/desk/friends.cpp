@@ -20,6 +20,7 @@ using namespace styles;
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <QScrollBar>
+#include "ui/auth/user_data.h"
 
 #include <QJsonArray>
 #include <QRegularExpression>
@@ -28,6 +29,11 @@ using namespace styles;
 using namespace screens;
 
 Friends::Friends() {
+
+
+    std::string IDstd = GetId();
+
+    ID_QSTRING = QString::fromUtf8(IDstd.c_str());
 
     mainVLayout = new QVBoxLayout;
     QVBoxLayout *inputContainer = new QVBoxLayout;
@@ -225,7 +231,7 @@ void Friends::onHttpResult(QNetworkReply *reply) {
         QJsonDocument doc = QJsonDocument::fromJson(resp);
         QJsonObject obj;
 
-        std::string str = resp.toStdString();
+        std::string strfriends = resp.toStdString();
 
 
 
@@ -233,7 +239,7 @@ void Friends::onHttpResult(QNetworkReply *reply) {
 
 
 
-        nlohmann::json j = nlohmann::json::parse(str);
+        nlohmann::json j = nlohmann::json::parse(strfriends);
 
 
 
@@ -249,16 +255,7 @@ void Friends::onHttpResult(QNetworkReply *reply) {
 
             } else {
 
-                nlohmann::json::iterator it = j.begin();
-                std::cout << it.key() << std::endl;
 
-                std::string key = it.key();
-
-                nlohmann::json value = j[key];
-
-                std::cout << value << std::endl;
-
-                std::set<std::string> s_friends;
 
                 for (auto& element : j["get_contacts"]) {
 
@@ -519,7 +516,7 @@ void Friends::loadFriends() {
 
    // nlohmann::json aaa = nlohmann::json::parse(loadFriendsJson);
 
-    userIDJson.insert("user_id", "1");
+    userIDJson.insert("user_id", ID_QSTRING);
     loadFriendsJson.insert("get_contacts", userIDJson);
 
         qDebug() << "create request" << endl;
@@ -554,7 +551,7 @@ void Friends::addFriendButtonPressed() {
 
     QJsonObject addFriendJson;
     QJsonObject bodyJson;
-    bodyJson.insert("user_id", "1");
+    bodyJson.insert("user_id", ID_QSTRING);
 
     QJsonArray arrayFriends;
 
@@ -622,7 +619,7 @@ void Friends::deleteFriendPressed(){
 
     QJsonObject addFriendJson;
     QJsonObject bodyJson;
-    bodyJson.insert("user_id", "1");
+    bodyJson.insert("user_id", ID_QSTRING);
 
     QJsonArray arrayFriends;
 

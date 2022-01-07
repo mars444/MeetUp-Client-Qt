@@ -11,6 +11,8 @@
 #include <QJsonDocument>
 #include "nlohmann/json.hpp"
 
+#include "ui/auth/user_data.h"
+
 #include <QJsonArray>
 #include <QMessageBox>
 #include <QNetworkReply>
@@ -26,6 +28,14 @@ using namespace styles;
 using namespace screens;
 
 Shedule::Shedule() {
+
+    std::string IDstd = GetId();
+
+    ID_QSTRING = QString::fromUtf8(IDstd.c_str());
+
+
+
+
 
 
     mainHLayout = new QHBoxLayout;
@@ -230,8 +240,8 @@ Shedule::Shedule() {
     this->setObjectName("fragment");
 
 
-    networkManager = new QNetworkAccessManager();
-    connect(networkManager, &QNetworkAccessManager::finished, this, &Shedule::onHttpResult);
+    networkManagerGetEvents = new QNetworkAccessManager();
+    connect(networkManagerGetEvents, &QNetworkAccessManager::finished, this, &Shedule::onHttpResultGetEvents);
 
     networkManagerSendShedule = new QNetworkAccessManager();
     connect(networkManagerSendShedule, &QNetworkAccessManager::finished, this, &Shedule::onHttpResultSendShedule);
@@ -265,7 +275,7 @@ Shedule::~Shedule() {
     delete date7Button;
     delete loading;
     delete loadingBox;
-    delete networkManager;
+    delete networkManagerGetEvents;
     delete networkManageraddEvent;
     delete networkManagerDeleteEvent;
     delete networkManagerSendShedule;
@@ -457,7 +467,7 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
     task_container->addWidget(deleteTaskButton);
     task_container->setContentsMargins(125,0,0,0);
 
-    inputContainer->insertLayout(3,task_container);
+    inputContainer->addLayout(task_container);
 
     deleteTaskButtonToLayoutMap.insert(deleteTaskButton,task_container);
 
@@ -465,12 +475,12 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
     QJsonObject addEventJson;
     QJsonObject bodyJson;
-    bodyJson.insert("user_id", "1");
+    bodyJson.insert("user_id", ID_QSTRING);
     bodyJson.insert("event_name", cardTitleEdit->text());
     bodyJson.insert("event_date", dateToHTTP);
     bodyJson.insert("time_begin", time_begin_string);
     bodyJson.insert("time_end", time_end_string);
-    bodyJson.insert("description", "q");
+    bodyJson.insert("description", cardTitleEdit->text());
 
 
     QJsonArray eventArray;
@@ -1176,16 +1186,20 @@ void Shedule::onHttpResultSendShedule(QNetworkReply *reply){
 
 void Shedule::loadSheduleFromDate() {
 
-
+     qDebug() << "this id.........." << ID_QSTRING;
 
     QDate date = QDate::currentDate();
     QJsonObject loadSheduleJson;
     QJsonObject currentDate;
+
     currentDate.insert("event_date", date.toString("yyyy-MM-dd"));
+    currentDate.insert("user_id", ID_QSTRING);
 
-    currentDate.insert("user_id", "1");
+    QJsonArray data;
 
-    loadSheduleJson.insert("get_events", currentDate);
+    data.push_back(currentDate);
+
+    loadSheduleJson.insert("get_events", data);
 
         qDebug() << "create request" << endl;
 
@@ -1194,10 +1208,11 @@ void Shedule::loadSheduleFromDate() {
         QNetworkRequest request(QUrl(SERVER_URL + ""));
 
         request.setRawHeader("JSON_DATA", QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact));
+
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QStringLiteral("application/json;charset=utf-8"));
         qDebug() << "request data"<< QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact) << endl;
-        networkManager->post(
+        networkManagerGetEvents->post(
             request,
             QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact)
         );
@@ -1205,7 +1220,7 @@ void Shedule::loadSheduleFromDate() {
     }
 
 
-void Shedule::onHttpResult(QNetworkReply *reply) {
+void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
 
 
     qDebug() << "http finished" << endl;
@@ -1221,11 +1236,11 @@ void Shedule::onHttpResult(QNetworkReply *reply) {
         std::cout << "str  " + str << std::endl;
 //        "{\"userID\":\"213564544\",\"Friends\":[\"Misha1991\", \"Igor\",  \"Alex\",  \"qwe\", \"piotr\"]}";
 
-        std::string parser_str = "{\"get_events\":[{\"description\":\"breakfast\","
+        //std::string parser_str = "{\"get_events\":[{\"description\":\"breakfast\","
                                  " \"time_begin\":\"10:00\",""\"time_end\":\"10:45\"}, {\"description\":\"lansh\", \"time_begin\":"
                                           "\"19:00\", \"time_end\":\"20:00\"}]}";
 
-        nlohmann::json j = nlohmann::json::parse(parser_str);
+        nlohmann::json j = nlohmann::json::parse(str);
 
             nlohmann::json::iterator it = j.begin();
 
@@ -1236,14 +1251,14 @@ void Shedule::onHttpResult(QNetworkReply *reply) {
 
                 std::string time_end_str;
                  std::string time_begin_str;
-                  std::string description;
+                  std::string event_name;
 
 
-                if(element.contains("description"))
+                if(element.contains("event_name"))
                 {
-                    description = element["description"].get<std::string>();
+                    event_name = element["event_name"].get<std::string>();
 
-                    std::cout << description << std::endl;
+                    std::cout << event_name << std::endl;
                 }
 
 
@@ -1259,6 +1274,7 @@ void Shedule::onHttpResult(QNetworkReply *reply) {
 
                      std::cout << time_end_str << std::endl;
                 }
+
 
 
                 timeLabelTask = new QLabel;
@@ -1279,7 +1295,7 @@ void Shedule::onHttpResult(QNetworkReply *reply) {
                 timeLabelTask->setText(QString("begin %1 \n end: %2.").arg(time_begin_string, time_end_string));
 
 
-                QString titleEvent = QString::fromUtf8(description.c_str());
+                QString titleEvent = QString::fromUtf8(event_name.c_str());
                 titleList.append(titleEvent);
                 titleList.append(time_begin_string);
                 titleList.append(time_end_string);
@@ -1304,7 +1320,8 @@ void Shedule::onHttpResult(QNetworkReply *reply) {
                 task_container->addWidget(deleteTaskButton);
                 task_container->setContentsMargins(125,0,0,0);
 
-                inputContainer->insertLayout(3,task_container);
+                //inputContainer->insertLayout(3,task_container);
+                inputContainer->addLayout(task_container);
 
                 deleteTaskButtonToLayoutMap.insert(deleteTaskButton,task_container);
 
@@ -1312,19 +1329,21 @@ void Shedule::onHttpResult(QNetworkReply *reply) {
 
         } else {
 
-        qDebug() << reply->errorString();
 
-        qDebug() << "Server answer: " +  reply->readAll() << endl;
-
-        qDebug () << reply -> error ();
 
 
 }
 
+    qDebug() << reply->errorString();
+
+    qDebug() << "Server answer: " +  reply->readAll() << endl;
+
+    qDebug () << reply -> error ();
+
 
     reply->deleteLater();
 
-    networkManager->clearAccessCache();
+    networkManagerGetEvents->clearAccessCache();
 
        }
 

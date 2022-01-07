@@ -21,6 +21,7 @@ using namespace styles;
 #include <QScrollArea>
 #include <QScrollBar>
 #include <iostream>
+#include <QMovie>
 
 
 using namespace screens;
@@ -38,7 +39,7 @@ MainFragment::MainFragment() {
     QPushButton *mySheduleButton = new QPushButton("Мое расписание");
     QPushButton *myFriendsButton = new QPushButton("Мои друзья");
     QPushButton *myGroupsButton = new QPushButton("Мои группы");
-    QPushButton *mySettingsButton = new QPushButton("Настройки");
+    QPushButton *mySettingsButton = new QPushButton("Профиль");
 
     // QPushButton *mySettingsButton1 = new QPushButton("qwrqwrewrwer");
 
@@ -48,7 +49,7 @@ MainFragment::MainFragment() {
 
     userContainer = new QVBoxLayout;
     QLabel *profileImageLabel = new QLabel("");
-    QPixmap profileImage(":/resc/resc/user.png");
+    QPixmap profileImage(":/resc/resc/user2.png");
     profileImageLabel->setPixmap(profileImage);
 
 
@@ -62,7 +63,13 @@ MainFragment::MainFragment() {
 //    std::cout << user_data::userNameData->toStdString() << std::endl;
 
 
-    userName = new QLabel("mars444");
+
+    std::string nick = GetNickname();
+
+    QString nickQ = QString::fromUtf8(nick.c_str());
+
+
+    userName = new QLabel(nickQ);
 
     QLabel *mainTitle = new QLabel("Лента новостей:");
     mainTitle->setAlignment(Qt::AlignCenter);
@@ -81,6 +88,12 @@ MainFragment::MainFragment() {
     loading = new WaitingSpinnerWidget(scrolContainer, true, false);
     loading->setColor(QT_COLOR_PRIMARY);
 
+
+//    QMovie *movie = new QMovie( ":/resc/resc/loader3.gif" );
+//    Qlabel
+//    container->setMovie(movie); // label имеет тип QLabel*
+//    movie->start();
+
     QFrame *loadingExitContainer = new QFrame;
     loadingExitContainer->setMinimumHeight(200);
     loadingExit = new WaitingSpinnerWidget(loadingExitContainer, true, false);
@@ -88,7 +101,7 @@ MainFragment::MainFragment() {
 
     scrolContainer->setObjectName("container");
     scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
-    deskScrollArea->setStyleSheet(SCROL_BAR);
+    deskScrollArea->setStyleSheet(GLOBAL_BACK_WHITE);
     QHBoxLayout *deskContainer = new QHBoxLayout;
     start = new QVBoxLayout;
     start->setAlignment(Qt::AlignTop);
@@ -166,7 +179,7 @@ MainFragment::MainFragment() {
     mainHLayout->setAlignment(Qt::AlignHCenter);
 
     this->setLayout(mainHLayout);
-    this->setStyleSheet(BACK_WHITE);
+    this->setStyleSheet(GLOBAL_BACK_WHITE);
     this->setObjectName("fragment");
 
     loading->start();
@@ -193,18 +206,18 @@ void MainFragment::onResume() {
 }
 
 void MainFragment::loadUserName() {
-    QJsonObject getUserNameJson;
-    getUserNameJson.insert("getUserName", "");
+//    QJsonObject getUserNameJson;
+//    getUserNameJson.insert("getUserName", "");
 
-    QNetworkRequest request(QUrl(SERVER_URL + ""));
-    request.setHeader(QNetworkRequest::ContentTypeHeader,
-                      QStringLiteral("application/json;charset=utf-8"));
-     qDebug() << "request data"<< QJsonDocument(getUserNameJson).toJson(QJsonDocument::Compact) << endl;
+//    QNetworkRequest request(QUrl(SERVER_URL + ""));
+//    request.setHeader(QNetworkRequest::ContentTypeHeader,
+//                      QStringLiteral("application/json;charset=utf-8"));
+//     qDebug() << "request data"<< QJsonDocument(getUserNameJson).toJson(QJsonDocument::Compact) << endl;
 
-    networkManager->post(
-        request,
-      QJsonDocument(getUserNameJson).toJson(QJsonDocument::Compact)
-    );
+//    networkManager->post(
+//        request,
+//      QJsonDocument(getUserNameJson).toJson(QJsonDocument::Compact)
+//    );
 }
 
 void MainFragment::onExit() {

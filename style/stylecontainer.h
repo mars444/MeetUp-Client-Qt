@@ -27,6 +27,15 @@ namespace styles{
             "}";
 
 
+
+    static const QString GROUP_IMAGE  =
+            "QLabel {"
+            "   margin-right: 50px;"
+
+            "   margin-bottom: 50px;"
+            "}";
+
+
     static const QString TASK_PADDING  =
             "QLabel {"
             "   padding-right: 20px;"
@@ -48,12 +57,11 @@ namespace styles{
 
     static const QString MAIN_TITLE  =
             "QLabel {"
-            "   text-align: center;"
-            "   margin: o auto;"
+
+            "   margin-left: 20px;"
             "   font-size: 30px;"
             "   color: "+COLOR_PRIMARY+";"
-            "   text-align: center;"
-            "   text-align: center;"
+
             "}";
 
 

@@ -152,6 +152,9 @@ void RegistrationFragment::onRegPressed() {
          QMessageBox::warning(this,"Регистрация","Пароли не совпадают!");
     } else {
 
+        std::string NizkName = loginEdit->text().toStdString();
+        WriteNickname(NizkName);
+
         QJsonObject loginPasswordValues;
         QJsonObject loginPasswordValues1;
         loginPasswordValues1.insert("nickname", loginEdit->text());
@@ -213,6 +216,9 @@ void RegistrationFragment::onRegResult(QNetworkReply *reply) {
               std::string IDValue = j["registration"]["user_id"].get<std::string>();
 
               std::cout << "ID: " << IDValue << std::endl;
+
+
+              WriteId(IDValue);
               newRootScreen(MAIN_TAG);
 
           } else {

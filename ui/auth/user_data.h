@@ -1,9 +1,18 @@
 #ifndef USER_DATA_H
 #define USER_DATA_H
 
-#include "models/basemodel.h"
-#include <QString>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iostream>
 
-extern  QString userId;
+bool WriteGroupTitle        (std::string&);
+bool WriteId                (std::string&);
+bool WriteNickname          (std::string&);
+
+std::string GetGroupTitle   ();
+std::string GetId           ();
+std::string GetNickname     ();
+
 
 #endif // USER_DATA_H
