@@ -44,6 +44,7 @@
         <file>resc/settings_50px.gif</file>
         <file>resc/arrow_up_white.svg</file>
         <file>resc/upload_photo.svg</file>
+        <file>resc/check.svg</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

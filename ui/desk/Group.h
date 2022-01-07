@@ -31,6 +31,8 @@ private:
 
     QString ID_QSTRING;
 
+    QHBoxLayout *deleteLayout;
+
     QString GROUP_TITLE_QSTRING;
 
     QVBoxLayout *inputContainerGroups;
@@ -46,6 +48,11 @@ private:
          QHBoxLayout *friendContainer2;
 
     QPushButton *addFriendButton;
+
+    QPushButton *groupDeleteYes;
+
+    QPushButton *groupDeleteNo;
+
     QLineEdit *addFriendEdit;
 
         QVBoxLayout *inputContainerFriends;
@@ -73,7 +80,12 @@ private:
     QPushButton *day6Button;
     QPushButton *day7Button;
 
+    QFrame *deleteFrame;
+
     QLabel *GrouptitleLabel;
+
+
+   QLabel *deleteLabel;
 
 
 
@@ -103,7 +115,8 @@ public slots:
 
     void sendGroupNameSlot(const QString &text);
 
-
+    void groupDeleteYesPressed();
+    void groupDeleteNoPressed();
 
     void loadGroup();
 

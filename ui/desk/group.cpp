@@ -79,7 +79,6 @@ Group::Group() {
 
     groupDelete = new QPushButton(tr("Delete group  "));
 
-
     QPixmap pixmapgroupDelete(":/resc/resc/cross.svg");
     QIcon ButtonIcongroupDelete(pixmapgroupDelete);
 
@@ -87,6 +86,31 @@ Group::Group() {
     groupDelete-> setLayoutDirection ( Qt :: RightToLeft );
     groupDelete-> setStyleSheet("text-align: right");
     groupDelete->setIconSize(QSize(20,20));
+    groupDelete->setStyleSheet(BUTTON_PROFILE_RED);
+    groupDelete->setMaximumWidth(180);
+
+    deleteLabel = new QLabel(tr("You are sure?"));
+    groupDeleteYes = new QSvgButton(":/resc/resc/check.svg", QSize(30,30));
+    groupDeleteNo = new QSvgButton(":/resc/resc/cross.svg", QSize(30,30));
+
+
+
+
+
+
+    deleteLabel->setAlignment(Qt::AlignCenter);
+
+
+    groupDeleteYes->setStyleSheet( "   margin:30px;"
+                                   "   font-size: 18px;");
+
+    groupDeleteNo->setStyleSheet("border-radius:15px;");
+
+    //groupDeleteNo->setContentsMargins(30,0,0,0);
+
+    connect(groupDeleteYes, &QPushButton::clicked, this, &Group::groupDeleteYesPressed);
+    connect(groupDeleteNo, &QPushButton::clicked, this, &Group::groupDeleteNoPressed);
+
 
       connect(groupList, &QPushButton::clicked, this, &Group::groupListPressed);
 
@@ -95,10 +119,22 @@ Group::Group() {
       connect(groupDelete, &QPushButton::clicked, this, &Group::groupDeletePressed);
 
 
-    groupDelete->setStyleSheet(BUTTON_PROFILE_RED);
 
-    groupDelete->setMaximumWidth(180);
 
+
+
+
+    deleteLayout = new QHBoxLayout;
+
+    deleteLabel->setStyleSheet(DELETE_GROUP_FRAME);
+
+    deleteLayout->addWidget(deleteLabel);
+    deleteLayout->addWidget(groupDeleteYes);
+    deleteLayout->addWidget(groupDeleteNo);
+
+    deleteLabel->hide();
+    groupDeleteYes->hide();
+    groupDeleteNo->hide();
 
 
     groupMeets->setStyleSheet(BUTTON_SOLID);
@@ -110,6 +146,12 @@ Group::Group() {
      groupButtonsContainer->addWidget(groupList);
 
      groupButtonsContainer->addWidget(groupDelete);
+
+     groupButtonsContainer->addLayout(deleteLayout);
+
+
+
+
 
       QHBoxLayout *daysButtonsContainer = new QHBoxLayout;
       QDate date =   QDate::currentDate();
@@ -663,7 +705,7 @@ void Group::sendGroupNameSlot(const QString &text)
 }
 
 
-void Group::groupDeletePressed(){
+void Group::groupDeleteYesPressed(){
 
     QJsonObject deleteGroupJson;
     QJsonObject bodyJson;
@@ -689,6 +731,29 @@ void Group::groupDeletePressed(){
 
 
 }
+void Group::groupDeletePressed(){
+
+    groupDelete->hide();
+    deleteLabel->show();
+    groupDeleteYes->show();
+    groupDeleteNo->show();
+
+
+
+}
+
+void Group::groupDeleteNoPressed(){
+
+
+    groupDelete->show();
+    deleteLabel->hide();
+    groupDeleteYes->hide();
+    groupDeleteNo->hide();
+
+
+
+}
+
 
 void Group::onHttpResultDeleteGroup(QNetworkReply *reply){
 

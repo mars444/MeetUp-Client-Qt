@@ -169,8 +169,25 @@ namespace styles{
             "   font-size: 18px;"
             "   text-align: center;"
             "}"
+
             "QFrame {"
             "background: transparent;"
+            "}";
+
+
+
+    static const QString DELETE_GROUP_FRAME =
+            "QLabel {"
+            "color: "+COLOR_BACKGROUND+";"
+            "background-color:"+COLOR_TEXT_RED+";"
+            "border:none;"
+            "padding:12px;"
+            "border-radius:22px;"
+            "font-size:16px;"
+            "}"
+
+            "QFrame {"
+            "border-radius:22px;"
             "}";
 
 
