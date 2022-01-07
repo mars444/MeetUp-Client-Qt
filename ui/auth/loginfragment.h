@@ -12,6 +12,8 @@
 
 
 
+
+
 class LoginFragment: public BaseFragment {
     Q_OBJECT
 private:
@@ -29,6 +31,7 @@ private:
 public:
     LoginFragment();
     ~LoginFragment();
+
 public slots:
     void onBackPressed();
     void onLoginPressed();

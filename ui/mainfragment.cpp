@@ -2,8 +2,6 @@
 
 #include "auth/user_data.h"
 
-using namespace userData;
-
 #include "ui/auth/loginfragment.h"
 
 #include "style/stylecontainer.h"
@@ -22,6 +20,7 @@ using namespace styles;
 #include <QJsonArray>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <iostream>
 
 
 using namespace screens;
@@ -52,11 +51,18 @@ MainFragment::MainFragment() {
     QPixmap profileImage(":/resc/resc/user.png");
     profileImageLabel->setPixmap(profileImage);
 
+
     QHBoxLayout *fuckContainer = new QHBoxLayout;
 
 //    QString strq = QString::fromUtf8(userNameData.c_str());  // преобразование std string в QString
-    userName = new QLabel(userNameData);
 
+
+
+
+//    std::cout << user_data::userNameData->toStdString() << std::endl;
+
+
+    userName = new QLabel("mars444");
 
     QLabel *mainTitle = new QLabel("Лента новостей:");
     mainTitle->setAlignment(Qt::AlignCenter);
@@ -133,8 +139,8 @@ MainFragment::MainFragment() {
 
 
 //    QLabel *centerContainer = new QLabel("");
-//    //QPixmap profileImage(":/resc/resc/loader.gif");
-//    //centerContainer->setPixmap(profileImage);
+//    QPixmap profileImage(":/resc/resc/loader.gif");
+//    centerContainer->setPixmap(profileImage);
 
 
 //    QMovie *movie = new QMovie( ":/resc/resc/loader3.gif" );
@@ -194,7 +200,7 @@ void MainFragment::loadUserName() {
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       QStringLiteral("application/json;charset=utf-8"));
      qDebug() << "request data"<< QJsonDocument(getUserNameJson).toJson(QJsonDocument::Compact) << endl;
-    request.setRawHeader("Authorization", ("Bearer " + token).toLocal8Bit());
+
     networkManager->post(
         request,
       QJsonDocument(getUserNameJson).toJson(QJsonDocument::Compact)
@@ -208,7 +214,7 @@ void MainFragment::onExit() {
     QNetworkRequest request(QUrl(SERVER_URL + "exit"));
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       QStringLiteral("application/json;charset=utf-8"));
-    request.setRawHeader("Authorization", ("Bearer " + token).toLocal8Bit());
+
     QNetworkReply* reply = networkManager->post(
         request,
         ""

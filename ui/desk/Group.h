@@ -11,6 +11,7 @@
 
 #include <common/base/basefragment.h>
 
+ static QString *nameGroupString;
 
 
 #include <ui/view/waitingspinnerwidget.h>
@@ -46,15 +47,31 @@ private:
 
         QVBoxLayout *inputContainerFriends;
 
-     QLabel *GrouptitleLabel;
+
 
      QStackedWidget *stack;
 
-    QVBoxLayout *mainVLayout;
+     QVBoxLayout *mainVLayout;
 
-        QPushButton *groupMeets;
+     QPushButton *groupMeets;
 
-            QPushButton *groupList;
+     QPushButton *groupList;
+
+     QPushButton *groupDelete;
+
+
+
+
+    QPushButton *day1Button;
+    QPushButton *day2Button;
+    QPushButton *day3Button;
+    QPushButton *day4Button;
+    QPushButton *day5Button;
+    QPushButton *day6Button;
+    QPushButton *day7Button;
+
+    QLabel *GrouptitleLabel;
+
 
 
 
@@ -62,9 +79,10 @@ private:
     QLineEdit *titleEdit;
     QPlainTextEdit *descriptionEdit;
     QPushButton *createButton;
-    QNetworkAccessManager *networkManagerGetList;
+    QNetworkAccessManager *networkManagerloadFriends;
     QNetworkAccessManager *networkManagerGetMeets;
     QNetworkAccessManager *networkManagerDeleteFriendFromGroup;
+    QNetworkAccessManager *networkManagerDeleteGroup;
 
 
 public:
@@ -74,10 +92,19 @@ public:
 
 
 
+
+
+
+
 public slots:
+
+    void sendGroupNameSlot(const QString &text);
+
 
 
     void loadGroup();
+
+    void loadFriends();
 
     void onBackPressed();
 
@@ -85,7 +112,11 @@ public slots:
 
      void groupMeetsPressed();
 
+     void groupDeletePressed();
+
      void deleteFriendPressed();
+
+     //void setNameGroup();
 
 
       void onHttpResultnetworkManagerGetList(QNetworkReply *reply);
@@ -94,8 +125,14 @@ public slots:
 
        void onHttpResultnetworkManagerDeleteFriendFromGroup(QNetworkReply *reply);
 
+       void getIventsDatePressed();
+
+
     void getMeets();
     void onHttpResult(QNetworkReply *reply);
+
+
+    void onHttpResultDeleteGroup(QNetworkReply *reply);
 
 
 

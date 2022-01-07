@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include "nlohmann/json.hpp"
 
 #include <QJsonArray>
 #include <QMessageBox>
@@ -29,22 +30,25 @@ Shedule::Shedule() {
 
     mainHLayout = new QHBoxLayout;
     inputContainer = new QVBoxLayout;
+    inputContainer->setAlignment(Qt::AlignTop);
+    mainHLayout->setAlignment(Qt::AlignTop);
 
     QHBoxLayout *titleContainer = new QHBoxLayout;
+    titleContainer->setAlignment(Qt::AlignTop);
     QSvgButton *backButton = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(24,24));
     QLabel *titleLabel = new QLabel("Мое расписание");
 
 
     calendar = new QCalendarWidget;
+ calendar->setMinimumDate(QDate::currentDate().addDays(-4));
 
-
-    calendar->setMinimumDate(QDate::currentDate());
-
-    calendar->setMinimumHeight(250);
+    calendar->setMinimumHeight(350);
 
 
 
     calendar->setGridVisible(0);
+
+    calendar->setMaximumHeight(350);
 
 
 
@@ -53,7 +57,9 @@ Shedule::Shedule() {
     QHBoxLayout *buttoContainer = new QHBoxLayout;
     QHBoxLayout *buttonBoxContainer = new QHBoxLayout;
     createButton_1 = new QPushButton("Отправить расписание");
-    createButton_2= new QPushButton("Отправить расписание");
+    createButton_2= new QPushButton("Сохранить расписание");
+    createButton_2->setDisabled(true);
+    createButton_2->setStyleSheet(BUTTON_DISABLED);
 
     QFrame *loadingContaiter = new QFrame;
     loading = new WaitingSpinnerWidget(loadingContaiter, true, false);
@@ -75,7 +81,7 @@ Shedule::Shedule() {
     scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
     deskScrollArea->setStyleSheet(SCROL_BAR);
     QHBoxLayout *content = new QHBoxLayout;
-    content->setAlignment(Qt::AlignHCenter);
+    content->setAlignment(Qt::AlignTop);
     scrolContainer->setLayout(content);
     deskScrollArea->setWidget(scrolContainer);
     deskScrollArea->setWidgetResizable(true);
@@ -133,100 +139,6 @@ Shedule::Shedule() {
     connect(calendar, &QCalendarWidget::clicked, this, &Shedule::calendar_btn);
 
 
-    //стак для выбора контента
-    stack = new QStackedWidget;
-
-    QFrame *day1Widjet = new QFrame;
-    QVBoxLayout *day1Layout = new QVBoxLayout;
-
-    QFrame *day2Widget = new QFrame;
-    QVBoxLayout *day2Layout = new QVBoxLayout;
-
-    QFrame *day3Widget = new QFrame;
-    QVBoxLayout *day3Layout = new QVBoxLayout;
-
-    QFrame *day4Widget = new QFrame;
-    QVBoxLayout *day4Layout = new QVBoxLayout;
-
-    QFrame *day5Widget = new QFrame;
-    QVBoxLayout *day5Layout = new QVBoxLayout;
-
-    QFrame *day6Widget = new QFrame;
-    QVBoxLayout *day6Layout = new QVBoxLayout;
-
-    QFrame *day7Widget = new QFrame;
-    QVBoxLayout *day7Layout = new QVBoxLayout;
-
-
-    day1Widjet->setLayout(day1Layout);
-    day1Layout->setAlignment(Qt::AlignTop);
-
-    day2Widget->setLayout(day2Layout);
-    day2Layout->setAlignment(Qt::AlignTop);
-
-    day3Widget->setLayout(day3Layout);
-    day3Layout->setAlignment(Qt::AlignTop);
-
-    day4Widget->setLayout(day4Layout);
-    day4Layout->setAlignment(Qt::AlignTop);
-
-    day5Widget->setLayout(day5Layout);
-    day5Layout->setAlignment(Qt::AlignTop);
-
-    day6Widget->setLayout(day6Layout);
-    day6Layout->setAlignment(Qt::AlignTop);
-
-    day7Widget->setLayout(day7Layout);
-    day7Layout->setAlignment(Qt::AlignTop);
-
-    stack->addWidget(day1Widjet);
-    stack->addWidget(day2Widget);
-    stack->addWidget(day3Widget);
-    stack->addWidget(day4Widget);
-    stack->addWidget(day5Widget);
-    stack->addWidget(day6Widget);
-    stack->addWidget(day7Widget);
-
-    stack->setCurrentIndex(0);
-
-    stack->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-
-    // стак для дел
-    cardTitleEdit = new QLineEdit;
-    connect(cardTitleEdit, &QLineEdit::textChanged, this, &Shedule::checkBoxTitle);
-
-    QHBoxLayout *titleEditContainer = new QHBoxLayout;
-
-    QHBoxLayout *form = new QHBoxLayout;
-    left = new QTimeEdit;
-    right = new QTimeEdit;
-
-    left->setStyleSheet(Qtimestyle);
-    right->setStyleSheet(Qtimestyle);
-
-
-    addBoxTitleButton = new QSvgButton(":/resc/resc/done_outline.svg", QSize(24,24));
-    titleWidgetList = new QVBoxLayout;
-    titleWidgetList->setAlignment(Qt::AlignTop);
-    connect(addBoxTitleButton, &QSvgButton::clicked, this, &Shedule::onBoxTitleAdd);
-    addBoxTitleButton->hide();
-    cardTitleEdit->setStyleSheet(EDIT_TEXT);
-    cardTitleEdit->setPlaceholderText("Дело...");
-
-
-    form->addWidget(left);
-    form->addWidget(cardTitleEdit);
-    form->addWidget(right);
-
-    titleEditContainer->addLayout(form);
-    titleEditContainer->addWidget(addBoxTitleButton);
-
-    day1Layout->setContentsMargins(0,0,0,0);
-    day1Layout->addLayout(titleWidgetList);
-    day1Layout->addLayout(titleEditContainer);
-    day1Layout->addLayout(buttonBoxContainer);
-
     titleLabel->setStyleSheet(TITLE_LABLE);
     connect(backButton, &QSvgButton::clicked, this, &Shedule::onBackPressed);
     titleContainer->addWidget(backButton);
@@ -242,9 +154,9 @@ Shedule::Shedule() {
     createButton_2->setStyleSheet(BUTTON_SOLID);
     createButton_2->setMaximumWidth(335);
     createButton_2->setMinimumWidth(335);
-    connect(createButton_2, &QPushButton::clicked, this, &Shedule::onCreatePressed);
+    connect(createButton_2, &QPushButton::clicked, this, &Shedule::sendShedulePressed);
     buttonBoxContainer->addWidget(loadingBoxContaiter);
-    buttonBoxContainer->addWidget(createButton_2);
+    //buttonBoxContainer->addWidget(createButton_2);
     buttonBoxContainer->setAlignment(Qt::AlignRight);
 
 
@@ -254,11 +166,60 @@ Shedule::Shedule() {
     inputContainer->addLayout(titleContainer);
     inputContainer->addWidget(calendar);
     inputContainer->addLayout(selectorContainer);
-    inputContainer->addWidget(stack);
+    inputContainer->addLayout(buttonBoxContainer);
 
+    cardTitleEdit = new QLineEdit;
+
+
+    titleEditContainer = new QHBoxLayout;
+
+    QHBoxLayout *form = new QHBoxLayout;
+    left = new QTimeEdit;
+    right = new QTimeEdit;
+
+    left->setStyleSheet(Qtimestyle);
+    right->setStyleSheet(Qtimestyle);
+
+
+
+
+    addBoxTitleButton = new QSvgButton(":/resc/resc/done_outline.svg", QSize(24,24));
+
+    connect(addBoxTitleButton, &QSvgButton::clicked, this, &Shedule::onBoxTitleAdd);
+
+
+    addBoxTitleButton->hide();
+    cardTitleEdit->setStyleSheet(EDIT_TEXT);
+    cardTitleEdit->setPlaceholderText("Дело...");
+
+    connect(cardTitleEdit, &QLineEdit::textChanged, this, &Shedule::checkBoxTitle);
+
+
+    form->addWidget(left);
+    form->addWidget(cardTitleEdit);
+
+    form->addWidget(right);
+
+
+    titleEditContainer->addLayout(form);
+    titleEditContainer->addWidget(addBoxTitleButton);
+
+//        //стак для выбора контента
+
+
+//        QVBoxLayout *day1Layout = new QVBoxLayout;
+
+//        day1Layout->setAlignment(Qt::AlignTop);
+
+
+
+    inputContainer->insertLayout(3,titleEditContainer);
+
+
+    content->setAlignment(Qt::AlignTop);
     content->addLayout(inputContainer);
 
-    mainHLayout->setAlignment(Qt::AlignHCenter);
+    mainHLayout->setAlignment(Qt::AlignTop);
 
     mainHLayout->addWidget(deskScrollArea);
 
@@ -268,15 +229,26 @@ Shedule::Shedule() {
     this->setStyleSheet(BACK_WHITE);
     this->setObjectName("fragment");
 
-    checkData();
 
     networkManager = new QNetworkAccessManager();
     connect(networkManager, &QNetworkAccessManager::finished, this, &Shedule::onHttpResult);
 
+    networkManagerSendShedule = new QNetworkAccessManager();
+    connect(networkManagerSendShedule, &QNetworkAccessManager::finished, this, &Shedule::onHttpResultSendShedule);
+
+    networkManageraddEvent = new QNetworkAccessManager();
+    connect(networkManageraddEvent, &QNetworkAccessManager::finished, this, &Shedule::onHttpResultAddEvent);
+
+    networkManagerDeleteEvent = new QNetworkAccessManager();
+    connect(networkManagerDeleteEvent, &QNetworkAccessManager::finished, this, &Shedule::onHttpResultDeleteEvent);
 
     setButtonDate();
 
+
     loadSheduleFromDate();
+    checkData();
+
+   // qDebug() << "TTTILE EDIT COUNNTT  "<<  this->titleEditContainer->count() << endl;
 
 }
 
@@ -293,22 +265,27 @@ Shedule::~Shedule() {
     delete date7Button;
     delete loading;
     delete loadingBox;
-    //delete networkManager;
+    delete networkManager;
+    delete networkManageraddEvent;
+    delete networkManagerDeleteEvent;
+    delete networkManagerSendShedule;
 }
 
 void Shedule::checkData() {
 
     if (titleList.size() != 0) {
           createButton_2->setStyleSheet(BUTTON_SOLID);
+          createButton_2->setDisabled(false);
+
       } else {
           createButton_2->setStyleSheet(BUTTON_DISABLED);
+           createButton_2->setDisabled(true);
       }
 
 }
 
 void Shedule::setData(BaseModel *model) {
-    DeskModel *desk = dynamic_cast<DeskModel*>(model);
-    this->model = desk;
+
 }
 
 void Shedule::onBackPressed() {
@@ -317,7 +294,6 @@ void Shedule::onBackPressed() {
 
 void Shedule::onCreatePressed() {
     if (titleEdit->text().length() > 2) {
-        if (this->currentType == "checkbox" && titleList.size() == 0) return;
         createButton_1->setDisabled(true);
         loading->show();
         createButton_2->setStyleSheet(BUTTON_DISABLED);
@@ -331,10 +307,14 @@ void Shedule::onCreatePressed() {
 
 }
 
-void Shedule::onHttpResult(QNetworkReply *reply) {
+
+
+void Shedule::onHttpResultDeleteEvent(QNetworkReply *reply) {
 
     reply->deleteLater();
 }
+
+
 
 void Shedule::day_btn_1() {
     calendar->setSelectedDate(date1);
@@ -346,8 +326,6 @@ void Shedule::day_btn_1() {
     date6Button->setStyleSheet(BUTTON_DISABLED);
     date7Button->setStyleSheet(BUTTON_DISABLED);
 
-    stack->setCurrentIndex(0);
-    this->currentType = "checkbox";
 }
 
 void Shedule::day_btn_2() {
@@ -359,8 +337,7 @@ void Shedule::day_btn_2() {
     date5Button->setStyleSheet(BUTTON_DISABLED);
     date6Button->setStyleSheet(BUTTON_DISABLED);
     date7Button->setStyleSheet(BUTTON_DISABLED);
-    stack->setCurrentIndex(0);
-    this->currentType = "checkbox";
+
 }
 
 void Shedule::day_btn_3() {
@@ -372,8 +349,7 @@ void Shedule::day_btn_3() {
     date5Button->setStyleSheet(BUTTON_DISABLED);
     date6Button->setStyleSheet(BUTTON_DISABLED);
     date7Button->setStyleSheet(BUTTON_DISABLED);
-    stack->setCurrentIndex(0);
-    this->currentType = "checkbox";
+
 }
 
 void Shedule::day_btn_4() {
@@ -385,8 +361,7 @@ void Shedule::day_btn_4() {
     date5Button->setStyleSheet(BUTTON_DISABLED);
     date6Button->setStyleSheet(BUTTON_DISABLED);
     date7Button->setStyleSheet(BUTTON_DISABLED);
-    stack->setCurrentIndex(0);
-    this->currentType = "checkbox";
+
 }
 
 void Shedule::day_btn_5() {
@@ -398,8 +373,7 @@ void Shedule::day_btn_5() {
     date4Button->setStyleSheet(BUTTON_DISABLED);
     date6Button->setStyleSheet(BUTTON_DISABLED);
     date7Button->setStyleSheet(BUTTON_DISABLED);
-    stack->setCurrentIndex(0);
-    this->currentType = "checkbox";
+
 }
 
 void Shedule::day_btn_6() {
@@ -411,8 +385,7 @@ void Shedule::day_btn_6() {
     date4Button->setStyleSheet(BUTTON_DISABLED);
     date5Button->setStyleSheet(BUTTON_DISABLED);
     date7Button->setStyleSheet(BUTTON_DISABLED);
-    stack->setCurrentIndex(0);
-    this->currentType = "checkbox";
+
 }
 
 void Shedule::day_btn_7() {
@@ -426,8 +399,7 @@ void Shedule::day_btn_7() {
     date4Button->setStyleSheet(BUTTON_DISABLED);
     date5Button->setStyleSheet(BUTTON_DISABLED);
     date6Button->setStyleSheet(BUTTON_DISABLED);
-    stack->setCurrentIndex(0);
-    this->currentType = "checkbox";
+
 }
 
 void Shedule::checkBoxTitle() {
@@ -439,19 +411,17 @@ void Shedule::checkBoxTitle() {
 }
 
 
-void Shedule::onBoxTitleAdd() {
+void Shedule::onBoxTitleAdd() {  // добавление ивента
 
-    titleList.append(cardTitleEdit->text());
 
     timeLabelTask = new QLabel;
 
 
+    time_begin = left->time();
+    time_end = right->time();
 
-    QTime time_begin = left->time();
-    QTime time_end = right->time();
-
-    QString time_begin_string = time_begin.toString("hh:mm");
-    QString time_end_string = time_end.toString("hh:mm");
+    time_begin_string = time_begin.toString("hh:mm");
+    time_end_string = time_end.toString("hh:mm");
 
 
     deleteTaskButton = new QSvgButton(":/resc/resc/bin.svg", QSize(24,24));
@@ -460,10 +430,14 @@ void Shedule::onBoxTitleAdd() {
 
 
 
+
     timeLabelTask->setText(QString("begin %1 \n end: %2.").arg(time_begin_string, time_end_string));
 
-
     titleList.append(cardTitleEdit->text());
+    titleList.append(time_begin_string);
+    titleList.append(time_end_string);
+
+
     boxTitleTask = new QLabel(cardTitleEdit->text());
     boxTitleTask->setStyleSheet(TASK_PADDING);
 
@@ -475,32 +449,198 @@ void Shedule::onBoxTitleAdd() {
     task_container = new QHBoxLayout;
 
     //task_container->setAlignment(Qt::AlignCenter);
+
     task_container->addWidget(mainImageTask);
     task_container->addWidget(boxTitleTask);
     task_container->addWidget(timeLabelTask);
+
     task_container->addWidget(deleteTaskButton);
     task_container->setContentsMargins(125,0,0,0);
 
-    titleWidgetList->addLayout(task_container);
-    cardTitleEdit->setText("");
-    checkBoxTitle();
+    inputContainer->insertLayout(3,task_container);
+
+    deleteTaskButtonToLayoutMap.insert(deleteTaskButton,task_container);
+
     checkData();
+
+    QJsonObject addEventJson;
+    QJsonObject bodyJson;
+    bodyJson.insert("user_id", "1");
+    bodyJson.insert("event_name", cardTitleEdit->text());
+    bodyJson.insert("event_date", dateToHTTP);
+    bodyJson.insert("time_begin", time_begin_string);
+    bodyJson.insert("time_end", time_end_string);
+    bodyJson.insert("description", "q");
+
+
+    QJsonArray eventArray;
+
+    eventArray.push_back(bodyJson);
+
+
+
+    addEventJson.insert("add_event", eventArray);
+
+        qDebug() << "create request" << endl;
+
+
+
+        QNetworkRequest request(QUrl(SERVER_URL + ""));
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                          QStringLiteral("application/json;charset=utf-8"));
+
+        request.setRawHeader("JSON_DATA", QJsonDocument(addEventJson).toJson(QJsonDocument::Compact));
+        qDebug() << "request data"<< QJsonDocument(addEventJson).toJson(QJsonDocument::Compact) << endl;
+        networkManageraddEvent->post(
+            request,
+            QJsonDocument(addEventJson).toJson(QJsonDocument::Compact)
+        );
+        qDebug() << "request send" << endl;
+
+
+
+        cardTitleEdit->setText("");
+
+
+}
+
+
+
+void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
+
+    qDebug() << "http finished" << endl;
+    loading->stop();
+    checkData();
+    if(!reply->error()) {
+        QByteArray resp = reply->readAll();
+        qDebug() <<"ETO OTVET SERVERA ADD EVENT :  " + resp  << endl;
+        QJsonDocument doc = QJsonDocument::fromJson(resp);
+        QJsonObject obj;
+
+        std::string str = resp.toStdString();
+
+        std::cout << "str  " + str << std::endl;
+
+        nlohmann::json j = nlohmann::json::parse(str);
+
+        std::string add_event_result = j["add_event"].get<std::string>();
+
+        if(add_event_result == "OK") {
+
+
+            std::cout << "delete friebd: " << add_event_result << std::endl;
+
+}
+
+        } else {
+
+        qDebug() << reply->errorString();
+
+        qDebug() <<  reply->readAll() << endl;
+
+        qDebug () << reply -> error ();
+
+        QMessageBox::warning(this, "Ошибка",
+            "При подключениии произошла ошибка.\n");
+        // newRootScreen(MAIN_TAG);
+
+}
+    //newRootScreen(MAIN_TAG);
+    reply->deleteLater();
+
+
+     networkManageraddEvent->clearAccessCache();
+
+
 }
 
 void Shedule::deleteButton_pressed() {
 
+
+
+
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+
+    QHBoxLayout *layout = deleteTaskButtonToLayoutMap.take(button);
+
+//    QWidget *event_name = layout->takeAt(1)->widget();
+
+//    QLayout *times = layout->takeAt(2)->layout();
+
+//    QWidget *time_begin = times->takeAt(0)->widget();
+
+//    QWidget *time_end= times->takeAt(1)->widget();
+
+//    QLabel* event_nameLabel = dynamic_cast<QLabel*>(event_name);
+
+//    QLabel* time_begin_label = dynamic_cast<QLabel*>(time_begin);
+
+//    QLabel* time_end_label = dynamic_cast<QLabel*>(time_end);
+
+
+//    QString event_nameString = event_nameLabel->text();
+
+//    QString time_beginString = time_begin_label->text();
+
+//    QString time_endString = time_end_label->text();
+
+//    qDebug() <<  event_nameString  << endl;
+
+//    qDebug() <<  time_beginString  << endl;
+
+//    qDebug() <<  time_endString  << endl;
+
+
+
+//    QJsonObject deleteEventJson;
+//    QJsonObject bodyJson;
+//    bodyJson.insert("user_id", "1");
+//    bodyJson.insert("event_name", cardTitleEdit->text());
+//    bodyJson.insert("event_date", dateToHTTP);
+//    //bodyJson.insert("time_begin", tmpItem->time_begin_string);
+//    bodyJson.insert("time_end", time_end_string);
+//    bodyJson.insert("description", "q");
+
+
+//    QJsonArray eventArray;
+
+//    eventArray.push_back(bodyJson);
+
+//    deleteEventJson.insert("delete_event", eventArray);
+
+//        qDebug() << "create request" << endl;
+
+
+
+//        QNetworkRequest request(QUrl(SERVER_URL + ""));
+//        request.setHeader(QNetworkRequest::ContentTypeHeader,
+//                          QStringLiteral("application/json;charset=utf-8"));
+
+//        request.setRawHeader("JSON_DATA", QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact));
+//        qDebug() << "request data"<< QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact) << endl;
+//        networkManageraddEvent->post(
+//            request,
+//            QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact)
+//        );
+//        qDebug() << "request send" << endl;
+
+
+    while(QLayoutItem *tmpItem = layout->itemAt(0)) {
+        layout->removeItem(tmpItem);
+        layout->removeWidget(tmpItem->widget());
+        delete tmpItem->widget();
+        delete tmpItem;
+    }
+    layout->update();
+
+
+
     checkData();
 
-    delete this->mainImageTask;
-    delete this->deleteTaskButton;
-    delete this->boxTitleTask;
-    delete this->timeLabelTask;
-    delete this->task_container;
-    checkData();
 
-    titleWidgetList->update();
 
-    checkData();
+   // titleWidgetList->update();
+
 
 
 }
@@ -516,20 +656,65 @@ void Shedule::deleteButton_pressed() {
 void Shedule::calendar_btn(const QDate &date) {
 
 
+
+//        while(QLayoutItem *tmpItem = task_container->itemAt(0)) {
+//            this->task_container->removeItem(tmpItem);
+//            this->task_container->removeWidget(tmpItem->widget());
+//            delete tmpItem->widget();
+//            delete tmpItem;
+//        }
+//        this->task_container->update();
+//        delete task_container;
+
+
+
+
       QString strdate = date.toString();
+      dateTotask = date.toString("dd-MM-yy");
+
+      dateToHTTP = date.toString("MM-dd-yyyy");
 
     if(!strDinamicckeck.contains(strdate) && date !=   QDate::currentDate()){
 
-        strDinamicckeck = strDinamicckeck + strdate;
+
+
+
+//        if(titleEditContainer->count() != 0){
+
+//            while (titleEditContainer->count() != 0) {
+////                QLayoutItem *item = titleEditContainer->takeAt(0);
+////                delete item->widget();
+//                //delete item;
+//                delete titleEditContainer;
+//            }
+//        }
+
+//          if(titleEditContainer->count() != 0){
+
+//        QHBoxLayout *layout = titleEditContainer;
+
+//        while(QLayoutItem *tmpItem = layout->itemAt(0)) {
+//            layout->removeItem(tmpItem);
+//            layout->removeWidget(tmpItem->widget());
+//            delete tmpItem->widget();
+//            delete tmpItem;
+//        }
+//        layout->update();
+
+//        }
+
+
+
+        // стак для дел
+
+//        day1Layout->setContentsMargins(0,0,0,0);
+//        day1Layout->addLayout(titleWidgetList);
+//    day1Layout->addLayout(titleEditContainer);
 
 
     }
 
 
-    checkData();
-
-    stack->setCurrentIndex(0);
-    this->currentType = "checkbox";
 
     QString strcheck = date.toString();
 
@@ -761,12 +946,9 @@ void Shedule::calendar_btn(const QDate &date) {
 
 void Shedule::setButtonDate(void) {
 
+
+
     QDate date =   QDate::currentDate();
-
-            checkData();
-
-            stack->setCurrentIndex(0);
-            this->currentType = "checkbox";
 
             QString strcheck = date.toString();
 
@@ -927,25 +1109,91 @@ void Shedule::setButtonDate(void) {
 }
 
 
-void Shedule::on_addButton_clicked() {
+void Shedule::sendShedulePressed() {
+
+//    QJsonObject loadSheduleJson;
+
+//    QJsonObject Shedule;
+
+//          QJsonObject SheduleTask;
+
+
+//    for(int i = 0; i < titleList.size(); i=i+3 ){
+
+//        QString s = QString::number(i);
+
+
+
+//        SheduleTask.insert("taskTitle" + s , titleList[i]);
+//        SheduleTask.insert("taskBegin" + s, titleList[i+1]);
+//        SheduleTask.insert("taskEnd" + s, titleList[i+2]);
+
+
+//         Shedule.insert("qq",SheduleTask);
+//    }
+
+
+
+//    Shedule.insert("date",dateTotask);
+
+
+
+
+
+
+
+//    qDebug() << titleList.size() << endl;
+
+
+//    loadSheduleJson.insert("sendSheduleFromDate", Shedule);
+
+//        qDebug() << "create request" << endl;
+
+
+
+//        QNetworkRequest request(QUrl(SERVER_URL + ""));
+//        request.setHeader(QNetworkRequest::ContentTypeHeader,
+//                          QStringLiteral("application/json;charset=utf-8"));
+//        qDebug() << "request data"<< QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact) << endl;
+//        networkManagerSendShedule->post(
+//            request,
+//            QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact)
+//        );
+//        qDebug() << "request send" << endl;
+    }
+
+
+void Shedule::onHttpResultSendShedule(QNetworkReply *reply){
+
 
 
 }
 
 
+
+
+
+
 void Shedule::loadSheduleFromDate() {
-    QDate date =   QDate::currentDate();
+
+
+
+    QDate date = QDate::currentDate();
     QJsonObject loadSheduleJson;
     QJsonObject currentDate;
-    currentDate.insert("date", date.toString("dd-MM-yy"));
+    currentDate.insert("event_date", date.toString("yyyy-MM-dd"));
 
-    loadSheduleJson.insert("getSheduleFromDate", currentDate);
+    currentDate.insert("user_id", "1");
+
+    loadSheduleJson.insert("get_events", currentDate);
 
         qDebug() << "create request" << endl;
 
 
 
         QNetworkRequest request(QUrl(SERVER_URL + ""));
+
+        request.setRawHeader("JSON_DATA", QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact));
         request.setHeader(QNetworkRequest::ContentTypeHeader,
                           QStringLiteral("application/json;charset=utf-8"));
         qDebug() << "request data"<< QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact) << endl;
@@ -955,6 +1203,135 @@ void Shedule::loadSheduleFromDate() {
         );
         qDebug() << "request send" << endl;
     }
+
+
+void Shedule::onHttpResult(QNetworkReply *reply) {
+
+
+    qDebug() << "http finished" << endl;
+
+    if(1) {  //!reply->error()
+        QByteArray resp = reply->readAll();
+        qDebug() <<"ETO OTVET SERVERA LOAD EVENTS :  " + resp  << endl;
+        QJsonDocument doc = QJsonDocument::fromJson(resp);
+        QJsonObject obj;
+
+        std::string str = resp.toStdString();
+
+        std::cout << "str  " + str << std::endl;
+//        "{\"userID\":\"213564544\",\"Friends\":[\"Misha1991\", \"Igor\",  \"Alex\",  \"qwe\", \"piotr\"]}";
+
+        std::string parser_str = "{\"get_events\":[{\"description\":\"breakfast\","
+                                 " \"time_begin\":\"10:00\",""\"time_end\":\"10:45\"}, {\"description\":\"lansh\", \"time_begin\":"
+                                          "\"19:00\", \"time_end\":\"20:00\"}]}";
+
+        nlohmann::json j = nlohmann::json::parse(parser_str);
+
+            nlohmann::json::iterator it = j.begin();
+
+            nlohmann::json value = j[it.key()];
+
+            for (auto& element : value)
+            {
+
+                std::string time_end_str;
+                 std::string time_begin_str;
+                  std::string description;
+
+
+                if(element.contains("description"))
+                {
+                    description = element["description"].get<std::string>();
+
+                    std::cout << description << std::endl;
+                }
+
+
+                if(element.contains("time_begin"))
+                {
+                     time_begin_str = element["time_begin"].get<std::string>();
+                     std::cout << time_begin_str << std::endl;
+                }
+
+                if(element.contains("time_end"))
+                {
+                    time_end_str = element["time_end"].get<std::string>();
+
+                     std::cout << time_end_str << std::endl;
+                }
+
+
+                timeLabelTask = new QLabel;
+
+
+
+                time_begin_string = QString::fromUtf8(time_begin_str.c_str());
+                time_end_string = QString::fromUtf8(time_end_str.c_str());
+
+
+                deleteTaskButton = new QSvgButton(":/resc/resc/bin.svg", QSize(24,24));
+
+                connect(deleteTaskButton, &QSvgButton::clicked, this, &Shedule::deleteButton_pressed);
+
+
+
+
+                timeLabelTask->setText(QString("begin %1 \n end: %2.").arg(time_begin_string, time_end_string));
+
+
+                QString titleEvent = QString::fromUtf8(description.c_str());
+                titleList.append(titleEvent);
+                titleList.append(time_begin_string);
+                titleList.append(time_end_string);
+
+
+                boxTitleTask = new QLabel(titleEvent);
+                boxTitleTask->setStyleSheet(TASK_PADDING);
+
+                mainImageTask = new QSvgWidget(":/resc/resc/done_outline.svg");
+                mainImageTask->setMinimumSize(QSize(24,24));
+                mainImageTask->setMaximumSize(QSize(24,24));
+
+
+                task_container = new QHBoxLayout;
+
+                //task_container->setAlignment(Qt::AlignCenter);
+
+                task_container->addWidget(mainImageTask);
+                task_container->addWidget(boxTitleTask);
+                task_container->addWidget(timeLabelTask);
+
+                task_container->addWidget(deleteTaskButton);
+                task_container->setContentsMargins(125,0,0,0);
+
+                inputContainer->insertLayout(3,task_container);
+
+                deleteTaskButtonToLayoutMap.insert(deleteTaskButton,task_container);
+
+             }
+
+        } else {
+
+        qDebug() << reply->errorString();
+
+        qDebug() << "Server answer: " +  reply->readAll() << endl;
+
+        qDebug () << reply -> error ();
+
+
+}
+
+
+    reply->deleteLater();
+
+    networkManager->clearAccessCache();
+
+       }
+
+
+
+
+
 
 
 

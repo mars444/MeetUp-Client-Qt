@@ -175,14 +175,14 @@ Settings::Settings() {
     this->setStyleSheet(BACK_WHITE);
     this->setObjectName("fragment");
 
-    setSettingsButton->setStyleSheet(BUTTON_DISABLED);
-     setSettingsButton->setDisabled(true);
+
 
     connect(userMailEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
     connect(userNameEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
     connect(userSurnameEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
     connect(userAgeEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
     connect(userAdressEdit, &QLineEdit::textChanged, this, &Settings::checkSettings);
+    setSettingsButton->setStyleSheet(BUTTON_DISABLED);
 
 
     checkData();
@@ -228,24 +228,24 @@ void Settings::getSettings() {
 
 
 
-//    QJsonObject loadSettingsJson;
-//    QJsonObject userIDJson;
-//    userIDJson.insert("userID", "213564544");
-//    loadSettingsJson.insert("getSettings", userIDJson);
+    QJsonObject loadSettingsJson;
+    QJsonObject userIDJson;
+    userIDJson.insert("userID", "213564544");
+    loadSettingsJson.insert("getSettings", userIDJson);
 
-//        qDebug() << "create request" << endl;
+        qDebug() << "create request" << endl;
 
 
 
-//        QNetworkRequest request(QUrl(SERVER_URL + ""));
-//        request.setHeader(QNetworkRequest::ContentTypeHeader,
-//                          QStringLiteral("application/json;charset=utf-8"));
-//        qDebug() << "request data"<< QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact) << endl;
-//        networkManager->post(
-//            request,
-//            QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact)
-//        );
-//        qDebug() << "request send" << endl;
+        QNetworkRequest request(QUrl(SERVER_URL + ""));
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                          QStringLiteral("application/json;charset=utf-8"));
+        qDebug() << "request data"<< QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact) << endl;
+        networkManager->post(
+            request,
+            QJsonDocument(loadSettingsJson).toJson(QJsonDocument::Compact)
+        );
+        qDebug() << "request send" << endl;
 }
 
 
@@ -262,7 +262,7 @@ void Settings::setSettings() {
     userIDJson.insert("userAdress", userAdressEdit->text());
     userIDJson.insert("userMail", userMailEdit->text());
 
-    setSettingsJson.insert("getSettings", userIDJson);
+    setSettingsJson.insert("setSettings", userIDJson);
 
         qDebug() << "create request" << endl;
 

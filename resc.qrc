@@ -16,6 +16,7 @@
         <file>resc/groupusers.svg</file>
         <file>resc/client_secret_googleusercontent.com.json</file>
         <file>resc/loader4.gif</file>
+        <file>resc/user2.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

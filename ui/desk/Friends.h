@@ -31,6 +31,8 @@ private:
 
     QLabel *centerContainer;
 
+    QLabel *noFriendsLabel;
+
     QVBoxLayout *mainVLayout;
 
     QVBoxLayout *inputContainerFriends;
@@ -54,7 +56,9 @@ private:
 
     QNetworkAccessManager *networkManager;
 
-        QNetworkAccessManager *addManagerFriend;
+    QNetworkAccessManager *addManagerFriend;
+
+    QNetworkAccessManager *deleteManagerFriend;
 
 public:
     Friends();
@@ -77,12 +81,11 @@ public slots:
     void addFriendButtonPressed();
     void checkNameFriend();
 
-    void onHttpResultFriend(QNetworkReply *reply);
-
-
     void onHttpResult(QNetworkReply *reply);
 
     void onHttpResultDeleteFriend(QNetworkReply *reply);
+
+    void onHttpResultAddFriend(QNetworkReply *reply);
 
 
     /**

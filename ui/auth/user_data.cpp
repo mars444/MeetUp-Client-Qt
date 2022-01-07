@@ -1,6 +1,4 @@
-#include "user_data.h"
 
-user_data::user_data()
-{
+#include "models/usermodel.h"
 
-}
+

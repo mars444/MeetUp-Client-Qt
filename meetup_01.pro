@@ -30,8 +30,6 @@ SOURCES += \
     models/basemodel.cpp \
     models/cardmodel.cpp \
     models/checkboxmodel.cpp \
-    models/deskmodel.cpp \
-    models/historymodel.cpp \
     models/usermodel.cpp \
     screensfactory.cpp \
     style/stylecontainer.cpp \
@@ -61,7 +59,6 @@ HEADERS += \
     models/basemodel.h \
     models/cardmodel.h \
     models/checkboxmodel.h \
-    models/deskmodel.h \
     models/historymodel.h \
     models/usermodel.h \
     nlohmann/adl_serializer.hpp \

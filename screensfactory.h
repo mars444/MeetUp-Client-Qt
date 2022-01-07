@@ -5,10 +5,11 @@
 
 
 namespace screens {
-    //static const QString SERVER_URL = "http://192.168.31.207:9999";
 
+     static const QString SERVER_URL = "http://192.168.31.207:8080/";
+     //static const QString SERVER_URL = "http://192.168.31.233:8080/";   // Alya
     //static const QString SERVER_URL = "https://httpbin.org/post";
-    static const QString SERVER_URL = "http://localhost:8080";
+    //static const QString SERVER_URL = "http://localhost:8080/";
 
 
     static const QString SPLASH_TAG = "splash";

@@ -15,7 +15,7 @@ class MainFragment: public BaseFragment {
     Q_OBJECT
 private:
     QNetworkAccessManager *networkManager;
-    QString token;
+
     QString lastRequest;
 
     QPushButton *exitButton;
@@ -41,6 +41,8 @@ public:
     MainFragment();
     ~MainFragment();
 
+     QString user_ID;
+
     void onResume() override;
 public slots:
     void onExit();
@@ -49,6 +51,7 @@ public slots:
     void myGroups();
     void mySettings();
     void Group();
+
 
 
     void onHttpResult(QNetworkReply *reply);

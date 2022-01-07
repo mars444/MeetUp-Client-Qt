@@ -25,10 +25,10 @@ private:
     QHash<QPushButton*,QHBoxLayout*>mButtonBackToLayoutMap;
 
 
-
+    QLabel *noGroupsLabel;
 
     std::string str;
-
+    std::string strGroups;
 
     QVBoxLayout *mainVLayout;
     QVBoxLayout *inputContainerGroups;
@@ -37,9 +37,11 @@ private:
 
     QLabel *titleLabel;
 
+
      QHBoxLayout *GroupContainer2;
 
     QPushButton *inviteGroupButton2;
+
     QPushButton *deleteGroupButton2;
 
     QLabel *GroupImageLabel2;
@@ -64,27 +66,40 @@ private:
 
     QPushButton *backAddtoGroup;
 
+    QHBoxLayout *backLayout;
+
 
     QString groupNameString;
 
     QNetworkAccessManager *addManagerGroup;
 
-    QPushButton *GroupNameButton;
+    QNetworkAccessManager *ManagerAddFriendToGroup;
+    QNetworkAccessManager *ManagerAddFriendsLayout;
+
+
 
 public:
     Groups();
     ~Groups();
+        QPushButton *GroupNameButton;
 
 
+
+signals:
+    void sendGroupNameSignal(const QString &text); //название сигнала потом сами пропишите
 
 
 public slots:
+
+
 
 
      void friendName2Pressed();
 
 
     void loadGroups();
+
+    void loadFriends();
 
     void onBackPressed();
 
@@ -97,7 +112,7 @@ public slots:
     void addGroupButtonPressed();
     void checkNameGroup();
 
-    void onHttpResultGroup(QNetworkReply *reply);
+    void onHttpResultAddGroup(QNetworkReply *reply);
 
 
     void onHttpResult(QNetworkReply *reply);
@@ -105,7 +120,7 @@ public slots:
     void onHttpResultDeleteGroup(QNetworkReply *reply);
 
     void onHttpResultAddFriendtoGroup(QNetworkReply *reply);
-
+    void onHttpResultManagerAddFriendsLayout(QNetworkReply *reply);
 
     /**
      * @brief checkData

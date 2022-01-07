@@ -2,8 +2,10 @@
 #include "nlohmann/json.hpp"
 #include <iostream>
 #include <set>
-
+#include "../mainfragment.h"
 #include "user_data.h"
+
+#include "models/usermodel.h"
 
 #include <QJsonValue>
 #include <QLabel>
@@ -20,10 +22,10 @@
 #include <QSettings>
 #include <QString>
 
+#include <QUrlQuery>
 #include <QUrl>
 
 
-using namespace userData;
 
 
 
@@ -34,10 +36,6 @@ using namespace screens;
 
 LoginFragment::LoginFragment() {
 
-
-
-
-    qDebug("SplashFragnebt crete");                                             // строка для дебага
 
     QVBoxLayout *mainVLayout = new QVBoxLayout;                                 // создаем общую обертку  типа QVBoxLayout V - VERTICAL  (SPISOK)
     QHBoxLayout *mainHLayout = new QHBoxLayout;                                 // создаем общую обертку  типа QHBoxLayout H - GORIZONTAL (DISPLAY FLEX)
@@ -142,35 +140,49 @@ LoginFragment::~LoginFragment() {
 
 void LoginFragment::onLoginPressed() {
 
-    QJsonObject loginPasswordValues;
-    QJsonObject loginPasswordValues1;
-    loginPasswordValues1.insert("login", loginEdit->text());
-    loginPasswordValues1.insert("password", passwordEdit->text());
+//     QNetworkRequest request(QUrl(SERVER_URL + ""));
 
-    loginPasswordValues.insert("autorization", loginPasswordValues1);
-    if (loginEdit->text().length() >= 4 && passwordEdit->text().length() >= 8) {
-        loadingContaiter->show();
-        loading->start();
+//     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-        loginButton->setDisabled(true);
-        loginButton->setStyleSheet(BUTTON_DISABLED);
+//     QByteArray data("{\"key1\":\"value1\",\"key2\":\"value2\"}}");
 
-        qDebug() << "create request" << endl;
+//     networkManager->post(request,data);
 
+//    QNetworkRequest request(QUrl("http://192.168.31.207:9999"));
+//    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json"));
+//     request.setRawHeader("JSON_DATA", "{{HELLOOOOOOOOOOOOOOOOOOOOOOO}}");
+//    QByteArray body = "{{HELLOOOOOOOOOOOOOOOOOOOOOOO}}";
+//    networkManager->post(request, body);
 
 
-        qDebug() << "request data"<< QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact) << endl;
-        networkManager->post(
-            request,
-             QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
-    }
+    QJsonObject RegJson;
+    QJsonObject param;
+       param.insert("nickname", loginEdit->text());
+       param.insert("password", passwordEdit->text());
+       RegJson.insert("autorization", param);
+       if (loginEdit->text().length() > 5 && passwordEdit->text().length() > 5) {
+           loadingContaiter->show();
+           loading->start();
+
+           loginButton->setDisabled(true);
+           loginButton->setStyleSheet(BUTTON_DISABLED);
+
+           qDebug() << "create request" << endl;
+           QNetworkRequest request(QUrl(SERVER_URL + ""));
+           request.setHeader(QNetworkRequest::ContentTypeHeader,
+                             QStringLiteral("application/json;charset=utf-8"));
+
+           request.setRawHeader("JSON_DATA", QJsonDocument(RegJson).toJson(QJsonDocument::Compact));
+
+           qDebug() << "request data"<< QJsonDocument(RegJson).toJson(QJsonDocument::Compact) << endl;
+           networkManager->post(
+               request,
+               QJsonDocument(RegJson).toJson(QJsonDocument::Compact)
+           );
+           qDebug() << "request send" << endl;
+       }
+
 
 //    QUrl url("SERVER_URL");
 //    QNetworkRequest request;
@@ -178,21 +190,34 @@ void LoginFragment::onLoginPressed() {
 //    networkManager->get(request);
 
 
-////// Через QURL
+//////// Через QURL
 //    loadingContaiter->show();
-//         loading->start();
+//    loading->start();
 //    networkManager = new QNetworkAccessManager(this);
 //    const QUrl url(SERVER_URL);
 //    QNetworkRequest request(url);
 //    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-//    QJsonObject obj;
-//    obj["key1"] = "value1";
-//    obj["key2"] = "value2";
-//    QJsonDocument doc(obj);
-//    //QByteArray data = doc.toJson();
-//    // or
-//    QByteArray data("{\"key1\":\"value1\",\"key2\":\"value2\"}");
+//    request.setRawHeader("Accept-Encoding", "identity");
+
+//        QJsonObject loginPasswordValues;
+//        QJsonObject loginPasswordValues1;
+//        loginPasswordValues1.insert("login", loginEdit->text());
+//        loginPasswordValues1.insert("password", passwordEdit->text());
+
+//        loginPasswordValues.insert("autorization", loginPasswordValues1);
+//        QJsonDocument doc(loginPasswordValues);
+//        QByteArray data = doc.toJson();
+
+//           qDebug() << data;
+
+
+////    std::string aaa = "{dwefwef}}";
+
+////    QByteArray bite =  QByteArray(aaa.c_str(), aaa.size());
+
+////    QByteArray data("{\"key1\":\"value1\",\"key2\":\"value2\"}");
+
 //    QNetworkReply *reply = networkManager->post(request, data);
 
 //    QObject::connect(reply, &QNetworkReply::finished, [=](){
@@ -218,65 +243,63 @@ void LoginFragment::onHttpResult(QNetworkReply *reply) {
     checkData();
     if(!reply->error()) {
         QByteArray resp = reply->readAll();
-        qDebug() << resp << endl;
+        qDebug() <<"ETO OTVET SERVERA AUTORIZATION :  " + resp  << endl;
         QJsonDocument doc = QJsonDocument::fromJson(resp);
         QJsonObject obj;
-        if(!doc.isNull()) {
-            if(doc.isObject()) {
-                obj = doc.object();
 
+        std::string str = resp.toStdString();
 
-            }
-            else {
-                qDebug() << "Document is not an object" << endl;
-            }
-        } else {
-            qDebug() << "Invalid JSON...\n" << endl;
-        }
-
-
-
-        if (1) {
-
-
-
-            newRootScreen(MAIN_TAG);
-        } else {
-            qDebug("login error");
-            QMessageBox::warning(this, "Ошибка", "Неправильный Логин или пароль");
-        }
-    } else {
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
-
-
-
-
-        str = "{\"userID\":\"666666\",\"userName\":\"MeetUser\"}";
+        std::cout << "str  " + str << std::endl;
 
         nlohmann::json j = nlohmann::json::parse(str);
 
+        if(j["autorization"].contains("user_id")) {
 
-        nlohmann::json value = j;
+            std::string IDValue = j["autorization"]["user_id"].get<std::string>();
+
+            //userId = QString::fromUtf8(IDValue.c_str());;
+
+            std::cout << "ID: " << IDValue << std::endl;
+
+             QFile file("C:\\user_id.txt");
+
+             if (file.open(QIODevice::WriteOnly))
+             {
+                 file.write("Test string\n");
+
+                 file.close();
+             }
 
 
-        std::cout << userNameData.toStdString() << std::endl;
-        std::cout << userIDData.toStdString() << std::endl;
+            newRootScreen(MAIN_TAG);
 
-        std::string nameValue = value["userName"];
-        std::string IDValue = value["userID"];
+        } else {
 
-        userNameData = QString::fromUtf8(nameValue.c_str());
-        userIDData = QString::fromUtf8(IDValue.c_str());
+           std::string reg_error = j["autorization"].get<std::string>();
+           std::cout << "error: " << reg_error << std::endl;
 
-        std::cout << userNameData.toStdString() << std::endl;
-        std::cout << userIDData.toStdString() << std::endl;
+           qDebug("autorization error");
 
-             newRootScreen(MAIN_TAG);
+           QMessageBox::warning(this, "Ошибка", "Неверный логин или пароль");
 
+}
 
-    }
+        } else {
+
+        qDebug() << reply->errorString();
+
+        qDebug() << "Server answer: " +  reply->readAll() << endl;
+
+        qDebug () << reply -> error ();
+
+        QMessageBox::warning(this, "Ошибка",
+            "При подключениии произошла ошибка.\n");
+        // newRootScreen(MAIN_TAG);
+
+}
+    //newRootScreen(MAIN_TAG);
     reply->deleteLater();
+    networkManager->clearAccessCache();
 }
 
 void LoginFragment::checkData() {
@@ -289,36 +312,14 @@ void LoginFragment::checkData() {
 
 void LoginFragment::onBackPressed() {
     back();
-
-
-//    //QString request = "{\"registration\":{\"login\":\"bogjan\",\"password\":\"887471\"}}";
-
-//    nlohmann::json j =nlohmann::json::parse("{\"registration\":{\"login\":\"bogjan\",\"password\":\"887471\"}}");
-
-//    std::cout << j.size() << std::endl;
-//    std::cout << j << std::endl;
-
-//    nlohmann::json::iterator it = j.begin();
-//    std::cout << it.key() << std::endl;
-
-//    std::string key = it.key();
-
-//    nlohmann::json value = j[key];
-
-//    std::cout << value["login"] << std::endl;
-
-//    std::cout << value["password"] << std::endl;
-
-//    std::set<std::string> s_friends;
-
-//    for (auto& element : j[key]["friends"]) {
-//        s_friends.insert(element.dump());
-//    }
-
-//    for (auto& f: s_friends) {
-//        std::cout << "friend:" << f << std::endl;
-
-
-//    };
-
 }
+
+
+
+
+
+
+
+
+
+

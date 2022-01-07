@@ -6,6 +6,12 @@ using namespace styles;
 
 #include "user_data.h"
 
+#include "nlohmann/json.hpp"
+#include <iostream>
+#include <set>
+#include "../mainfragment.h"
+#include "user_data.h"
+
 #include <QSvgWidget>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -139,6 +145,7 @@ RegistrationFragment::~RegistrationFragment() {
     delete loadingContaiter;
 }
 
+
 void RegistrationFragment::onRegPressed() {
 
     if(passwordEdit->text() != repeatPasswordEdit->text()){
@@ -147,7 +154,7 @@ void RegistrationFragment::onRegPressed() {
 
         QJsonObject loginPasswordValues;
         QJsonObject loginPasswordValues1;
-        loginPasswordValues1.insert("login", loginEdit->text());
+        loginPasswordValues1.insert("nickname", loginEdit->text());
         loginPasswordValues1.insert("password", passwordEdit->text());
 
         loginPasswordValues.insert("registration", loginPasswordValues1);
@@ -161,11 +168,11 @@ void RegistrationFragment::onRegPressed() {
             qDebug() << "create request" << endl;
 
 
-
             QNetworkRequest request(QUrl(SERVER_URL + ""));
             request.setHeader(QNetworkRequest::ContentTypeHeader,
                               QStringLiteral("application/json"));
             qDebug() << "request data"<< QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact) << endl;
+            request.setRawHeader("JSON_DATA", QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact));
             networkManager->post(
                 request,
                  QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact)
@@ -184,38 +191,57 @@ void RegistrationFragment::onRegPressed() {
 
 void RegistrationFragment::onRegResult(QNetworkReply *reply) {
 
+    qDebug() << "http finished" << endl;
     loading->stop();
     loadingContaiter->hide();
     loginButton->setDisabled(false);
     checkData();
-
     if(!reply->error()) {
         QByteArray resp = reply->readAll();
-        qDebug() << resp << endl;
-        QJsonDocument doc = QJsonDocument::fromJson(resp);
-        QJsonObject obj;
-        if(!doc.isNull()) {
-            if(doc.isObject()) {
-                obj = doc.object();
-                qDebug() << obj["success"].toBool() << endl;
-            }
-            else {
-                qDebug() << "Document is not an object" << endl;
-            }
-        } else {
-            qDebug() << "Invalid JSON...\n" << endl;
-        }
-        if (obj["success"].toBool()) {
-            newRootScreen(MAIN_TAG);
-        } else {
-            qDebug("login error");
-            QMessageBox::warning(this, "Ошибка", obj["message"].toString());
-        }
+        qDebug() << resp  << endl;
+
+        qDebug() <<"ETO OTVET SERVERA REG :  " + resp  << endl;
+
+          std::string str = resp.toStdString();
+
+          std::cout << "str  " + str << std::endl;
+
+          nlohmann::json j = nlohmann::json::parse(str);
+
+          if(j["registration"].contains("user_id")) {
+
+              std::string IDValue = j["registration"]["user_id"].get<std::string>();
+
+              std::cout << "ID: " << IDValue << std::endl;
+              newRootScreen(MAIN_TAG);
+
+          } else {
+
+             std::string reg_error = j["registration"].get<std::string>();
+             std::cout << "error: " << reg_error << std::endl;
+
+             qDebug("registration error");
+
+             QMessageBox::warning(this, "Ошибка", "Пользователь с таким именем существуюет");
+
+  }
+
     } else {
+
+        qDebug() << reply->errorString();
+
+        qDebug() <<  reply->readAll() << endl;
+
+        qDebug () << reply -> error ();
+
+
         QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n"        );
-    }
-    reply->deleteLater();
+            "При подключениии произошла ошибка.\n");
+
+
+
+}
+      reply->deleteLater();
 }
 
 void RegistrationFragment::checkData() {

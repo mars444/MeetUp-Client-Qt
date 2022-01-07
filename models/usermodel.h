@@ -9,6 +9,7 @@
 
 class UserModel: public BaseModel {
 public:
+
     UserModel(QJsonObject obj);
 
     QString id;

@@ -22,6 +22,9 @@ private:
     DeskModel *model;
     QString currentType = "simple";
 
+
+    QHash<QPushButton*,QHBoxLayout*> deleteTaskButtonToLayoutMap;
+
     QHBoxLayout *mainHLayout;
     QVBoxLayout *inputContainer;
 
@@ -54,6 +57,11 @@ private:
     QDate date7;
 
 
+    QString time_begin_string;
+
+    QString time_end_string;
+
+
 
     QVBoxLayout *verticalLayout;
     QLineEdit *lineEdit;
@@ -70,13 +78,21 @@ private:
 
     QLabel *boxTitleTask;
 
+    QString dateToHTTP;
+
     QLabel *timeLabelTask;
 
     QSvgButton *deleteTaskButton;
 
 
-
+    QHBoxLayout *titleEditContainer;
     QList<QString> titleList;
+
+    QLabel *dateTask;
+
+
+    QTime time_begin;
+    QTime time_end;
 
     QPushButton *date1Button;
     QPushButton *date2Button;
@@ -86,12 +102,19 @@ private:
     QPushButton *date6Button;
     QPushButton *date7Button;
 
+    QString dateTotask;
+
     QStackedWidget *stack;
 
     QTimeEdit* left;
     QTimeEdit* right;
 
     QNetworkAccessManager *networkManager;
+    QNetworkAccessManager *networkManagerSendShedule;
+
+    QNetworkAccessManager *networkManageraddEvent;
+
+      QNetworkAccessManager *networkManagerDeleteEvent;
 
 public:
     Shedule();
@@ -102,6 +125,12 @@ public slots:
     void onBackPressed();
     void onCreatePressed();
     void onHttpResult(QNetworkReply *reply);
+
+    void onHttpResultSendShedule(QNetworkReply *reply);
+
+    void onHttpResultAddEvent(QNetworkReply *reply);
+
+     void onHttpResultDeleteEvent(QNetworkReply *reply);
     void onBoxTitleAdd();
 
     void loadSheduleFromDate();
@@ -116,7 +145,7 @@ public slots:
     void deleteButton_pressed();
     void calendar_btn(const QDate &date);
     void setButtonDate(void);
-    void on_addButton_clicked();
+    void sendShedulePressed();
 
     /**
      * @brief checkData
