@@ -1,0 +1,203 @@
+#include "loginfragment.h"
+
+#include <QJsonValue>
+#include <QLabel>
+#include <QPushButton>
+#include <QSvgWidget>
+#include <QTreeWidgetItem>
+#include <QVBoxLayout>
+#include <ui/view/qsvgbutton.h>
+#include <ui/view/waitingspinnerwidget.h>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QMessageBox>
+#include <QNetworkAccessManager>
+#include <QSettings>
+
+#include "style/stylecontainer.h"
+using namespace styles;
+#include "screensfactory.h"
+using namespace screens;
+
+LoginFragment::LoginFragment() {
+
+    qDebug("SplashFragnebt crete");                                             // строка для дебага
+
+    QVBoxLayout *mainVLayout = new QVBoxLayout;                                 // создаем общую обертку  типа QVBoxLayout V - VERTICAL  (SPISOK)
+    QHBoxLayout *mainHLayout = new QHBoxLayout;                                 // создаем общую обертку  типа QHBoxLayout H - GORIZONTAL (DISPLAY FLEX)
+    QFrame *centerConainer = new QFrame;                                        // создаем объект типа QFrame    (РАМКА)
+
+    QVBoxLayout *startMainLayout = new QVBoxLayout;                             // создаем внутренню обертку объект типа QVBoxLayout
+    QHBoxLayout *startContent = new QHBoxLayout;                                // создаем внутренню обертку объект типа QVBoxLayout
+    QSvgWidget *mainImage = new QSvgWidget(":/resc/resc/logo.svg");         // создаем объект типа QSvgWidget и указываем ссылку на картинку
+    mainImage->setMaximumSize(175,175);
+    QVBoxLayout *backContainer = new QVBoxLayout;                               // создаем внутренню обертку объект типа QVBoxLayout
+    QSvgButton *backImage = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(25,25));
+
+    QVBoxLayout *startVerticalContent = new QVBoxLayout;                        // создаем правую внутренню обертку объект типа QVBoxLayout
+    QLabel *title = new QLabel("Вход в приложение");                            // создаем Qlabel(строка обычная)
+    QLabel *subtitle = new QLabel("Приветсвуем!");                              // создаем правую внутренню обертку объект типа QVBoxLayout
+    loginEdit = new QLineEdit;                                                  // создаем Qlabel логин(поле ввода, инпут)
+    passwordEdit = new QLineEdit;                                               // создаем Qlabel пароль (поле ввода, инпут)
+
+    startVerticalContent->setContentsMargins(0,0,0,50);
+
+    QVBoxLayout *buttonContainer = new QVBoxLayout;                             // создаем  обертку кнопки типа QVBoxLayout
+    QHBoxLayout *loadingButtonContainer = new QHBoxLayout;                      // создаем  обертку кнопки типа QHBoxLayout
+    loadingContaiter = new QFrame;                                              // создаем объект типа QFrame    (РАМКА)
+    loading = new WaitingSpinnerWidget(loadingContaiter, true, false);          // https://github.com/snowwlex/QtWaitingSpinner виджет загрузки
+    loading->setColor(QT_COLOR_PRIMARY);                                        // стиль для загрузки колор  QT_COLOR_PRIMARY
+    loadingContaiter->setMinimumWidth(100);                                     // minwidth загрузки
+    loadingContaiter->hide();                                                   // пока что скрываем ее
+
+    loginButton = new QPushButton("Войти");
+
+    title->setStyleSheet(TITLE_LABLE);                                          // задаем title  стиль  TITLE_LABLE из файла  #include "style/stylecontainer.h"
+    subtitle->setStyleSheet(HINT_LABLE);
+    subtitle->setMaximumWidth(355);                                             // макс длина в пикселях
+    subtitle->setMinimumWidth(355);
+    subtitle->setWordWrap(true);                                                // перевод слов на новую строку
+
+    startVerticalContent->addWidget(title);                                     // вносим титле в startVerticalContent
+    startVerticalContent->addWidget(subtitle);
+    startVerticalContent->setAlignment(Qt::AlignTop);                           // текст сверху б кнопки к низу
+    startMainLayout->setContentsMargins(100,0,0,0);
+    buttonContainer->setAlignment(Qt::AlignBottom);
+
+    startMainLayout->addLayout(startVerticalContent);                           // вносим все в главный контейнер
+    startMainLayout->addLayout(buttonContainer);
+
+    loginEdit->setMaximumWidth(355);                                          // поле ввода логина длна 355
+    loginEdit->setStyleSheet(EDIT_TEXT);
+    loginEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    loginEdit->setPlaceholderText("Логин");
+
+    passwordEdit->setMaximumWidth(355);
+    passwordEdit->setStyleSheet(EDIT_TEXT);
+    passwordEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    passwordEdit->setPlaceholderText("Пароль");
+    passwordEdit->setEchoMode(QLineEdit::Password);
+
+    connect(loginEdit, &QLineEdit::textChanged, this, &LoginFragment::checkData);
+    connect(passwordEdit, &QLineEdit::textChanged, this, &LoginFragment::checkData);
+
+    loginButton->setStyleSheet(BUTTON_SOLID);
+    connect(loginButton, &QPushButton::clicked, this, &LoginFragment::onLoginPressed);
+    buttonContainer->addWidget(loginEdit);
+    buttonContainer->addWidget(passwordEdit);
+    loadingButtonContainer->addWidget(loginButton);
+    loadingButtonContainer->addWidget(loadingContaiter);
+    buttonContainer->addLayout(loadingButtonContainer);
+
+    startContent->setContentsMargins(50,50,50,50);
+
+    backImage->setStyleSheet(BACK_WHITE);
+    connect(backImage, &QSvgButton::clicked, this, &LoginFragment::onBackPressed);
+
+    centerConainer->setStyleSheet(FRAME_8PX_WHITE);
+    centerConainer->setLayout(startContent);
+    mainImage->setStyleSheet(START_ICON);
+    backContainer->addWidget(backImage);
+    backContainer->setAlignment(Qt::AlignTop);
+    startContent->addLayout(backContainer);
+    startContent->addWidget(mainImage);
+    startContent->addLayout(startMainLayout);
+
+    mainHLayout->addWidget(centerConainer);
+    mainHLayout->setAlignment(Qt::AlignCenter);
+    mainVLayout->addLayout(mainHLayout);
+    mainVLayout->setAlignment(Qt::AlignCenter);
+
+    this->setLayout(mainVLayout);
+    checkData();
+    networkManager = new QNetworkAccessManager();
+    connect(networkManager, &QNetworkAccessManager::finished, this, &LoginFragment::onHttpResult);
+}
+
+LoginFragment::~LoginFragment() {
+    delete loginEdit;
+    delete passwordEdit;
+    delete loginButton;
+    delete loading;
+    delete loadingContaiter;
+    networkManager->clearAccessCache();
+}
+
+void LoginFragment::onLoginPressed() {
+    QJsonObject loginPasswordValues;
+    QJsonObject loginPasswordValues1;
+    loginPasswordValues1.insert("login", loginEdit->text());
+    loginPasswordValues1.insert("password", passwordEdit->text());
+
+    loginPasswordValues.insert("autorization", loginPasswordValues1);
+    if (loginEdit->text().length() >= 4 && passwordEdit->text().length() >= 8) {
+        loadingContaiter->show();
+        loading->start();
+
+        loginButton->setDisabled(true);
+        loginButton->setStyleSheet(BUTTON_DISABLED);
+
+        qDebug() << "create request" << endl;
+
+
+
+        QNetworkRequest request(QUrl(SERVER_URL + ""));
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                          QStringLiteral("application/json;charset=utf-8"));
+        qDebug() << "request data"<< QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact) << endl;
+        networkManager->post(
+            request,
+            QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact)
+        );
+        qDebug() << "request send" << endl;
+    }
+}
+
+void LoginFragment::onHttpResult(QNetworkReply *reply) {
+    qDebug() << "http finished" << endl;
+    loading->stop();
+    loadingContaiter->hide();
+    loginButton->setDisabled(false);
+    checkData();
+    if(!reply->error()) {
+        QByteArray resp = reply->readAll();
+        qDebug() << resp << endl;
+        QJsonDocument doc = QJsonDocument::fromJson(resp);
+        QJsonObject obj;
+        if(!doc.isNull()) {
+            if(doc.isObject()) {
+                obj = doc.object();
+                qDebug() << obj["success"].toBool() << endl;
+            }
+            else {
+                qDebug() << "Document is not an object" << endl;
+            }
+        } else {
+            qDebug() << "Invalid JSON...\n" << endl;
+        }
+        if (obj["success"].toBool()) {
+
+            newRootScreen(MAIN_TAG);
+        } else {
+            qDebug("login error");
+            QMessageBox::warning(this, "Ошибка", obj["message"].toString());
+        }
+    } else {
+        QMessageBox::warning(this, "Ошибка",
+            "При подключениии произошла ошибка.\n");
+        newRootScreen(MAIN_TAG);
+    }
+    reply->deleteLater();
+}
+
+void LoginFragment::checkData() {
+    if (loginEdit->text().length() >= 4 && passwordEdit->text().length() >= 8) {
+        loginButton->setStyleSheet(BUTTON_SOLID);
+    } else {
+        loginButton->setStyleSheet(BUTTON_DISABLED);
+    }
+}
+
+void LoginFragment::onBackPressed() {
+    back();
+}

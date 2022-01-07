@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/resc">
+        <file>resc/arrow_back.svg</file>
+        <file>resc/user_circle.svg</file>
+        <file>resc/done_outline.svg</file>
+        <file>resc/loader.gif</file>
+        <file>resc/logo.png</file>
+        <file>resc/logo.svg</file>
+        <file>resc/bin.svg</file>
+        <file>resc/online_status_onn.svg</file>
+        <file>resc/online_status_off.svg</file>
+        <file>resc/group.svg</file>
+        <file>resc/user.png</file>
+        <file>resc/loader2.gif</file>
+        <file>resc/loader3.gif</file>
+    </qresource>
+    <qresource prefix="/"/>
+</RCC>
