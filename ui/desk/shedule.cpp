@@ -791,7 +791,8 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
     form->addWidget(cardDescriptionEditAdd);   //4
 
-    form->addLayout(timeInner);  //5
+    form->addWidget(leftAdd);  //5
+    form->addWidget(rightAdd);  //5
 
     form->addWidget(updateTaskButton);   //6
 
@@ -808,7 +809,7 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
     task_container_inner->addWidget(formFrame);
 
-    deleteTaskButtonToLayoutMap.insert(deleteTaskButton,task_container);
+    deleteTaskButtonToLayoutMap.insert(deleteTaskButton,form);
     doneButtonToLayoutMap.insert(doneButton,doneButtonYes);
 
     doneButtonYesToLayoutMap.insert(doneButtonYes,doneButton);
@@ -928,8 +929,11 @@ void Shedule::deleteButton_pressed() {
 
 
     QPushButton *button = qobject_cast<QPushButton*>(sender());
+    qDebug()<<"qqqqqq1111111111"<<endl;
 
     QHBoxLayout *layout = deleteTaskButtonToLayoutMap.take(button);
+
+       qDebug()<<"qqqqqq2222222"<<endl;
 
 
     ////////////////////////////////////////////
@@ -941,36 +945,47 @@ void Shedule::deleteButton_pressed() {
 
 
 
+//    form->addWidget(idLabel);   //2
+
+//    QWidget *event_name = layout->takeAt(4)->widget();
+//    QLabel* event_nameLabel = dynamic_cast<QLabel*>(event_name);
+//    QString event_nameString = event_nameLabel->text();
+//    qDebug() <<"deleteeeeeee event"  <<  event_nameString  << endl;
 
 
-    QWidget *event_name = layout->takeAt(4)->widget();
-    QLabel* event_nameLabel = dynamic_cast<QLabel*>(event_name);
-    QString event_nameString = event_nameLabel->text();
-    qDebug() <<"deleteeeeeee event"  <<  event_nameString  << endl;
 
+//    QWidget *time = layout->takeAt(3)->widget();
+//    QLabel* timeLabel = dynamic_cast<QLabel*>(time);
+//    QString timeString = timeLabel->text();
+//    qDebug() <<"Time===  "  <<  timeString  << endl;
 
+//    std::string time_begin = timeString.toStdString().substr(0,5);
 
-    QWidget *time = layout->takeAt(3)->widget();
-    QLabel* timeLabel = dynamic_cast<QLabel*>(time);
-    QString timeString = timeLabel->text();
-    qDebug() <<"Time===  "  <<  timeString  << endl;
+//    std::string time_end = timeString.toStdString().substr(9,13);
 
-    std::string time_begin = timeString.toStdString().substr(0,5);
+//    QString begin_str = QString::fromStdString(time_begin);
 
-    std::string time_end = timeString.toStdString().substr(9,13);
+//    QString end_str = QString::fromStdString(time_end);
 
-    QString begin_str = QString::fromStdString(time_begin);
+//    qDebug() <<"timeeeeee  begin  "  <<  begin_str  << endl;
 
-    QString end_str = QString::fromStdString(time_end);
-
-    qDebug() <<"timeeeeee  begin  "  <<  begin_str  << endl;
-
-    qDebug() <<"timeeeeee  end  "  <<  end_str  << endl;
+//    qDebug() <<"timeeeeee  end  "  <<  end_str  << endl;
 
     QWidget *event_id = layout->takeAt(2)->widget();
+
+    qDebug()<<"qqqqqq333333333333"<<endl;
+
+
     QLabel* event_idLabel = dynamic_cast<QLabel*>(event_id);
+
+    qDebug()<<"qqqqqq444444444"<<endl;
     QString event_idString = event_idLabel->text();
+
+    qDebug()<<"qqqqqq5555555555"<<endl;
+
     qDebug() <<"Event ID===  "  <<  event_idString  << endl;
+
+
 
 
     dateToHTTP = calendar->selectedDate().toString("MM-dd-yyyy");
@@ -978,12 +993,9 @@ void Shedule::deleteButton_pressed() {
     QJsonObject deleteEventJson;
     QJsonObject bodyJson;
     bodyJson.insert("user_id", ID_QSTRING);
-    bodyJson.insert("event_name", event_nameString);
-    //bodyJson.insert("event_id", event_idString);
+    bodyJson.insert("event_id", event_idString);
     bodyJson.insert("event_date", dateToHTTP);
-    bodyJson.insert("time_begin", begin_str);
-    bodyJson.insert("time_end", end_str);
-    bodyJson.insert("description", event_nameString);
+
 
 
     QJsonArray eventArray;
@@ -1010,26 +1022,19 @@ void Shedule::deleteButton_pressed() {
 
 
     while(QLayoutItem *tmpItem = layout->itemAt(0)) {
+
         layout->removeItem(tmpItem);
         layout->removeWidget(tmpItem->widget());
         delete tmpItem->widget();
         delete tmpItem;
+
+
     }
+
     layout->update();
-
-    delete event_nameLabel;
-
-    delete timeLabel;
 
     delete event_id;
 
-
-
-    checkData();
-
-
-
-   // titleWidgetList->update();
 
 
 
@@ -1839,11 +1844,13 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
 
                 form->addWidget(cardDescriptionEdit);   //4
 
-                form->addLayout(timeInner);  //5
+                form->addWidget(left);  //5
 
-                form->addWidget(updateTaskButton);   //6
+                form->addWidget(right);  //6
 
-                form->addWidget(deleteTaskButton);   //7
+                form->addWidget(updateTaskButton);   //7
+
+                form->addWidget(deleteTaskButton);   //8
 
                 QFrame *formFrame = new QFrame;
 
@@ -1856,7 +1863,7 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
 
                 task_container_inner->addWidget(formFrame);
 
-                deleteTaskButtonToLayoutMap.insert(deleteTaskButton,task_container);
+                deleteTaskButtonToLayoutMap.insert(deleteTaskButton,form);
                 doneButtonToLayoutMap.insert(doneButton,doneButtonYes);
 
                 doneButtonYesToLayoutMap.insert(doneButtonYes,doneButton);
