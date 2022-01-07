@@ -25,7 +25,7 @@ using namespace screens;
 
 Groups::Groups() {
 
-    QVBoxLayout *mainHLayout = new QVBoxLayout;
+    mainHLayout = new QVBoxLayout;
     QVBoxLayout *infoContainer = new QVBoxLayout;
 
     QHBoxLayout *titleContainer = new QHBoxLayout;
@@ -66,15 +66,46 @@ Groups::Groups() {
 
 
 
+    QHBoxLayout *addGroupContainer = new QHBoxLayout;
+
+
+    addGroupEdit = new QLineEdit;
+
+
+    connect(addGroupEdit, &QLineEdit::textChanged, this, &Groups::checkNameGroup);
+
+    addGroupEdit->setMaximumWidth(355);                                          // поле ввода логина длна 355
+    addGroupEdit->setStyleSheet(EDIT_TEXT);
+    addGroupEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    addGroupEdit->setPlaceholderText("Название группы");
+
+
+
+    addGroupButton = new QPushButton("Создать группу");
+
+
+    connect(addGroupButton, &QPushButton::clicked, this, &Groups::addGroupButtonPressed);
+
+    addGroupButton->setStyleSheet(BUTTON_DISABLED);
+    addGroupButton->setDisabled(true);
+
+
+    addGroupContainer->addWidget(addGroupEdit);
+
+    addGroupContainer->addWidget(addGroupButton);
+
+
+
+
+
+
+
+
 
     QHBoxLayout *groupButtonContainer = new QHBoxLayout;
 
 
     groupButtonContainer->addWidget(inviteGroupButton);
-
-
-
-
 
     QLabel *groupImageLabel = new QLabel("");
 
@@ -128,27 +159,6 @@ Groups::Groups() {
     groupContainer2->setAlignment(Qt::AlignTop);
 
 
-    QHBoxLayout *groupContainer3 = new QHBoxLayout;
-    QLabel *groupImageLabel3 = new QLabel("");
-    QPixmap groupImage3(":/resc/resc/group.svg");
-    groupImageLabel3->setPixmap(groupImage3);
-    groupImageLabel3->setStyleSheet(FRIEND_IMAGE);
-
-    QLabel *groupName3 = new QLabel("Group 3");
-
-    groupName3->setStyleSheet(FRIEND_NAME_SURNAME);
-
-    QPushButton *inviteGroupButton3 = new QPushButton("Пригласить в группу");
-
-    inviteGroupButton3->setStyleSheet(BUTTON_SOLID);
-
-    QHBoxLayout *groupButtonContainer3 = new QHBoxLayout;
-
-    groupButtonContainer3->addWidget(inviteGroupButton3);
-    groupContainer3->addWidget(groupImageLabel3);
-    groupContainer3->addWidget(groupName3);
-    groupContainer3->addLayout(groupButtonContainer3);
-    groupContainer3->setAlignment(Qt::AlignTop);
 
 
 
@@ -170,7 +180,6 @@ Groups::Groups() {
 
 
     QScrollArea *deskScrollArea = new QScrollArea;
-    deskScrollArea->setMinimumWidth(396);
     deskScrollArea->setFrameShape(QFrame::NoFrame);
     QWidget *scrolContainer = new QWidget;
     scrolContainer->setObjectName("container");
@@ -185,16 +194,38 @@ Groups::Groups() {
 
 
 
-    mainHLayout->addLayout(infoContainer);
 
-    mainHLayout->addLayout(groupContainer);
-    mainHLayout->addLayout(groupContainer2);
-    //mainHLayout->addLayout(groupContainer3);
+
+    inputContainer = new QVBoxLayout;
+
+
+    inputContainer->addLayout(infoContainer);
+
+    inputContainer->addLayout(addGroupContainer);
+
+    inputContainer->setAlignment(Qt::AlignTop);
+
+    addGroupContainer->setAlignment(Qt::AlignTop);
+
+    inputContainer->addLayout(groupContainer);
+    inputContainer->addLayout(groupContainer2);
+
 
     //mainHLayout->addWidget(deskScrollArea);
-    mainHLayout->addStretch();
+    //mainHLayout->addStretch();
 
-    mainHLayout->setAlignment(Qt::AlignLeft);
+   mainHLayout->setAlignment(Qt::AlignLeft);
+
+    content->addLayout(inputContainer);
+
+
+
+
+
+
+
+    mainHLayout->addWidget(deskScrollArea);
+
 
     this->setLayout(mainHLayout);
     this->setStyleSheet(BACK_WHITE);
@@ -202,6 +233,10 @@ Groups::Groups() {
 
     networkManagerGroup = new QNetworkAccessManager();
     connect(networkManagerGroup, &QNetworkAccessManager::finished, this, &Groups::onHttpResult);
+
+
+    addManagerGroup = new QNetworkAccessManager();
+    connect(addManagerGroup, &QNetworkAccessManager::finished, this, &Groups::onHttpResultsetGroup);
 
     loadGroups();
 }
@@ -220,11 +255,33 @@ void Groups::onBackPressed() {
 }
 
 
+
+
+void Groups::checkNameGroup() {
+    if (addGroupEdit->text().length() >= 4) {
+        addGroupButton->setStyleSheet(BUTTON_SOLID);
+         addGroupButton->setDisabled(false);
+    } else {
+        addGroupButton->setStyleSheet(BUTTON_DISABLED);
+         addGroupButton->setDisabled(true);
+    }
+}
+
+
 void Groups::onHttpResult(QNetworkReply *reply) {
 
 }
 
+void Groups::onHttpResultsetGroup(QNetworkReply *reply) {
+
+}
+
+
 void Groups::loadGroups() {
+    addGroupEdit->setText("");
+    addGroupButton->setStyleSheet(BUTTON_DISABLED);
+    addGroupButton->setDisabled(true);
+
     QJsonObject loadGroupsJson;
     QJsonObject userIDJson;
     userIDJson.insert("userID", "213564544");
@@ -244,5 +301,63 @@ void Groups::loadGroups() {
         );
         qDebug() << "request send" << endl;
     }
+
+
+void Groups::addGroupButtonPressed() {
+    QJsonObject setGroupJson;
+    QJsonObject bodyJson;
+    bodyJson.insert("userID", "213564544");
+    bodyJson.insert("groupTitle", addGroupEdit->text());
+    setGroupJson.insert("setGroup", bodyJson);
+
+        qDebug() << "create request" << endl;
+
+
+
+        QNetworkRequest request(QUrl(SERVER_URL + ""));
+        request.setHeader(QNetworkRequest::ContentTypeHeader,
+                          QStringLiteral("application/json;charset=utf-8"));
+        qDebug() << "request data"<< QJsonDocument(setGroupJson).toJson(QJsonDocument::Compact) << endl;
+        networkManagerGroup->post(
+            request,
+            QJsonDocument(setGroupJson).toJson(QJsonDocument::Compact)
+        );
+        qDebug() << "request send" << endl;
+
+
+
+        QHBoxLayout *groupContainer3 = new QHBoxLayout;
+        QLabel *groupImageLabel3 = new QLabel("");
+        QPixmap groupImage3(":/resc/resc/group.svg");
+        groupImageLabel3->setPixmap(groupImage3);
+        groupImageLabel3->setStyleSheet(FRIEND_IMAGE);
+
+        QLabel *groupName3 = new QLabel();
+        groupName3->setText(addGroupEdit->text());
+
+        groupName3->setStyleSheet(FRIEND_NAME_SURNAME);
+
+        QPushButton *inviteGroupButton3 = new QPushButton("Пригласить в группу");
+
+        inviteGroupButton3->setStyleSheet(BUTTON_SOLID);
+
+        QHBoxLayout *groupButtonContainer3 = new QHBoxLayout;
+
+        groupButtonContainer3->addWidget(inviteGroupButton3);
+        groupContainer3->addWidget(groupImageLabel3);
+        groupContainer3->addWidget(groupName3);
+        groupContainer3->addLayout(groupButtonContainer3);
+        groupContainer3->setAlignment(Qt::AlignTop);
+
+        inputContainer->addLayout(groupContainer3);
+
+        loadGroups();
+
+
+    }
+
+
+
+
 
 

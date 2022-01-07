@@ -12,6 +12,7 @@
 #include <ui/desk/Groups.h>
 #include <ui/desk/Groups.h>
 #include <ui/desk/Settings.h>
+#include <ui/desk/Group.h>
 
 
 using namespace screens;
@@ -44,7 +45,9 @@ BaseFragment* ScreensFactory::create(QString tag) {
         return new Shedule;
     } else if (tag == MY_SETTINGS_SCREEN) {
         return new Settings;
-    }   else {
+    } else if (tag == GROUP) {
+        return new Group;
+    }  else {
         return nullptr;
     }
 }

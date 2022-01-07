@@ -21,6 +21,7 @@ using namespace screens;
 
 LoginFragment::LoginFragment() {
 
+
     qDebug("SplashFragnebt crete");                                             // строка для дебага
 
     QVBoxLayout *mainVLayout = new QVBoxLayout;                                 // создаем общую обертку  типа QVBoxLayout V - VERTICAL  (SPISOK)
@@ -83,6 +84,7 @@ LoginFragment::LoginFragment() {
 
     loginButton->setStyleSheet(BUTTON_SOLID);
     connect(loginButton, &QPushButton::clicked, this, &LoginFragment::onLoginPressed);
+
     buttonContainer->addWidget(loginEdit);
     buttonContainer->addWidget(passwordEdit);
     loadingButtonContainer->addWidget(loginButton);

@@ -10,7 +10,6 @@
 #include <QSvgWidget>
 #include <QLabel>
 
-#include "Shedule_generation.h"
 #include <models/deskmodel.h>
 
 #include <ui/view/qsvgbutton.h>

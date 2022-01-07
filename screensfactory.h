@@ -17,6 +17,7 @@ namespace screens {
     static const QString MY_GROUPS_SCREEN = "groups_screen";
     static const QString MY_SHEDULE_SCREEN = "shedule_screen";
     static const QString MY_SETTINGS_SCREEN = "settings_screen";
+    static const QString GROUP = "group_screen";
 
 };
 

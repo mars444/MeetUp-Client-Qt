@@ -48,6 +48,7 @@ public slots:
     void myShedule();
     void myGroups();
     void mySettings();
+    void Group();
 
 
     void onHttpResult(QNetworkReply *reply);

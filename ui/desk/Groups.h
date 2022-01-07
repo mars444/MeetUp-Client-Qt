@@ -5,6 +5,8 @@
 #include <QNetworkAccessManager>
 #include <QScrollBar>
 #include <QVBoxLayout>
+#include <QLineEdit>
+#include <QPushButton>
 
 #include <models/cardmodel.h>
 #include <models/deskmodel.h>
@@ -17,11 +19,20 @@ private:
     QLabel *users;
     QLabel *progress;
 
+    QVBoxLayout *inputContainer;
+
+    QVBoxLayout *mainHLayout;
+
+    QPushButton *addGroupButton;
+    QLineEdit *addGroupEdit;
+
     const QString LOAD_DATA = "load_data";
     const QString CHECK = "check";
 
     DeskModel *model;
     QNetworkAccessManager *networkManagerGroup;
+
+    QNetworkAccessManager *addManagerGroup;
 
 public:
     Groups();
@@ -35,6 +46,13 @@ public slots:
     void loadGroups();
 
 
+    void addGroupButtonPressed();
+
+    void checkNameGroup();
+
+
     void onHttpResult(QNetworkReply *reply);
+
+      void onHttpResultsetGroup(QNetworkReply *reply);
 
 };

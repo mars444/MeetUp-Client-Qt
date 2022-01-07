@@ -26,6 +26,15 @@ namespace styles{
             "   margin:20px 50px;"
             "}";
 
+    static const QString SETTINGS_LABEL  =
+            "QLabel {"
+
+
+            "   margin-right:30px;"
+            "   font-size: 18px;"
+            "   text-align: center;"
+            "}";
+
 
 
 

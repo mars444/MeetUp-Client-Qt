@@ -4,6 +4,7 @@
 #include <ui/view/waitingspinnerwidget.h>
 using namespace styles;
 
+
 #include <QLabel>
 #include <cstring>
 #include <QTimeEdit>
@@ -31,7 +32,7 @@ QDynamicButton::QDynamicButton(QWidget *parent) :
 {
 
 
-   QHBoxLayout *mainHLayout = new QHBoxLayout;
+   QHBoxLayout *mainLayout = new QHBoxLayout;
     QVBoxLayout *inputContainer = new QVBoxLayout;
 
     QHBoxLayout *titleContainer = new QHBoxLayout;
@@ -215,8 +216,8 @@ QDynamicButton::QDynamicButton(QWidget *parent) :
 
     content->addLayout(inputContainer);
 
-    mainHLayout->setAlignment(Qt::AlignHCenter);
-    mainHLayout->addWidget(deskScrollArea);
+    mainLayout->setAlignment(Qt::AlignHCenter);
+    mainLayout->addWidget(deskScrollArea);
 
 
     this->addWidget(stack);

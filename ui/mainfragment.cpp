@@ -36,6 +36,11 @@ MainFragment::MainFragment() {
     QPushButton *myFriendsButton = new QPushButton("Мои друзья");
     QPushButton *myGroupsButton = new QPushButton("Мои группы");
     QPushButton *mySettingsButton = new QPushButton("Настройки");
+
+     QPushButton *mySettingsButton1 = new QPushButton("qwrqwrewrwer");
+
+
+        connect(mySettingsButton1, &QPushButton::clicked, this, &MainFragment::Group);
     exitButton = new QPushButton("Выйти из профиля");
 
     userContainer = new QVBoxLayout;
@@ -124,6 +129,7 @@ MainFragment::MainFragment() {
     profileContainer->addWidget(myFriendsButton);
     profileContainer->addWidget(myGroupsButton);
     profileContainer->addWidget(mySettingsButton);
+        profileContainer->addWidget(mySettingsButton1);
     profileContainer->addWidget(exitButton);
     profileContainer->addWidget(loadingExitContainer);
     profileContainer->setAlignment(Qt::AlignTop);
@@ -208,6 +214,10 @@ void MainFragment::myShedule() {
 
 void MainFragment::mySettings() {
     navigateTo(MY_SETTINGS_SCREEN);
+}
+
+void MainFragment::Group() {
+    navigateTo(GROUP);
 }
 
 

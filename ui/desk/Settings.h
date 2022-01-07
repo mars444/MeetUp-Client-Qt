@@ -18,17 +18,29 @@ class Settings : public BaseFragment{
     Q_OBJECT
 
 private:
-    QString token;
 
-    bool editmode = false;
-    DeskModel *model;
+    QLineEdit *userNameEdit;
+    QLabel *userNameLabel;
 
-    WaitingSpinnerWidget *loading;
+    QLineEdit *userSurnameEdit;
+    QLabel *userSurnameLabel;
+
+    QLineEdit *userAgeEdit;
+    QLabel *userAgeLabel;
+
+    QLineEdit *userAdressEdit;
+    QLabel *userAdressLabel;
+
+    QLineEdit *userMailEdit;
+    QLabel *userMailLabel;
+
+    QPushButton *setSettingsButton;
+
 
     QLabel *titleLabel;
     QLineEdit *titleEdit;
     QPlainTextEdit *descriptionEdit;
-    QPushButton *createButton;
+
     QNetworkAccessManager *networkManager;
 
     void setData(BaseModel* model) override;
@@ -40,6 +52,10 @@ public:
 public slots:
     void onBackPressed();
     void onCreatePressed();
+    void checkSettings();
+
+    void setSettings();
+    void getSettings();
     void onHttpResult(QNetworkReply *reply);
 
     /**

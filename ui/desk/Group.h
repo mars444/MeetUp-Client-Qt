@@ -16,48 +16,42 @@
 
 #include <models/deskmodel.h>
 
-class Friends : public BaseFragment{
+class Group : public BaseFragment{
     Q_OBJECT
 
 private:
-    QString token;
+
+    QLabel *groupEventDateLabel;
+    QLabel *groupEventstart;
+    QLabel *groupEventend;
 
 
 
     QVBoxLayout *mainVLayout;
-    QVBoxLayout *inputContainerFriends;
 
-    WaitingSpinnerWidget *loading;
 
-    QLabel *titleLabel;
 
-    QLineEdit *addFriendEdit;
+    QLabel *GrouptitleLabel;
+    QLineEdit *titleEdit;
     QPlainTextEdit *descriptionEdit;
     QPushButton *createButton;
-    QPushButton *addFriendButton;
     QNetworkAccessManager *networkManager;
 
-        QNetworkAccessManager *addManagerFriend;
-
 public:
-    Friends();
-    ~Friends();
+    Group();
+    ~Group();
 
 
 public slots:
 
 
-    void loadFriends();
+    void loadGroup();
 
     void onBackPressed();
 
-    void addFriendButtonPressed();
-    void checkNameFriend();
-
-    void onHttpResultFriend(QNetworkReply *reply);
-
-
     void onHttpResult(QNetworkReply *reply);
+
+
 
     /**
      * @brief checkData
