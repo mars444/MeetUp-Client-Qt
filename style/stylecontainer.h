@@ -198,7 +198,7 @@ namespace styles{
             "   background-color:"+COLOR_BACKGROUND+";"
             "   border-radius:100px;"            "}"
               "QWidget#fragment {"
-             "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #A184F9, stop:1 #8046A4);"
+             "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #fff, stop:1 #8046A4);"
              "}";
 
     static const QString FRAME_8PX_WHITE =

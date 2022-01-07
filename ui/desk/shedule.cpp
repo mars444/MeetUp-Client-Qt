@@ -54,7 +54,7 @@ Shedule::Shedule() {
     QHBoxLayout *titleContainer = new QHBoxLayout;
     titleContainer->setAlignment(Qt::AlignTop);
     QSvgButton *backButton = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(24,24));
-    QLabel *titleLabel = new QLabel(tr("My Shedule"));
+    QLabel *titleLabel = new QLabel(tr("My Sheduleqqqqqqqqqqqq"));
 
 
     calendar = new QCalendarWidget;

@@ -91,8 +91,8 @@ MainFragment::MainFragment() {
     QPixmap profileImage(":/resc/resc/user2.png");
     profileImageLabel->setPixmap(profileImage);
     profileImageLabel->setContentsMargins(0,15,0,0);
-    profileImageLabel->setMinimumHeight(162);
-    profileImageLabel->setMaximumHeight(109);
+    profileImageLabel->setMinimumHeight(162);  //x
+    profileImageLabel->setMaximumHeight(109);  //x-53
 
 
 
