@@ -339,7 +339,7 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
 
 
-            QPushButton *inviteGroupButton2 = new QPushButton("                  Пригласить в группу          ");
+            QPushButton *inviteGroupButton2 = new QPushButton("             Пригласить в группу          ");
 
             QPixmap pixmapinviteGroup(":/resc/resc/arrow_right.svg");
             QIcon ButtonIconinviteGroup(pixmapinviteGroup);
@@ -493,12 +493,14 @@ void Groups::onHttpResult(QNetworkReply *reply) {
                        controlsRestrictorWidget->setMaximumWidth(1120);
                        GroupContainer2->setContentsMargins(50,0,50,0);
 
+                       inputContainerGroups->addWidget(controlsRestrictorWidget);
+
             GroupContainer2->addWidget(stack);
 
             GroupContainer2->setAlignment(Qt::AlignCenter);
 
 
-            inputContainerGroups->addWidget(controlsRestrictorWidget);
+
 
             inputContainerGroups->setAlignment(Qt::AlignCenter);
 
@@ -733,7 +735,7 @@ void Groups::addGroupButtonPressed() {
         backWidget->setLayout(backLayout);
 
 
-        QPushButton *inviteGroupButton2 = new QPushButton("                  Пригласить в группу          ");
+        QPushButton *inviteGroupButton2 = new QPushButton("              Пригласить в группу          ");
 
         QPixmap pixmapinviteGroup(":/resc/resc/arrow_right.svg");
         QIcon ButtonIconinviteGroup(pixmapinviteGroup);
@@ -878,12 +880,20 @@ void Groups::addGroupButtonPressed() {
 
 
 
+        QWidget *controlsRestrictorWidget = new QWidget();
+        controlsRestrictorWidget->setLayout(GroupContainer2);
+        controlsRestrictorWidget->setMaximumWidth(1120);
+        GroupContainer2->setContentsMargins(50,0,50,0);
+
+        inputContainerGroups->addWidget(controlsRestrictorWidget);
+
+
+
 
 
         GroupContainer2->addWidget(stack);
 
 
-        inputContainerGroups->addLayout(GroupContainer2);
 
          mButtonBackToLayoutMap.insert(backAddtoGroup,GroupContainer2);
 

@@ -83,10 +83,13 @@ private:
 
     QLabel *timeLabelTask;
 
+    QDate datetohttp;
+
     QSvgButton *deleteTaskButton;
 
 
     QHBoxLayout *titleEditContainer;
+
     QList<QString> titleList;
 
     QLabel *dateTask;

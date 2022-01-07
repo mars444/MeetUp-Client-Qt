@@ -77,7 +77,16 @@ Group::Group() {
 
     groupMeets = new QPushButton("Встречи");
 
-    groupDelete = new QPushButton("Удалить группу");
+    groupDelete = new QPushButton("Удалить группу  ");
+
+
+    QPixmap pixmapgroupDelete(":/resc/resc/cross.svg");
+    QIcon ButtonIcongroupDelete(pixmapgroupDelete);
+
+    groupDelete->setIcon(ButtonIcongroupDelete);
+    groupDelete-> setLayoutDirection ( Qt :: RightToLeft );
+    groupDelete-> setStyleSheet("text-align: right");
+    groupDelete->setIconSize(QSize(20,20));
 
       connect(groupList, &QPushButton::clicked, this, &Group::groupListPressed);
 
@@ -88,7 +97,7 @@ Group::Group() {
 
     groupDelete->setStyleSheet(BUTTON_PROFILE_RED);
 
-    groupDelete->setMaximumWidth(150);
+    groupDelete->setMaximumWidth(180);
 
 
 
@@ -172,6 +181,8 @@ Group::Group() {
     titleContainer->addWidget(backButton);
     titleContainer->addWidget(GrouptitleLabel);
     titleContainer->setContentsMargins(0,24,0,16);
+
+    titleContainer->setAlignment(Qt::AlignCenter);
 
     GrouptitleLabel->setContentsMargins(16,0,0,0);
 
@@ -417,7 +428,18 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
 
                 QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
 
-                QPushButton *deleteFriendButton2 = new QPushButton("Удалить из группы");
+                QPushButton *deleteFriendButton2 = new QPushButton("      Удалить из группы    ");
+
+                QPixmap pixmapdeleteFriend(":/resc/resc/bin_white.svg");
+                QIcon ButtonIcondeleteFriend(pixmapdeleteFriend);
+
+                deleteFriendButton2->setIcon(ButtonIcondeleteFriend);
+                deleteFriendButton2 -> setLayoutDirection ( Qt :: RightToLeft );
+                deleteFriendButton2 -> setStyleSheet("text-align: right");
+                deleteFriendButton2->setIconSize(QSize(20,20));
+
+                deleteFriendButton2->setMaximumWidth(250);
+                deleteFriendButton2->setMinimumWidth(250);
 
 
                 inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
@@ -430,6 +452,9 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
 
                 //friendButtonContainer2->addWidget(inviteGroupButton2);
                 friendButtonContainer2->addWidget(deleteFriendButton2);
+
+
+
 
 
 

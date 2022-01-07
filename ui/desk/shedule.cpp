@@ -11,6 +11,12 @@
 #include <QJsonDocument>
 #include "nlohmann/json.hpp"
 
+#include <string>
+
+
+
+
+
 #include "ui/auth/user_data.h"
 
 #include <QJsonArray>
@@ -50,7 +56,7 @@ Shedule::Shedule() {
 
 
     calendar = new QCalendarWidget;
- calendar->setMinimumDate(QDate::currentDate());
+    //calendar->setMinimumDate(QDate::currentDate());
 
     calendar->setMinimumHeight(350);
 
@@ -271,6 +277,11 @@ Shedule::Shedule() {
 
    // qDebug() << "TTTILE EDIT COUNNTT  "<<  this->titleEditContainer->count() << endl;
 
+
+    dateToHTTP = calendar->selectedDate().toString("MM-dd-yyyy");
+
+
+
 }
 
 Shedule::~Shedule() {
@@ -339,6 +350,7 @@ void Shedule::onHttpResultDeleteEvent(QNetworkReply *reply) {
 
 void Shedule::day_btn_1() {
     calendar->setSelectedDate(date1);
+    loadSheduleFromDate();
     date1Button->setStyleSheet(BUTTON_SOLID);
     date2Button->setStyleSheet(BUTTON_DISABLED);
     date3Button->setStyleSheet(BUTTON_DISABLED);
@@ -351,6 +363,7 @@ void Shedule::day_btn_1() {
 
 void Shedule::day_btn_2() {
     calendar->setSelectedDate(date2);
+    loadSheduleFromDate();
     date2Button->setStyleSheet(BUTTON_SOLID);
     date1Button->setStyleSheet(BUTTON_DISABLED);
     date3Button->setStyleSheet(BUTTON_DISABLED);
@@ -363,6 +376,7 @@ void Shedule::day_btn_2() {
 
 void Shedule::day_btn_3() {
     calendar->setSelectedDate(date3);
+    loadSheduleFromDate();
     date3Button->setStyleSheet(BUTTON_SOLID);
     date1Button->setStyleSheet(BUTTON_DISABLED);
     date2Button->setStyleSheet(BUTTON_DISABLED);
@@ -375,6 +389,7 @@ void Shedule::day_btn_3() {
 
 void Shedule::day_btn_4() {
     calendar->setSelectedDate(date4);
+    loadSheduleFromDate();
     date4Button->setStyleSheet(BUTTON_SOLID);
     date1Button->setStyleSheet(BUTTON_DISABLED);
     date2Button->setStyleSheet(BUTTON_DISABLED);
@@ -387,6 +402,7 @@ void Shedule::day_btn_4() {
 
 void Shedule::day_btn_5() {
     calendar->setSelectedDate(date5);
+    loadSheduleFromDate();
     date5Button->setStyleSheet(BUTTON_SOLID);
     date1Button->setStyleSheet(BUTTON_DISABLED);
     date2Button->setStyleSheet(BUTTON_DISABLED);
@@ -399,6 +415,7 @@ void Shedule::day_btn_5() {
 
 void Shedule::day_btn_6() {
     calendar->setSelectedDate(date6);
+    loadSheduleFromDate();
     date6Button->setStyleSheet(BUTTON_SOLID);
     date1Button->setStyleSheet(BUTTON_DISABLED);
     date2Button->setStyleSheet(BUTTON_DISABLED);
@@ -412,6 +429,7 @@ void Shedule::day_btn_6() {
 void Shedule::day_btn_7() {
 
     calendar->setSelectedDate(date7);
+    loadSheduleFromDate();
 
     date7Button->setStyleSheet(BUTTON_SOLID);
     date1Button->setStyleSheet(BUTTON_DISABLED);
@@ -475,12 +493,14 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
    //task_container->setAlignment(Qt::AlignJustify);
 
-        task_container->addWidget(mainImageTask);
+    task_container->addWidget(mainImageTask);
 
     task_container->addWidget(timeLabelTask);
 
 
     task_container->addWidget(boxTitleTask);
+    boxTitleTask->setStyleSheet(TASK_PADDING);
+
 
 
     task_container->addWidget(deleteTaskButton);
@@ -592,34 +612,36 @@ void Shedule::deleteButton_pressed() {
 
     QHBoxLayout *layout = deleteTaskButtonToLayoutMap.take(button);
 
-//    QWidget *event_name = layout->takeAt(1)->widget();
 
-//    QLayout *times = layout->takeAt(2)->layout();
+    ////////////////////////////////////////////
 
-//    QWidget *time_begin = times->takeAt(0)->widget();
-
-//    QWidget *time_end= times->takeAt(1)->widget();
-
-//    QLabel* event_nameLabel = dynamic_cast<QLabel*>(event_name);
-
-//    QLabel* time_begin_label = dynamic_cast<QLabel*>(time_begin);
-
-//    QLabel* time_end_label = dynamic_cast<QLabel*>(time_end);
+//    task_container->addWidget(mainImageTask);       изображение      0000
+//    task_container->addWidget(timeLabelTask);         время       1111111    qlabel
+//    task_container->addWidget(boxTitleTask);          евент наэйм  222222222    qlabel
+//    task_container->addWidget(deleteTaskButton);  к
 
 
-//    QString event_nameString = event_nameLabel->text();
 
-//    QString time_beginString = time_begin_label->text();
+    QWidget *event_name = layout->takeAt(2)->widget();
+    QLabel* event_nameLabel = dynamic_cast<QLabel*>(event_name);
+    QString event_nameString = event_nameLabel->text();
+    qDebug() <<"deleteeeeeee event"  <<  event_nameString  << endl;
 
-//    QString time_endString = time_end_label->text();
+    QWidget *time = layout->takeAt(1)->widget();
+    QLabel* timeLabel = dynamic_cast<QLabel*>(time);
+    QString timeString = timeLabel->text();
 
-//    qDebug() <<  event_nameString  << endl;
+    std::string time_begin = timeString.toStdString().substr(0,5);
 
-//    qDebug() <<  time_beginString  << endl;
+    std::string time_end = timeString.toStdString().substr(9,13);
 
-//    qDebug() <<  time_endString  << endl;
+    QString begin_str = QString::fromStdString(time_begin);
 
+    QString end_str = QString::fromStdString(time_end);
 
+    qDebug() <<"timeeeeee  begin  "  <<  begin_str  << endl;
+
+    qDebug() <<"timeeeeee  end  "  <<  end_str  << endl;
 
 //    QJsonObject deleteEventJson;
 //    QJsonObject bodyJson;
@@ -662,6 +684,10 @@ void Shedule::deleteButton_pressed() {
     }
     layout->update();
 
+    delete event_nameLabel;
+
+    delete timeLabel;
+
 
 
     checkData();
@@ -674,15 +700,9 @@ void Shedule::deleteButton_pressed() {
 
 }
 
-
-
-
-
-
-
-
-
 void Shedule::calendar_btn(const QDate &date) {
+
+    loadSheduleFromDate();
 
 
 
@@ -701,9 +721,11 @@ void Shedule::calendar_btn(const QDate &date) {
       QString strdate = date.toString();
       dateTotask = date.toString("dd-MM-yy");
 
-      dateToHTTP = date.toString("MM-dd-yyyy");
+     datetohttp = calendar->selectedDate();
 
-    if(!strDinamicckeck.contains(strdate) && date !=   QDate::currentDate()){
+      dateToHTTP = datetohttp.toString("MM-dd-yyyy");
+
+    if(!strDinamicckeck.contains(strdate) && date !=   calendar->selectedDate()){
 
 
 
@@ -977,7 +999,7 @@ void Shedule::setButtonDate(void) {
 
 
 
-    QDate date =   QDate::currentDate();
+    QDate date =   calendar->selectedDate();
 
             QString strcheck = date.toString();
 
@@ -1024,6 +1046,15 @@ void Shedule::setButtonDate(void) {
                   str5 = date.addDays(3).toString("dddd\n dd MMMM");
                   str6 = date.addDays(4).toString("dddd\n dd MMMM");
                   str7 = date.addDays(5).toString("dddd\n dd MMMM");
+
+                  date1 = date.addDays(-1);
+                  date2 = date;
+                  date3 = date.addDays(1);
+                  date4 = date.addDays(2);
+                  date5 = date.addDays(3);
+                  date6 = date.addDays(4);
+                  date7 = date.addDays(5);
+
              } else if(strcheck.contains("ср")) {
 
                  date3Button->setStyleSheet(BUTTON_SOLID);
@@ -1207,7 +1238,7 @@ void Shedule::loadSheduleFromDate() {
 
      qDebug() << "this id.........." << ID_QSTRING;
 
-    QDate date = QDate::currentDate();
+    QDate date = calendar->selectedDate();
     QJsonObject loadSheduleJson;
     QJsonObject currentDate;
 
@@ -1261,6 +1292,8 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
 
         nlohmann::json j = nlohmann::json::parse(str);
 
+        if(j["get_events"] != "Not found events"){
+
             nlohmann::json::iterator it = j.begin();
 
             nlohmann::json value = j[it.key()];
@@ -1308,10 +1341,7 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
 
                 connect(deleteTaskButton, &QSvgButton::clicked, this, &Shedule::deleteButton_pressed);
 
-
-
-
-                timeLabelTask->setText(QString("begin %1 \n end: %2.").arg(time_begin_string, time_end_string));
+                timeLabelTask->setText(QString("%1----%2").arg(time_begin_string, time_end_string));
 
 
                 QString titleEvent = QString::fromUtf8(event_name.c_str());
@@ -1333,11 +1363,10 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
                 //task_container->setAlignment(Qt::AlignCenter);
 
                 task_container->addWidget(mainImageTask);
-                task_container->addWidget(boxTitleTask);
                 task_container->addWidget(timeLabelTask);
-
+                task_container->addWidget(boxTitleTask);
                 task_container->addWidget(deleteTaskButton);
-                task_container->setContentsMargins(125,0,0,0);
+                //task_container->setContentsMargins(125,0,0,0);
 
                 //inputContainer->insertLayout(3,task_container);
                 inputContainer->addLayout(task_container);
@@ -1345,6 +1374,10 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
                 deleteTaskButtonToLayoutMap.insert(deleteTaskButton,task_container);
 
              }
+
+        }
+
+
 
         } else {
 

@@ -36,10 +36,10 @@ MainFragment::MainFragment() {
 
     QVBoxLayout *lentContainer = new QVBoxLayout;
 
-    QPushButton *mySheduleButton = new QPushButton("Мое расписание");
-    QPushButton *myFriendsButton = new QPushButton("Мои друзья");
-    QPushButton *myGroupsButton = new QPushButton("Мои группы");
-    QPushButton *mySettingsButton = new QPushButton("Профиль");
+    QPushButton *mySheduleButton = new QPushButton("       Мое расписание");
+    QPushButton *myFriendsButton = new QPushButton("            Мои друзья     ");
+    QPushButton *myGroupsButton = new QPushButton("            Мои группы    ");
+    QPushButton *mySettingsButton = new QPushButton("                Профиль       ");
 
 
 
@@ -66,7 +66,7 @@ MainFragment::MainFragment() {
 
     // QPushButton *mySettingsButton1 = new QPushButton("qwrqwrewrwer");
 
-    exitButton = new QPushButton("Выйти из профиля");
+    exitButton = new QPushButton("    Выйти из профиля");
 
     QPixmap pixmapexitButton(":/resc/resc/enter.svg");
     QIcon ButtonIconexitButton(pixmapexitButton);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.9.1, 2022-01-07T12:28:02. -->
+<!-- Written by QtCreator 4.9.1, 2022-01-07T12:31:30. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -58,6 +58,14 @@
    <valuelist type="QVariantList" key="ClangCodeModel.CustomCommandLineKey"/>
    <value type="bool" key="ClangCodeModel.UseGlobalConfig">false</value>
    <value type="QString" key="ClangCodeModel.WarningConfigId">{e2a38eae-6fa3-4529-860f-5adcc11420e6}</value>
+   <value type="bool" key="ClangTools.BuildBeforeAnalysis">false</value>
+   <value type="QString" key="ClangTools.DiagnosticConfig">Builtin.TidyAndClazy</value>
+   <valuelist type="QVariantList" key="ClangTools.SelectedDirs">
+    <value type="QString">/home/mars444/Рабочий стол/meet_up/meet/meetup_01.pro</value>
+   </valuelist>
+   <valuelist type="QVariantList" key="ClangTools.SelectedFiles"/>
+   <valuelist type="QVariantList" key="ClangTools.SuppressedDiagnostics"/>
+   <value type="bool" key="ClangTools.UseGlobalSettings">true</value>
   </valuemap>
  </data>
  <data>

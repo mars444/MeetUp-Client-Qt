@@ -278,42 +278,6 @@ namespace styles{
             "   subcontrol-origin: margin;"
             "}";
 
-    static const QString TEXT_DARK_LABLE =
-            "color:" + COLOR_TEXT_PRIMARY + ";"
-            "font-size:16px;";
-
-    static const QString TEXT_HINT_SMAL_LABLE =
-            "color:" + COLOR_TEXT_HINT + ";"
-            "font-size:14px;";
-
-    static const QString TEXT_PRIMARY_SMAL_LABLE =
-            "color:" + COLOR_PRIMARY + ";"
-            "font-size:14px;";
-
-    static const QString TEXT_PIMARY_18PX_LABLE =
-            "color:" + COLOR_PRIMARY + ";"
-            "font-size:18px;";
-
-    static const QString TEXT_HINT_LABLE =
-            "color:" + COLOR_TEXT_HINT+ ";"
-            "font-size:16px;";
-
-    static const QString TEXT_HINT_16PX_LABLE =
-            "color:" + COLOR_TEXT_HINT + ";"
-            "font-size:16px;";
-
-    static const QString TEXT_HINT_18PX_LABLE =
-            "color:" + COLOR_TEXT_HINT + ";"
-            "font-size:18px;";
-
-    static const QString TEXT_PRIMARY_16PX_LABLE =
-            "color:" + COLOR_PRIMARY + ";"
-            "font-size:16px;";
-
-    static const QString TEXT_DARK_18PX_LABLE =
-            "color:" + COLOR_TEXT_PRIMARY + ";"
-            "font-size:18px;";
-
 };
 
 

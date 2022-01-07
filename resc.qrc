@@ -30,6 +30,7 @@
         <file>resc/plus.svg</file>
         <file>resc/plus_white.svg</file>
         <file>resc/arrow_right.svg</file>
+        <file>resc/cross.svg</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>
