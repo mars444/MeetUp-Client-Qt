@@ -2,12 +2,17 @@
 #include "screensfactory.h"
 #include <common/navigator.h>
 
+#include <QTranslator>
+#include <QLibraryInfo>
+
 #include <QDesktopWidget>
 #include <QException>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {   
+
+
     try {
         qDebug("create main window");
         container = new QStackedWidget;

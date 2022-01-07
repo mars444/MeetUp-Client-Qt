@@ -16,6 +16,7 @@ using namespace styles;
 #include <QJsonDocument>
 #include <QSettings>
 #include <QMessageBox>
+#include <QMovie>
 
 #include "ui/auth/user_data.h"
 
@@ -32,11 +33,10 @@ Settings::Settings() {
 
 
    QVBoxLayout *mainVLayout = new QVBoxLayout;
-   QHBoxLayout *inputContainer = new QHBoxLayout;
 
     QHBoxLayout *titleContainer = new QHBoxLayout;
     QSvgButton *backButton = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(24,24));
-    titleLabel = new QLabel("Настройки");
+    titleLabel = new QLabel(tr("Settings"));
 
 
     qDebug()<<"1"<<endl;
@@ -52,7 +52,7 @@ Settings::Settings() {
 
     QHBoxLayout *inputcountryInner = new QHBoxLayout;
     usercountryEdit = new QLineEdit;
-    usercountryLabel = new QLabel("Country:");
+    usercountryLabel = new QLabel(tr("Country:"));
     usercountryEdit->setMaximumWidth(355);
     usercountryEdit->setMinimumWidth(355);
     usercountryEdit->setMinimumHeight(50);
@@ -66,7 +66,7 @@ Settings::Settings() {
 
     QHBoxLayout *inputindexInner = new QHBoxLayout;
     userindexEdit = new QLineEdit;
-    userindexLabel = new QLabel("Index:");
+    userindexLabel = new QLabel(tr("Index:"));
     userindexEdit->setMaximumWidth(355);
     userindexEdit->setMinimumWidth(355);
     userindexEdit->setMinimumHeight(50);
@@ -79,7 +79,7 @@ Settings::Settings() {
 
     QHBoxLayout *inputdistrictInner = new QHBoxLayout;
     userdistrictEdit = new QLineEdit;
-    userdistrictLabel = new QLabel("District:");
+    userdistrictLabel = new QLabel(tr("District:"));
     userdistrictEdit->setMaximumWidth(355);
     userdistrictEdit->setMinimumWidth(355);
     userdistrictEdit->setMinimumHeight(50);
@@ -91,7 +91,7 @@ Settings::Settings() {
 
     QHBoxLayout *inputcityInner = new QHBoxLayout;
     usercityEdit = new QLineEdit;
-    usercityLabel = new QLabel("City:");
+    usercityLabel = new QLabel(tr("City:"));
     usercityEdit->setMaximumWidth(355);
     usercityEdit->setMinimumWidth(355);
     usercityEdit->setMinimumHeight(50);
@@ -104,7 +104,7 @@ Settings::Settings() {
 
     QHBoxLayout *inputstreetInner = new QHBoxLayout;
     userstreetEdit = new QLineEdit;
-    userstreetLabel = new QLabel("Street:");
+    userstreetLabel = new QLabel(tr("Street:"));
     userstreetEdit->setMaximumWidth(355);
     userstreetEdit->setMinimumWidth(355);
     userstreetEdit->setMinimumHeight(50);
@@ -116,7 +116,7 @@ Settings::Settings() {
 
     QHBoxLayout *inputhousingInner = new QHBoxLayout;
     userhousingEdit = new QLineEdit;
-    userhousingLabel = new QLabel("Housing:");
+    userhousingLabel = new QLabel(tr("Housing:"));
     userhousingEdit->setMaximumWidth(355);
     userhousingEdit->setMinimumWidth(355);
     userhousingEdit->setMinimumHeight(50);
@@ -130,7 +130,7 @@ Settings::Settings() {
 
     QHBoxLayout *inputbuildingInner = new QHBoxLayout;
     userbuildingEdit = new QLineEdit;
-    userbuildingLabel = new QLabel("Building:");
+    userbuildingLabel = new QLabel(tr("Building:"));
     userbuildingEdit->setMaximumWidth(355);
     userbuildingEdit->setMinimumWidth(355);
     userbuildingEdit->setMinimumHeight(50);
@@ -142,6 +142,13 @@ Settings::Settings() {
 
      qDebug()<<"4"<<endl;
 
+
+    inputcountryInner->setContentsMargins(0,10,0,0);
+    inputdistrictInner->setContentsMargins(0,10,0,0);
+    inputcityInner->setContentsMargins(0,10,0,0);
+    inputstreetInner->setContentsMargins(0,10,0,0);
+    inputhousingInner->setContentsMargins(0,10,0,0);
+    inputindexInner->setContentsMargins(0,10,0,0);
 
 
     settingsInnerRight->addLayout(inputcountryInner);
@@ -160,7 +167,7 @@ Settings::Settings() {
      QHBoxLayout *inputNameInner = new QHBoxLayout;
      userNameEdit = new QLineEdit;
 
-     userNameLabel = new QLabel("Name:");
+     userNameLabel = new QLabel(tr("Name:"));
      userNameEdit->setMaximumWidth(355);
      userNameEdit->setMinimumWidth(355);
      userNameEdit->setMinimumHeight(50);
@@ -176,7 +183,7 @@ Settings::Settings() {
 
      QHBoxLayout *inputSurnameInner = new QHBoxLayout;
      userSurnameEdit = new QLineEdit;
-     userSurnameLabel = new QLabel("Surname:");
+     userSurnameLabel = new QLabel(tr("Surname:"));
      userSurnameEdit->setMaximumWidth(355);
      userSurnameEdit->setMinimumWidth(355);
      userSurnameEdit->setMinimumHeight(50);
@@ -190,7 +197,7 @@ Settings::Settings() {
 
      QHBoxLayout *inputAgeInner = new QHBoxLayout;
      userAgeEdit = new QLineEdit;
-     userAgeLabel = new QLabel("Age:");
+     userAgeLabel = new QLabel(tr("Age:"));
      userAgeEdit->setMaximumWidth(355);
      userAgeEdit->setMinimumWidth(355);
      userAgeEdit->setMinimumHeight(50);
@@ -202,7 +209,7 @@ Settings::Settings() {
 
      QHBoxLayout *inputStatusInner = new QHBoxLayout;
      userStatusEdit = new QLineEdit;
-     userStatusLabel = new QLabel("Status:");
+     userStatusLabel = new QLabel(tr("Status:"));
      userStatusEdit->setMaximumWidth(355);
      userStatusEdit->setMinimumWidth(355);
      userStatusEdit->setMinimumHeight(50);
@@ -215,7 +222,7 @@ Settings::Settings() {
 
      QHBoxLayout *inputDescriptionInner = new QHBoxLayout;
      userDescriptionEdit = new QLineEdit;
-     userDescriptionLabel = new QLabel("Description:");
+     userDescriptionLabel = new QLabel(tr("Description:"));
      userDescriptionEdit->setMaximumWidth(355);
      userDescriptionEdit->setMinimumWidth(355);
      userDescriptionEdit->setMinimumHeight(50);
@@ -227,7 +234,7 @@ Settings::Settings() {
 
      QHBoxLayout *inputLabelInner = new QHBoxLayout;
      userLabelEdit = new QLineEdit;
-     userLabelLabel = new QLabel("Label:");
+     userLabelLabel = new QLabel(tr("Label:"));
      userLabelEdit->setMaximumWidth(355);
      userLabelEdit->setMinimumWidth(355);
      userLabelEdit->setMinimumHeight(50);
@@ -240,7 +247,7 @@ Settings::Settings() {
 
     QHBoxLayout *inputPhoneNumberInner = new QHBoxLayout;
      userPhoneNumberEdit = new QLineEdit;
-     userPhoneNumberLabel = new QLabel("PhoneNumber:");
+     userPhoneNumberLabel = new QLabel(tr("PhoneNumber:"));
      userPhoneNumberEdit->setMaximumWidth(355);
      userPhoneNumberEdit->setMinimumWidth(355);
      userPhoneNumberEdit->setMinimumHeight(50);
@@ -253,7 +260,7 @@ Settings::Settings() {
 
      QHBoxLayout *inputMailInner = new QHBoxLayout;
      userMailEdit = new QLineEdit;
-     userMailLabel = new QLabel("Mail:");
+     userMailLabel = new QLabel(tr("Mail:"));
      userMailEdit->setMinimumWidth(355);
      userMailEdit->setMaximumWidth(355);
      userMailEdit->setMinimumHeight(50);
@@ -287,7 +294,7 @@ Settings::Settings() {
 
     QHBoxLayout *settingButtonContainer = new QHBoxLayout;
 
-    setSettingsButton = new QPushButton("Сохранить");
+    setSettingsButton = new QPushButton(tr("                                       Save                       "));
 
     setSettingsButton->setStyleSheet(BUTTON_SOLID);
 
@@ -307,12 +314,28 @@ Settings::Settings() {
 
     connect(backButton, &QSvgButton::clicked, this, &Settings::onBackPressed);
 
+
+    QLabel *centerContainer = new QLabel("");
+    QMovie *movie = new QMovie( ":/resc/resc/settings_50px.gif" );
+    centerContainer->setMovie(movie); // label имеет тип QLabel*
+    movie->start();
+
     titleContainer->addWidget(backButton);
     titleContainer->addWidget(titleLabel);
-    titleContainer->setContentsMargins(0,24,0,10);
-    titleLabel->setContentsMargins(16,0,0,0);
+    titleContainer->addWidget(centerContainer);
+    titleContainer->setContentsMargins(0,10,5,25);
+    titleLabel->setContentsMargins(16,0,16,0);
 
     titleContainer->setAlignment(Qt::AlignCenter);
+
+    inputNameInner->setContentsMargins(0,10,0,0);
+    inputSurnameInner->setContentsMargins(0,10,0,0);
+    inputAgeInner->setContentsMargins(0,10,0,0);
+    inputPhoneNumberInner->setContentsMargins(0,10,0,0);
+    inputStatusInner->setContentsMargins(0,10,0,0);
+    inputLabelInner->setContentsMargins(0,10,0,0);
+    inputDescriptionInner->setContentsMargins(0,10,0,0);
+    inputMailInner->setContentsMargins(0,10,0,0);
 
     settingsInner->addLayout(inputNameInner);
     settingsInner->addLayout(inputSurnameInner);
@@ -351,13 +374,13 @@ Settings::Settings() {
 
     settingButtonContainer->setAlignment(Qt::AlignRight);
 
-    settingButtonContainer->setContentsMargins(30,30,0,0);
+    settingButtonContainer->setContentsMargins(30,10,0,0);
 
 
 
 
     QHBoxLayout *settingButtonRightContainer = new QHBoxLayout;
-    setSettingsRightButton = new QPushButton("Сохранить Адрес");
+    setSettingsRightButton = new QPushButton(tr("                                Save address              "));
 
     setSettingsRightButton->setStyleSheet(BUTTON_DISABLED);
 
@@ -368,19 +391,43 @@ Settings::Settings() {
     connect(setSettingsRightButton, &QPushButton::clicked, this, &Settings::setSettingsRightPressed);
     settingButtonRightContainer->addWidget(setSettingsRightButton);
     settingButtonRightContainer->setAlignment(Qt::AlignRight);
-    settingButtonRightContainer->setContentsMargins(30,30,0,0);
+    settingButtonRightContainer->setContentsMargins(30,10,0,0);
+
+
+
+    QPixmap pixmapShedule(":/resc/resc/arrow_up.svg");
+    QIcon ButtonIconShedule(pixmapShedule);
+    setSettingsRightButton->setIcon(ButtonIconShedule);
+    setSettingsRightButton->setIconSize(QSize(30,30));
+    setSettingsRightButton -> setLayoutDirection ( Qt :: RightToLeft );
+    setSettingsButton -> setLayoutDirection ( Qt :: RightToLeft );
+    setSettingsButton->setIcon(ButtonIconShedule);
+    setSettingsButton->setIconSize(QSize(30,30));
 
 
   settingsInnerRight->addLayout(settingButtonRightContainer);
     settingsInner->addLayout(settingButtonContainer);
 
-    settingsInner->setAlignment(Qt::AlignLeft);
+    settingsInner->setAlignment(Qt::AlignCenter);
 
-    settingsInnerRight->setAlignment(Qt::AlignRight);
+    settingsInnerRight->setAlignment(Qt::AlignCenter);
 
-    innerDataSettigs->addLayout(settingsInner);
+    QFrame *settingsInnerFrame = new QFrame;
 
-    innerDataSettigs->addLayout(settingsInnerRight);
+    settingsInnerFrame->setStyleSheet(SETTING_LEFT_STYLE);
+
+    settingsInnerFrame->setLayout(settingsInner);
+
+    QFrame *settingsInnerRightFrame = new QFrame;
+
+    settingsInnerRightFrame->setStyleSheet(SETTING_RIGHT_STYLE);
+
+    settingsInnerRightFrame->setLayout(settingsInnerRight);
+
+
+    innerDataSettigs->addWidget(settingsInnerFrame);
+
+    innerDataSettigs->addWidget(settingsInnerRightFrame);
 
     innerDataSettigs->setAlignment(Qt::AlignJustify);
     innerDataSettigs->setAlignment(Qt::AlignTop);
@@ -592,13 +639,13 @@ void Settings::checkSettings() {
 }
 
 void Settings::checkSettingsRight() {
-    if ((userMailEdit->text().length() >= 4) &&
+    if (
             //(userbuildingEdit->text().length() >= 1 ) &&
             (userhousingEdit->text().length() >= 1 ) &&
             (userstreetEdit->text().length() >= 4) &&
             (usercityEdit->text().length() >= 4) &&
             (userdistrictEdit->text().length() >= 4) &&
-            (userindexEdit->text().length() == 6) &&
+            (userindexEdit->text().length() > 5) &&
             (usercountryEdit->text().length() >= 4)) {
 
         setSettingsRightButton->setStyleSheet(BUTTON_SOLID);
@@ -668,7 +715,7 @@ void Settings::onHttpResult(QNetworkReply *reply) {
         qDebug () << reply -> error ();
 
         QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
+            "Connection ERROR!\n");
 
 }
 
@@ -727,7 +774,7 @@ void Settings::onHttpResultRight(QNetworkReply *reply) {
         qDebug () << reply -> error ();
 
         QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
+            "Connection ERROR!\n");
 
 }
 
@@ -791,8 +838,8 @@ void Settings::onHttpResultSetSettings(QNetworkReply *reply) {
 
         qDebug () << reply -> error ();
 
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
+        QMessageBox::warning(this, "Error",
+            "Connection ERROR!\n");
 
 }
 
@@ -840,7 +887,7 @@ void Settings::onHttpResultSetSettingsRight(QNetworkReply *reply) {
         qDebug () << reply -> error ();
 
         QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
+            "Connection ERROR!\n");
 
 }
 

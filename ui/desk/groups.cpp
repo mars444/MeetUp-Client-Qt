@@ -86,13 +86,13 @@ Groups::Groups() {
     addGroupEdit->setMaximumWidth(355);
     addGroupEdit->setStyleSheet(EDIT_TEXT);
     addGroupEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    addGroupEdit->setPlaceholderText("Имя группы");
+    addGroupEdit->setPlaceholderText(tr("group name"));
 
     addGroupEdit->setMaximumWidth(600);
     addGroupEdit->setMinimumWidth(600);
 
 
-    addGroupButton = new QPushButton("                                    Создать группу                             ");
+    addGroupButton = new QPushButton(tr("                                    Create Group                             "));
 
     QPixmap pixmapaddGroup(":/resc/resc/plus.svg");
     QIcon ButtonIconaddGroup(pixmapaddGroup);
@@ -277,7 +277,7 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
         if(j["get_groups"].is_string()){   // проверка если по ключу строка ошибки, а не массив групп
 
-            noGroupsLabel = new QLabel("Вы не состоите в группе :(");
+            noGroupsLabel = new QLabel(tr("You are not a member of a group :("));
 
             inputContainerGroups->addWidget(noGroupsLabel);
 
@@ -339,7 +339,7 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
 
 
-            QPushButton *inviteGroupButton2 = new QPushButton("             Пригласить в группу          ");
+            QPushButton *inviteGroupButton2 = new QPushButton(tr("                 Invite to group         "));
 
             QPixmap pixmapinviteGroup(":/resc/resc/arrow_right.svg");
             QIcon ButtonIconinviteGroup(pixmapinviteGroup);
@@ -355,7 +355,7 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
             inviteButtonLayout->addWidget(inviteGroupButton2);
 
-            backAddtoGroup = new QPushButton("Отмена");
+            backAddtoGroup = new QPushButton(tr("Cancel"));
 
             backAddtoGroup->setMaximumWidth(200);
 
@@ -521,8 +521,8 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
         qDebug () << reply -> error ();
 
-        QMessageBox::warning(this, "Ошибка",
-        "При подключениии произошла ошибка.\n");
+        QMessageBox::warning(this, tr("Ошибка"),
+        "Connection ERROR!\n");
 
 
     }
@@ -567,12 +567,11 @@ void Groups::onHttpResultAddGroup(QNetworkReply *reply) {
 
         qDebug () << reply -> error ();
 
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
-        // newRootScreen(MAIN_TAG);
+        QMessageBox::warning(this, tr("Error"),
+            "Connection ERROR!\n");
 
 }
-    //newRootScreen(MAIN_TAG);
+
     reply->deleteLater();
 
 
@@ -735,7 +734,7 @@ void Groups::addGroupButtonPressed() {
         backWidget->setLayout(backLayout);
 
 
-        QPushButton *inviteGroupButton2 = new QPushButton("              Пригласить в группу          ");
+        QPushButton *inviteGroupButton2 = new QPushButton(tr("              Invite to group          "));
 
         QPixmap pixmapinviteGroup(":/resc/resc/arrow_right.svg");
         QIcon ButtonIconinviteGroup(pixmapinviteGroup);
@@ -808,7 +807,7 @@ void Groups::addGroupButtonPressed() {
              friendContainer2 = new QVBoxLayout;
 
              innerScrollFriends = new QVBoxLayout;
-             QLabel *friendNamesTitle = new QLabel("Выберите кого пригласить:");
+             QLabel *friendNamesTitle = new QLabel(tr("Выберите кого пригласить:"));
 
              //friendNamesTitle->setAlignment(Qt::AlignCenter);
              //innerScroll->addWidget(friendNamesTitle);
@@ -936,11 +935,10 @@ void Groups::onHttpResultManagerAddFriendsLayout(QNetworkReply *reply) {
 
          qDebug () << reply -> error ();
 
-         QMessageBox::warning(this, "Ошибка",
-             "При подключениии произошла ошибка.\n");
+         QMessageBox::warning(this, tr("Error"),
+             "Connection ERROR!\n");
 
  }
-
 
      reply->deleteLater();
 
@@ -1142,9 +1140,8 @@ void Groups::onHttpResultAddFriendtoGroup(QNetworkReply *reply) {
 
         qDebug () << reply -> error ();
 
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
-        // newRootScreen(MAIN_TAG);
+        QMessageBox::warning(this, tr("Error"),
+            "Connection ERROR!\n");
 
 
 }

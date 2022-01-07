@@ -42,11 +42,11 @@ RegistrationFragment::RegistrationFragment() {
 
 
     QVBoxLayout *startVerticalContent = new QVBoxLayout;
-    QLabel *title = new QLabel("Регистрация");
-    QLabel *subtitle = new QLabel(
-                "Придумайте себе пароль и логин для входа, "
-                "чтобы мы могли вас узнавать на других устройствах.\n"
-                "Логин min 4 символов. Пароль min 8 символов"
+    QLabel *title = new QLabel(tr("Registration"));
+    QLabel *subtitle = new QLabel(tr("Come up with a password and login so that we can recognize you on other devices.\n"
+                                     "Login min 4 characters.\n"
+                                     "Password min 8 characters.\n")
+
                 );
     loginEdit = new QLineEdit;
     passwordEdit = new QLineEdit;
@@ -61,7 +61,7 @@ RegistrationFragment::RegistrationFragment() {
     loadingContaiter->setMinimumWidth(100);
     loadingContaiter->hide();
 
-    loginButton = new QPushButton("Создать профиль");
+    loginButton = new QPushButton(tr("Create Profile"));
 
     title->setStyleSheet(TITLE_LABLE);
     subtitle->setStyleSheet(HINT_LABLE);
@@ -81,20 +81,20 @@ RegistrationFragment::RegistrationFragment() {
     loginEdit->setMaximumWidth(355);
     loginEdit->setStyleSheet(EDIT_TEXT);
     loginEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    loginEdit->setPlaceholderText("Логин");
+    loginEdit->setPlaceholderText(tr("NickName"));
     connect(loginEdit, &QLineEdit::textChanged, this, &RegistrationFragment::checkData);
 
     passwordEdit->setMaximumWidth(355);
     passwordEdit->setStyleSheet(EDIT_TEXT);
     passwordEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    passwordEdit->setPlaceholderText("Пароль");
+    passwordEdit->setPlaceholderText(tr("Password"));
     passwordEdit->setEchoMode(QLineEdit::Password);
     connect(passwordEdit, &QLineEdit::textChanged, this, &RegistrationFragment::checkData);
 
     repeatPasswordEdit->setMaximumWidth(355);
     repeatPasswordEdit->setStyleSheet(EDIT_TEXT);
     repeatPasswordEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    repeatPasswordEdit->setPlaceholderText("Повтор пароля");
+    repeatPasswordEdit->setPlaceholderText(tr("Repeat Password"));
     repeatPasswordEdit->setEchoMode(QLineEdit::Password);
     connect(repeatPasswordEdit, &QLineEdit::textChanged, this, &RegistrationFragment::checkData);
 
@@ -162,7 +162,7 @@ RegistrationFragment::~RegistrationFragment() {
 void RegistrationFragment::onRegPressed() {
 
     if(passwordEdit->text() != repeatPasswordEdit->text()){
-         QMessageBox::warning(this,"Регистрация","Пароли не совпадают!");
+         QMessageBox::warning(this,tr("Регистрация"),tr("Пароли не совпадают!"));
     } else {
 
         std::string NizkName = loginEdit->text().toStdString();
@@ -241,7 +241,7 @@ void RegistrationFragment::onRegResult(QNetworkReply *reply) {
 
              qDebug("registration error");
 
-             QMessageBox::warning(this, "Ошибка", "Пользователь с таким именем существуюет");
+             QMessageBox::warning(this, tr("Error"), tr("User with this name exists!"));
 
   }
 
@@ -254,8 +254,8 @@ void RegistrationFragment::onRegResult(QNetworkReply *reply) {
         qDebug () << reply -> error ();
 
 
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
+        QMessageBox::warning(this, tr("Error"),
+            tr("Connection ERROR!\n"));
 
 
 

@@ -22,7 +22,9 @@ using namespace styles;
 #include <QScrollBar>
 #include <iostream>
 #include <QMovie>
-#include <QToolButton>
+#include <QFileDialog>
+#include <QPainter>
+#include <ui/view/qsvgbutton.h>
 
 
 using namespace screens;
@@ -36,10 +38,21 @@ MainFragment::MainFragment() {
 
     QVBoxLayout *lentContainer = new QVBoxLayout;
 
-    QPushButton *mySheduleButton = new QPushButton("       Мое расписание");
-    QPushButton *myFriendsButton = new QPushButton("            Мои друзья     ");
-    QPushButton *myGroupsButton = new QPushButton("            Мои группы    ");
-    QPushButton *mySettingsButton = new QPushButton("                Профиль       ");
+
+
+    QSvgButton *setImage = new QSvgButton(":/resc/resc/arrow_up.svg", QSize(20,20));
+
+    setImage->setStyleSheet("border-radius:10px;");
+
+    setImage-> setLayoutDirection ( Qt :: RightToLeft );
+
+
+    connect(setImage, &QPushButton::clicked, this, &MainFragment::imageFunc);
+
+    QPushButton *mySheduleButton = new QPushButton(tr("        My  shedule   "));
+    QPushButton *myFriendsButton = new QPushButton(tr("          My  friends    "));
+    QPushButton *myGroupsButton = new QPushButton(tr("           My  groups    "));
+    QPushButton *mySettingsButton = new QPushButton(tr("               Profile       "));
 
 
 
@@ -66,7 +79,7 @@ MainFragment::MainFragment() {
 
     // QPushButton *mySettingsButton1 = new QPushButton("qwrqwrewrwer");
 
-    exitButton = new QPushButton("    Выйти из профиля");
+    exitButton = new QPushButton(tr("               Log out       "));
 
     QPixmap pixmapexitButton(":/resc/resc/enter.svg");
     QIcon ButtonIconexitButton(pixmapexitButton);
@@ -74,9 +87,13 @@ MainFragment::MainFragment() {
     exitButton->setIconSize(QSize(20,20));
 
     userContainer = new QVBoxLayout;
-    QLabel *profileImageLabel = new QLabel("");
+    profileImageLabel = new QLabel("");
     QPixmap profileImage(":/resc/resc/user2.png");
     profileImageLabel->setPixmap(profileImage);
+    profileImageLabel->setContentsMargins(0,15,0,0);
+    profileImageLabel->setMinimumHeight(162);
+    profileImageLabel->setMaximumHeight(109);
+
 
 
     QHBoxLayout *fuckContainer = new QHBoxLayout;
@@ -90,9 +107,16 @@ MainFragment::MainFragment() {
 
     userName = new QLabel(nickQ);
 
-    userName->setAlignment(Qt::AlignCenter);
+    userName->setAlignment(Qt::AlignHCenter);
 
-    QLabel *mainTitle = new QLabel("Лента новостей:");
+    userName->setStyleSheet(USER_NAME);
+
+    userName->setContentsMargins(0,15,0,0);
+
+
+
+
+    QLabel *mainTitle = new QLabel(tr("News:"));
     mainTitle->setAlignment(Qt::AlignCenter);
 
     mainTitle->setStyleSheet(MAIN_TITLE);
@@ -111,6 +135,8 @@ MainFragment::MainFragment() {
     loadingExit->setColor(QT_COLOR_PRIMARY);
 
     scrolContainer->setObjectName("container");
+
+    scrolContainer->setStyleSheet("   border-radius:100px;");
     scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
     deskScrollArea->setStyleSheet(GLOBAL_BACK_WHITE);
     QHBoxLayout *deskContainer = new QHBoxLayout;
@@ -119,13 +145,12 @@ MainFragment::MainFragment() {
     deskScrollArea->setWidgetResizable(true);
     deskScrollArea->horizontalScrollBar()->setEnabled(false);
 
-    profileImageLabel->setStyleSheet(PROFILE_IMAGE);
 
     fuckContainer->addWidget(profileImageLabel);
     userContainer->addLayout(fuckContainer);
-    userName->setStyleSheet(TITLE_LABLE);
+    userContainer->addWidget(setImage);
     userName->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    userName->setContentsMargins(35,0,35,24);
+    userName->setAlignment(Qt::AlignCenter);
     userContainer->addWidget(userName);
     userContainer->setAlignment(Qt::AlignCenter);
 
@@ -165,11 +190,36 @@ MainFragment::MainFragment() {
 
 
     profileContainer->addLayout(userContainer);
-    profileContainer->addWidget(mySheduleButton);
-    profileContainer->addWidget(myFriendsButton);
-    profileContainer->addWidget(myGroupsButton);
-    profileContainer->addWidget(mySettingsButton);
-    profileContainer->addWidget(exitButton);
+
+
+    QVBoxLayout *buttonsInner = new QVBoxLayout;
+
+    mySheduleButton->setContentsMargins(0,0,0,10);
+    myFriendsButton->setContentsMargins(0,0,0,10);
+    myGroupsButton->setContentsMargins(0,0,0,10);
+    mySettingsButton->setContentsMargins(0,0,0,10);
+    exitButton->setContentsMargins(0,0,0,0);
+
+
+    buttonsInner->addWidget(mySheduleButton);
+    buttonsInner->addWidget(myFriendsButton);
+    buttonsInner->addWidget(myGroupsButton);
+    buttonsInner->addWidget(mySettingsButton);
+    buttonsInner->addWidget(exitButton);
+
+
+
+    QFrame *buttonsInnerFrame = new QFrame;
+
+    buttonsInnerFrame->setStyleSheet(FRAME_BUTTONS_MAIN);
+
+    buttonsInnerFrame->setLayout(buttonsInner);
+
+
+    profileContainer->addWidget(buttonsInnerFrame);
+
+
+
     profileContainer->addWidget(loadingExitContainer);
     profileContainer->setAlignment(Qt::AlignTop);
 
@@ -183,6 +233,8 @@ MainFragment::MainFragment() {
     movie->start();
 
     deskContainer->addWidget(centerContainer);
+
+
 
     deskContainer->setAlignment(Qt::AlignCenter);
 
@@ -208,6 +260,35 @@ MainFragment::~MainFragment() {
 }
 
 void MainFragment::onResume() {
+
+}
+
+void MainFragment::imageFunc() {
+    QPixmap pixmap(QFileDialog::getOpenFileName(this, tr("Open Image"), "", tr("Image Files (*.png *.jpg)")));
+
+
+
+//    QPixmap pixmap = QPixmap(size());
+//      pixmap.fill(Qt::transparent);
+
+//      QPixmap p(QFileDialog::getOpenFileName(this, tr("Open Image"), "", tr("Image Files (*.png *.jpg)")));
+
+
+//    QPainter painter (&pixmap);
+
+//        painter.setRenderHint(QPainter::Antialiasing, true);
+//        painter.setRenderHint(QPainter::HighQualityAntialiasing, true);
+//        painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+
+//        QPainterPath path = QPainterPath();
+//        path.addRoundedRect(100, 100, 200, 200, 0, 0);
+//        painter.setClipPath(path);
+//      painter.drawPixmap(200, 200, p.scaled(150, 150, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+
+        profileImageLabel->setMaximumWidth(270);
+        profileImageLabel->setAlignment(Qt::AlignCenter);
+        profileImageLabel->setPixmap(pixmap.scaled(150, 150, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+
 
 }
 

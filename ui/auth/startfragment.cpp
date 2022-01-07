@@ -1,5 +1,10 @@
 #include "startfragment.h"
 
+#include <QApplication>
+
+#include <QComboBox>
+#include <QTranslator>
+#include <QLibraryInfo>
 #include <QFrame>
 #include <QLabel>
 #include <QPushButton>
@@ -26,13 +31,13 @@ mainImage->setMaximumSize(175,175);
 
 
     QVBoxLayout *startVerticalContent = new QVBoxLayout;
-    QLabel *title = new QLabel("Hello!");
-    QLabel *subtitle = new QLabel("Наше приложение поможет вам организовать совместные встерчи с родными и друзьями.");
+    QLabel *title = new QLabel(tr("Hello"));
+    QLabel *subtitle = new QLabel(tr("Our application will help you organize joint meetings with family and friends."));
 
     QVBoxLayout *buttonContainer = new QVBoxLayout;
 
-    QPushButton *loginButton = new QPushButton("Войти");
-    QPushButton *regButton = new QPushButton("Регистрация");
+    QPushButton *loginButton = new QPushButton(tr("Log In"));
+    QPushButton *regButton = new QPushButton(tr("Registration"));
 
     title->setStyleSheet(TITLE_LABLE);
     title->setWordWrap(true);
@@ -65,13 +70,51 @@ mainImage->setMaximumSize(175,175);
     startContent->addWidget(mainImage);
     startContent->addLayout(startMainLayout);
 
+
+    // Задаём два пункта с текстом локалей в комбобоксе
+
+        QComboBox *comboBox = new QComboBox;
+        comboBox->addItems(QStringList() << "ru\_RU" << "en\_US");
+
+        // подключаем к сигналу изменения пункта комбобокса лямбда функцию,
+        // в которой будет изменяться перевод приложения
+        // Здесь имеется интересный момент. Поскольку QComboBox имеет перегрузку сигнатуры сигнала,
+        // то нам необходимо скастовать сигнал к нужной сигнатуре.
+        // В данном случае будем использовать название пункта при его изменении
+        connect(comboBox, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged),
+                [=](const QString &str){
+            qtLanguageTranslator.load("QtLanguage\_" + str, ".");   // Загружаем перевод
+            qApp->installTranslator(&qtLanguageTranslator);        // Устанавливаем перевод в приложение
+        });
+
+        // Сделаем первоначальную инициализацию перевода для окна прилоежния
+        qtLanguageTranslator.load(QString("QtLanguage\_") + QString("ru\_RU"));
+        qApp->installTranslator(&qtLanguageTranslator);
+
     mainHLayout->addWidget(centerContainer);                                                 // ВЫРАВНИВАНИЕ ПО ЦЕНТРУ
     mainHLayout->setAlignment(Qt::AlignCenter);
     mainVLayout->addLayout(mainHLayout);
     mainVLayout->setAlignment(Qt::AlignCenter);
 
+
+
+
     this->setLayout(mainVLayout);
 }
+
+void StartFragment::changeEvent(QEvent *event)
+{
+    // В случае получения события изменения языка приложения
+    if (event->type() == QEvent::LanguageChange) {
+//        retranslateUi(this);    // переведём окно заново
+    }
+}
+
+//void retranslateUi(QMainWindow *MainWindow)
+//{
+//    MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+
+//} // retranslateUi
 
 StartFragment::~StartFragment() {
 

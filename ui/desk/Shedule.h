@@ -15,6 +15,8 @@
 #include <ui/view/qsvgbutton.h>
 #include <ui/view/waitingspinnerwidget.h>
 
+#include "mytimeedit.h"
+
 class Shedule: public BaseFragment {
     Q_OBJECT
 private:
@@ -25,8 +27,16 @@ private:
 
     QHash<QPushButton*,QHBoxLayout*> deleteTaskButtonToLayoutMap;
 
+    QHash<QPushButton*,QPushButton*> doneButtonToLayoutMap;
+
+    QHash<QPushButton*,QPushButton*> doneButtonYesToLayoutMap;
+
     QHBoxLayout *mainHLayout;
     QVBoxLayout *inputContainer;
+
+    QHBoxLayout *form;
+
+    QFrame *formFrame;
 
     QString strDinamicckeck = "";
 
@@ -35,6 +45,7 @@ private:
 
     QLineEdit *titleEdit;
     QLineEdit *cardTitleEdit;
+    QLineEdit *cardDescriptionEdit;
 
     WaitingSpinnerWidget *loading;
     WaitingSpinnerWidget *loadingBox;
@@ -63,7 +74,6 @@ private:
     QString time_end_string;
 
 
-
     QVBoxLayout *verticalLayout;
     QLineEdit *lineEdit;
     QPushButton *addButtonq;
@@ -87,8 +97,14 @@ private:
 
     QSvgButton *deleteTaskButton;
 
+    QSvgButton *doneButton;
+
+    QSvgButton *doneButtonYes;
+
 
     QHBoxLayout *titleEditContainer;
+
+    QVBoxLayout *task_container_inner;
 
     QList<QString> titleList;
 
@@ -106,12 +122,16 @@ private:
     QPushButton *date6Button;
     QPushButton *date7Button;
 
+
+    QSvgButton *calendarOpen;
+    QSvgButton *calendarClose;
+
     QString dateTotask;
 
     QStackedWidget *stack;
 
-    QTimeEdit* left;
-    QTimeEdit* right;
+    TimeEdit* left;
+    TimeEdit* right;
 
     QNetworkAccessManager *networkManagerGetEvents;
     QNetworkAccessManager *networkManagerSendShedule;
@@ -127,6 +147,15 @@ public:
     void setData(BaseModel* model) override;
 public slots:
     void onBackPressed();
+
+    void doneButtonYes_pressed();
+
+    void doneButton_pressed();
+
+
+    void setTimeLeftTimeEdit();
+
+    void setTimeRightTimeEdit(const QTime &time);
     void onCreatePressed();
     void onHttpResultGetEvents(QNetworkReply *reply);
 
@@ -140,6 +169,13 @@ public slots:
     void loadSheduleFromDate();
 
     void day_btn_1();
+
+    void leftButtonClicked();
+    void rightButtonClicked();
+
+    void calendarOpenClicked();
+    void calendarCloseClicked();
+
     void day_btn_2();
     void day_btn_3();
     void day_btn_4();
@@ -150,6 +186,8 @@ public slots:
     void calendar_btn(const QDate &date);
     void setButtonDate(void);
     void sendShedulePressed();
+
+    void clearTasks();
 
     /**
      * @brief checkData

@@ -19,12 +19,97 @@ namespace styles{
     /** объявления стилей */
 
 
+    static const QString CALENDAR =
+
+
+    "selection-background-color: #A184F9;"
+    "selection-color: #fff;";
+
+
+
+
+    static const QString EVENT_STYLE =
+            "QFrame {"
+            "   border-radius:40px;"
+            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #A184F9, stop:1 #8046A4);"
+
+            "   padding-left:10px;"
+            "   padding-right:10px;"
+
+            "}";
+
+
+    static const QString EVENT_READY_STYLE =
+            "QFrame {"
+            "   border-radius:20px;"
+            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #A184F9, stop:1 #8046A4);"
+
+            "   padding-left:10px;"
+            "   padding-right:10px;"
+
+            "   margin-bottom:15px;"
+
+            "}";
+
+    static const QString SETTING_LEFT_STYLE =
+            "QFrame {"
+            "   border-radius:20px;"
+            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #A184F9, stop:1 #8046A4);"
+
+            "   padding-left:10px;"
+            "   padding-right:10px;"
+            "   padding-bottom:15px;"
+
+            "   margin-right:75px;"
+
+
+            "}";
+
+    static const QString SETTING_RIGHT_STYLE =
+            "QFrame {"
+            "   border-radius:20px;"
+            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #A184F9, stop:1 #8046A4);"
+
+            "   padding-left:10px;"
+            "   padding-right:10px;"
+            "   margin-left:75px;"
+            "   padding-bottom:15px;"
+
+
+            "}";
+
+    static const QString FRAME_BUTTONS_MAIN =
+            "QFrame {"
+            "   border-radius:20px;"
+            "background-color: #8046A4);"
+
+            "   padding:10px;"
+
+
+            "}";
+
+
     static const QString PROFILE_IMAGE  =
             "QLabel {"
-            "   text-align: center;"
-            "   border-radius:50px;"
-            "   margin:20px 30px;"
+
+            "   margin:0px 30px;"
+            "}"
+            "QPixmap {"
+
+            "   margin:0px 30px;"
             "}";
+
+
+    static const QString USER_NAME  =
+            "   padding-top: 30px;"
+            "   margin-top: 30px;"
+            "color:" + COLOR_TEXT_PRIMARY + ";"
+            "font-size:30px;"
+        "QFrame {"
+                   "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #A184F9, stop:1 #8046A4);"
+                        "}";
+
+
 
     static const QString TIMESTYLE  =
             "QLabel {"
@@ -51,6 +136,10 @@ namespace styles{
             "   padding-right: 20px;"
             "   font-size: 25px;"
 
+            "}"
+
+            "QFrame {"
+            "background: transparent;"
             "}";
 
     static const QString SETTINGS_LABEL  =
@@ -60,6 +149,9 @@ namespace styles{
             "   margin-right:30px;"
             "   font-size: 18px;"
             "   text-align: center;"
+            "}"
+            "QFrame {"
+            "background: transparent;"
             "}";
 
 
@@ -70,7 +162,7 @@ namespace styles{
 
             "   margin-left: 20px;"
             "   font-size: 30px;"
-            "   color: "+COLOR_PRIMARY+";"
+            "   color: "+COLOR_BACKGROUND+";"
 
             "}";
 
@@ -83,14 +175,7 @@ namespace styles{
 
             "}";
 
-    static const QString ONLINE_STATUS  =
-            "QLabel {"
-            "   padding-left: 5px;"
-            "   padding-right: 20px;"
-            "   padding-top: 7px;"
 
-
-            "}";
 
 
     static const QString FRIEND_IMAGE  =
@@ -102,8 +187,7 @@ namespace styles{
 
     static const QString Qtimestyle =
             "QTimeEdit {"
-            "   height:30px;"
-            "   width:100px;"
+            "   height:35px;"
             "   text-align: center;"
             "   width:100px;"
             "}";
@@ -112,7 +196,10 @@ namespace styles{
     static const QString GLOBAL_BACK_WHITE =
             "QWidget#container {"
             "   background-color:"+COLOR_BACKGROUND+";"
-            "}";
+            "   border-radius:100px;"            "}"
+              "QWidget#fragment {"
+             "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #A184F9, stop:1 #8046A4);"
+             "}";
 
     static const QString FRAME_8PX_WHITE =
             "QFrame {"
@@ -149,6 +236,20 @@ namespace styles{
             "QPushButton:hover {"
             "background-color:"+COLOR_BUTTON_PRESSED+";"
             "}";
+
+    static const QString BUTTON_SOLID_DELETE =
+            "QPushButton {"
+            "color: "+COLOR_BACKGROUND+";"
+            "background-color:"+COLOR_PRIMARY+";"
+            "border:none;"
+            "padding:12px;"
+            "border-radius:22px;"
+            "font-size:16px;"
+            "}"
+            "QPushButton:hover {"
+            "background-color:"+COLOR_TEXT_RED+";"
+            "}";
+
 
 
     static const QString BUTTON_WHITE =
@@ -202,7 +303,10 @@ namespace styles{
             "}"
             "QPushButton:hover {"
             "background-color:"+COLOR_BORDER+";"
-            "}";
+            "}"
+                                            /* "QPushButton::text {"
+                                             "margin-left:16px;"
+                                             "}"*/;
 
     static const QString BUTTON_PROFILE_RED =
             "QPushButton {"
@@ -222,7 +326,24 @@ namespace styles{
             "color: "+COLOR_TEXT_PRIMARY+";"
             "background-color:"+COLOR_BACKGROUND+";"
             "font-size:16px;"
-            "border-radius:8px;"
+            "border-radius:10px;"
+            "padding:12px;";
+
+    static const QString EDIT_TEXT_EVENT_TITLE =
+            "border: 1px solid "+COLOR_BORDER+";"
+            "color: "+COLOR_TEXT_PRIMARY+";"
+            "background-color:"+COLOR_BACKGROUND+";"
+            "font-size:20px;"
+            "border-radius:10px;"
+            "width:200px;"
+            "padding:12px;";
+
+    static const QString EDIT_TEXT_SMALL =
+            "border: 1px solid "+COLOR_BORDER+";"
+            "color: "+COLOR_TEXT_PRIMARY+";"
+            "background-color:"+COLOR_BACKGROUND+";"
+            "font-size:16px;"
+            "border-radius:10px;"
             "padding:12px;";
 
     static const QString BACK_WHITE =

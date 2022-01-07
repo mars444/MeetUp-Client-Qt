@@ -40,9 +40,9 @@ Friends::Friends() {
 
     QHBoxLayout *titleContainer = new QHBoxLayout;
     QSvgButton *backButton = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(24,24));
-    titleLabel = new QLabel("Мои друзья");
+    titleLabel = new QLabel(tr("Friends"));
 
-    createButton = new QPushButton("Добавить друзей");
+    createButton = new QPushButton(tr("Add Friends"));
 
 
     QFrame *friendFrame = new QFrame;
@@ -83,14 +83,14 @@ Friends::Friends() {
     addFriendEdit->setMaximumWidth(355);                                          // поле ввода логина длна 355
     addFriendEdit->setStyleSheet(EDIT_TEXT);
     addFriendEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    addFriendEdit->setPlaceholderText("Никнейм");
+    addFriendEdit->setPlaceholderText(tr("NickName"));
 
     addFriendEdit->setMaximumWidth(400);
     addFriendEdit->setMinimumWidth(400);
 
 
 
-    addFriendButton = new QPushButton("                        Добавить                         ");
+    addFriendButton = new QPushButton(tr("                                Add                            "));
 
     QPixmap pixmapaddFriend(":/resc/resc/plus.svg");
     QIcon ButtonIconaddFriend(pixmapaddFriend);
@@ -174,7 +174,10 @@ Friends::Friends() {
     inputContainer->setAlignment(Qt::AlignTop);
     addFriendContainer->setAlignment(Qt::AlignTop);
 
+    addFriendContainer->setContentsMargins(0,0,0,20);
+
     inputContainerFriends->addLayout(inputContainer);
+
 
      inputContainerFriends->addLayout(addFriendContainer);
 
@@ -260,7 +263,7 @@ void Friends::onHttpResult(QNetworkReply *reply) {
         if(j["get_contacts"].is_string()) {
 
 
-            noFriendsLabel = new QLabel("У вас пока нет друзей :(");
+            noFriendsLabel = new QLabel(tr("You have no friends yet :("));
 
 
             inputContainerFriends->addWidget(noFriendsLabel);
@@ -287,11 +290,12 @@ void Friends::onHttpResult(QNetworkReply *reply) {
                     QPixmap friendOnlineStatusImage2(":/resc/resc/online_status_off.svg");
                     friendOnlineStatusLabel2->setPixmap(friendOnlineStatusImage2.scaled(15,15, Qt::KeepAspectRatio));
 
-                    friendOnlineStatusLabel2->setStyleSheet(ONLINE_STATUS);
 
-                    QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
+                    QPushButton *inviteGroupButton2 = new QPushButton(tr("Invite to group"));
 
-                    QPushButton *deleteFriendButton2 = new QPushButton("Удалить из друзей   ");
+                    QPushButton *deleteFriendButton2 = new QPushButton(tr(""));
+
+                    deleteFriendButton2->setMaximumWidth(50);
 
                     QPixmap pixmapdeleteFriend(":/resc/resc/bin_white.svg");
                     QIcon ButtonIcondeleteFriend(pixmapdeleteFriend);
@@ -303,12 +307,19 @@ void Friends::onHttpResult(QNetworkReply *reply) {
 
                     inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
 
-                    deleteFriendButton2->setStyleSheet(BUTTON_SOLID);
+                    deleteFriendButton2->setStyleSheet(BUTTON_SOLID_DELETE);
 
                     QHBoxLayout *friendButtonContainer2 = new QHBoxLayout;
 
                     //friendButtonContainer2->addWidget(inviteGroupButton2);
                     friendButtonContainer2->addWidget(deleteFriendButton2);
+
+                    friendImageLabel2->setStyleSheet("QFrame {""background: transparent""}");
+                    friendImageLabel2->setContentsMargins(0,15,0,0);
+                    friendName2->setStyleSheet(TASK_PADDING);
+                    friendName2->setContentsMargins(0,15,0,0);
+                    friendOnlineStatusLabel2->setStyleSheet("QFrame {""background: transparent""}");
+                    friendOnlineStatusLabel2->setContentsMargins(0,15,0,0);
 
                     friendContainer2->addWidget(friendImageLabel2);
                     friendContainer2->addWidget(friendName2);
@@ -318,7 +329,15 @@ void Friends::onHttpResult(QNetworkReply *reply) {
 
                     connect(deleteFriendButton2, &QPushButton::clicked, this, &Friends::deleteFriendPressed);
 
-                    inputContainerFriends->addLayout(friendContainer2);
+
+                    friendContainerFrame = new QFrame;
+
+                    friendContainerFrame->setStyleSheet(EVENT_READY_STYLE);
+
+                    friendContainerFrame->setLayout(friendContainer2);
+
+
+                    inputContainerFriends->addWidget(friendContainerFrame);
 
 
                     mButtonToLayoutMap.insert(deleteFriendButton2,friendContainer2);
@@ -337,8 +356,8 @@ void Friends::onHttpResult(QNetworkReply *reply) {
 
         qDebug () << reply -> error ();
 
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
+        QMessageBox::warning(this, tr("Error"),
+            "Connection ERROR!\n");
 
 }
 
@@ -412,13 +431,13 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
             QPixmap friendOnlineStatusImage2(":/resc/resc/online_status_off.svg");
             friendOnlineStatusLabel2->setPixmap(friendOnlineStatusImage2.scaled(15,15, Qt::KeepAspectRatio));
 
-            friendOnlineStatusLabel2->setStyleSheet(ONLINE_STATUS);
+            //friendOnlineStatusLabel2->setStyleSheet(ONLINE_STATUS);
 
 
 
-            inviteGroupButton2 = new QPushButton("Пригласить в группу");
+            inviteGroupButton2 = new QPushButton(tr("Invite to group"));
 
-            deleteFriendButton2 = new QPushButton("Удалить из друзей   ");
+            deleteFriendButton2 = new QPushButton(tr("Remove from friends   "));
 
             QPixmap pixmapdeleteFriend(":/resc/resc/bin_white.svg");
             QIcon ButtonIcondeleteFriend(pixmapdeleteFriend);
@@ -454,6 +473,7 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
 
             connect(deleteFriendButton2, &QPushButton::clicked, this, &Friends::deleteFriendPressed);
 
+
             inputContainerFriends->addLayout(friendContainer2);
 
 
@@ -466,8 +486,8 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
 
 } else {
                    addFriendEdit->setText("");
-            QMessageBox::warning(this, "Ошибка",
-                "Такого пользователя не существует!\n");
+            QMessageBox::warning(this, tr("Error"),
+                tr("This user does not exist.\n"));
 }
 
         } else {
@@ -478,12 +498,11 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
 
         qDebug () << reply -> error ();
 
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
-        // newRootScreen(MAIN_TAG);
+        QMessageBox::warning(this, tr("Error"),
+            "Connection ERROR!\n");
+
 
 }
-    //newRootScreen(MAIN_TAG);
     reply->deleteLater();
 
     addManagerFriend->clearAccessCache();
@@ -529,12 +548,10 @@ void Friends::onHttpResultDeleteFriend(QNetworkReply *reply) {
 
         qDebug () << reply -> error ();
 
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
-        // newRootScreen(MAIN_TAG);
+        QMessageBox::warning(this, tr("Error"),
+            "Connection ERROR!\n");
 
 }
-    //newRootScreen(MAIN_TAG);
     reply->deleteLater();
 
 
@@ -703,6 +720,7 @@ void Friends::deleteFriendPressed(){
         delete item->widget();
         delete item;
     }
+
 
     delete button;
     delete layout;

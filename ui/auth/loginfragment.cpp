@@ -49,8 +49,8 @@ LoginFragment::LoginFragment() {
     QSvgButton *backImage = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(25,25));
 
     QVBoxLayout *startVerticalContent = new QVBoxLayout;                        // создаем правую внутренню обертку объект типа QVBoxLayout
-    QLabel *title = new QLabel("Вход в приложение");                            // создаем Qlabel(строка обычная)
-    QLabel *subtitle = new QLabel("Приветсвуем!");                              // создаем правую внутренню обертку объект типа QVBoxLayout
+    QLabel *title = new QLabel(tr("Login to the application"));                            // создаем Qlabel(строка обычная)
+    QLabel *subtitle = new QLabel(tr("Hi user!"));                              // создаем правую внутренню обертку объект типа QVBoxLayout
     loginEdit = new QLineEdit;                                                  // создаем Qlabel логин(поле ввода, инпут)
     passwordEdit = new QLineEdit;                                               // создаем Qlabel пароль (поле ввода, инпут)
 
@@ -64,7 +64,7 @@ LoginFragment::LoginFragment() {
     loadingContaiter->setMinimumWidth(100);                                     // minwidth загрузки
     loadingContaiter->hide();                                                   // пока что скрываем ее
 
-    loginButton = new QPushButton("Войти");
+    loginButton = new QPushButton(tr("Log In"));
 
     title->setStyleSheet(TITLE_LABLE);                                          // задаем title  стиль  TITLE_LABLE из файла  #include "style/stylecontainer.h"
     subtitle->setStyleSheet(HINT_LABLE);
@@ -84,12 +84,12 @@ LoginFragment::LoginFragment() {
     loginEdit->setMaximumWidth(355);                                          // поле ввода логина длна 355
     loginEdit->setStyleSheet(EDIT_TEXT);
     loginEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    loginEdit->setPlaceholderText("Логин");
+    loginEdit->setPlaceholderText(tr("Nickname"));
 
     passwordEdit->setMaximumWidth(355);
     passwordEdit->setStyleSheet(EDIT_TEXT);
     passwordEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    passwordEdit->setPlaceholderText("Пароль");
+    passwordEdit->setPlaceholderText(tr("Password"));
     passwordEdit->setEchoMode(QLineEdit::Password);
 
     connect(loginEdit, &QLineEdit::textChanged, this, &LoginFragment::checkData);
@@ -287,7 +287,7 @@ void LoginFragment::onHttpResult(QNetworkReply *reply) {
 
            qDebug("autorization error");
 
-           QMessageBox::warning(this, "Ошибка", "Неверный логин или пароль");
+           QMessageBox::warning(this, tr("Error"), tr("Wrong login or password"));
 
 }
 
@@ -299,12 +299,10 @@ void LoginFragment::onHttpResult(QNetworkReply *reply) {
 
         qDebug () << reply -> error ();
 
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
-        // newRootScreen(MAIN_TAG);
+        QMessageBox::warning(this, tr("Error"),
+            tr("Connection ERROR.\n"));
 
 }
-    //newRootScreen(MAIN_TAG);
     reply->deleteLater();
     networkManager->clearAccessCache();
 }

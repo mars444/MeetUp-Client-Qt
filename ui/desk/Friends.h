@@ -35,6 +35,10 @@ private:
 
     QLabel *noFriendsLabel;
 
+    QHBoxLayout *Friend_inner;
+
+    QFrame *friendContainerFrame;
+
     QVBoxLayout *mainVLayout;
 
     QVBoxLayout *inputContainerFriends;

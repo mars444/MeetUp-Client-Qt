@@ -6,6 +6,14 @@ QT += websockets
 QT += widgets
 QT += networkauth
 
+TARGET = QtLanguage
+TEMPLATE = app
+
+
+TRANSLATIONS += QtLanguage_ru.ts
+
+CODECFORSRC     = UTF-8
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -43,6 +51,7 @@ SOURCES += \
     ui/desk/friends.cpp \
     ui/desk/group.cpp \
     ui/desk/groups.cpp \
+    ui/desk/mytimeedit.cpp \
     ui/desk/settings.cpp \
     ui/desk/shedule.cpp \
     ui/mainfragment.cpp \
@@ -118,6 +127,7 @@ HEADERS += \
     ui/auth/loginfragment.h \
     ui/auth/registrationfragment.h \
     ui/auth/startfragment.h \
+    ui/desk/mytimeedit.h \
     ui/invite/invitelistfragment.h \
     ui/mainfragment.h \
     ui/splashfragment.h \
@@ -133,9 +143,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resc.qrc \
-    resc.qrc \
     resc.qrc
+
 
 
 win32:RC_ICONS += resc/icon.ico
@@ -144,6 +153,7 @@ FORMS += \
     ui/desk/dialog.ui
 
 DISTFILES += \
+    resc/QtLanguage_ru.qm \
     resc/arrow_back.svg \
     resc/bin.svg \
     resc/client_secret_googleusercontent.com.json \

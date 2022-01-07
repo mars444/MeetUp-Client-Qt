@@ -22,6 +22,8 @@ private:
 
     QLabel *userName;
 
+    QLabel *profileImageLabel;
+
     QVBoxLayout *userContainer;
 
     WaitingSpinnerWidget *loading;
@@ -35,6 +37,8 @@ public:
 
     void onResume() override;
 public slots:
+
+    void imageFunc();
     void onExit();
     void myFriends();
     void myShedule();

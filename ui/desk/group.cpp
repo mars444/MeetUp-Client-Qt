@@ -47,7 +47,7 @@ Group::Group() {
     QSvgButton *backButton = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(24,24));
     GrouptitleLabel = new QLabel(GROUP_TITLE_QSTRING);
 
-    createButton = new QPushButton("Добавить друзей");
+    createButton = new QPushButton(tr("Add Friends"));
 
 
 
@@ -55,9 +55,9 @@ Group::Group() {
 
 
 
-    QLabel *groupEventDateLabelMain = new QLabel("Дата");
-    QLabel *groupEventMain = new QLabel("Начало встречи");
-    QLabel *groupEventendMain = new QLabel("Конец встречи");
+    QLabel *groupEventDateLabelMain = new QLabel(tr("Date"));
+    QLabel *groupEventMain = new QLabel(tr("Meeting start"));
+    QLabel *groupEventendMain = new QLabel(tr("meeting end"));
 
 
     groupEventDateLabelMain->setStyleSheet(SETTINGS_LABEL);
@@ -73,11 +73,11 @@ Group::Group() {
 
     QHBoxLayout *groupButtonsContainer = new QHBoxLayout;
 
-    groupList = new QPushButton("Участники");
+    groupList = new QPushButton(tr("Members"));
 
-    groupMeets = new QPushButton("Встречи");
+    groupMeets = new QPushButton(tr("Meets"));
 
-    groupDelete = new QPushButton("Удалить группу  ");
+    groupDelete = new QPushButton(tr("Delete group  "));
 
 
     QPixmap pixmapgroupDelete(":/resc/resc/cross.svg");
@@ -422,13 +422,13 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
                 QPixmap friendOnlineStatusImage2(":/resc/resc/online_status_off.svg");
                 friendOnlineStatusLabel2->setPixmap(friendOnlineStatusImage2.scaled(15,15, Qt::KeepAspectRatio));
 
-                friendOnlineStatusLabel2->setStyleSheet(ONLINE_STATUS);
+                //friendOnlineStatusLabel2->setStyleSheet(ONLINE_STATUS);
 
 
 
-                QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
+                QPushButton *inviteGroupButton2 = new QPushButton(tr("Invite to Group"));
 
-                QPushButton *deleteFriendButton2 = new QPushButton("      Удалить из группы    ");
+                QPushButton *deleteFriendButton2 = new QPushButton(tr("      Delete from group     "));
 
                 QPixmap pixmapdeleteFriend(":/resc/resc/bin_white.svg");
                 QIcon ButtonIcondeleteFriend(pixmapdeleteFriend);
@@ -489,12 +489,11 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
 
         qDebug () << reply -> error ();
 
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
-        // newRootScreen(MAIN_TAG);
+        QMessageBox::warning(this, tr("Error"),
+            "Connection ERROR!\n");
 
 }
-    //newRootScreen(MAIN_TAG);
+
     reply->deleteLater();
     networkManagerloadFriends->clearAccessCache();
 
@@ -538,9 +537,9 @@ void Group::onHttpResultnetworkManagerDeleteFriendFromGroup(QNetworkReply *reply
 
         qDebug () << reply -> error ();
 
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
-        // newRootScreen(MAIN_TAG);
+        QMessageBox::warning(this, tr("Error"),
+            "Connection ERROR!\n");
+
 
 }
     reply->deleteLater();
@@ -702,9 +701,8 @@ void Group::onHttpResultDeleteGroup(QNetworkReply *reply){
 
         if(delete_group_result == "OK") {
 
-            QMessageBox::information(this, "Удаление группы",
-                "Группа удалена\n");
-            // newRootScreen(MAIN_TAG);
+            QMessageBox::information(this, tr("Group deleting"),
+                tr("Group is delete!\n"));
 
             newRootScreen(MAIN_TAG);
 
@@ -720,8 +718,8 @@ void Group::onHttpResultDeleteGroup(QNetworkReply *reply){
 
         qDebug () << reply -> error ();
 
-        QMessageBox::warning(this, "Ошибка",
-            "При подключениии произошла ошибка.\n");
+        QMessageBox::warning(this, tr("Error"),
+            "Connection ERROR!\n");
         // newRootScreen(MAIN_TAG);
 
 }

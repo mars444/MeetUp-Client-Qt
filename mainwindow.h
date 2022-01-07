@@ -5,6 +5,8 @@
 
 #include <QMainWindow>
 #include <QStackedWidget>
+#include <QTranslator>
+#include <QEvent>
 
 #include <common/navigator.h>
 
@@ -12,7 +14,10 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+
+
 private:
+
     QStackedWidget *container;
     Navigator *navigator;
     BaseScreensFactory *factory;

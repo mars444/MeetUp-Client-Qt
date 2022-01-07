@@ -31,6 +31,19 @@
         <file>resc/plus_white.svg</file>
         <file>resc/arrow_right.svg</file>
         <file>resc/cross.svg</file>
+        <file>resc/QtLanguage_ru.qm</file>
+        <file>resc/arrow_up.svg</file>
+        <file>resc/chevron-left.svg</file>
+        <file>resc/chevron-right.svg</file>
+        <file>resc/bg-events.png</file>
+        <file>resc/checkbox-unchecked.svg</file>
+        <file>resc/checkbox-checked.svg</file>
+        <file>resc/loading.gif</file>
+        <file>resc/loading_30px.gif</file>
+        <file>resc/setting_45px.gif</file>
+        <file>resc/settings_50px.gif</file>
+        <file>resc/arrow_up_white.svg</file>
+        <file>resc/upload_photo.svg</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>
