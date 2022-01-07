@@ -22,10 +22,10 @@ using namespace styles;
 #include <QScrollBar>
 #include <iostream>
 #include <QMovie>
+#include <QToolButton>
 
 
 using namespace screens;
-
 
 
 MainFragment::MainFragment() {
@@ -41,11 +41,36 @@ MainFragment::MainFragment() {
     QPushButton *myGroupsButton = new QPushButton("Мои группы");
     QPushButton *mySettingsButton = new QPushButton("Профиль");
 
+
+
+    QPixmap pixmapShedule(":/resc/resc/calendar.svg");
+    QIcon ButtonIconShedule(pixmapShedule);
+    mySheduleButton->setIcon(ButtonIconShedule);
+    mySheduleButton->setIconSize(QSize(20,20));
+
+    QPixmap pixmapFriends(":/resc/resc/user.svg");
+    QIcon ButtonIconFriends(pixmapFriends);
+    myFriendsButton->setIcon(ButtonIconFriends);
+    myFriendsButton->setIconSize(QSize(20,20));
+
+    QPixmap pixmapGroups(":/resc/resc/users.svg");
+    QIcon ButtonIconGroups(pixmapGroups);
+    myGroupsButton->setIcon(ButtonIconGroups);
+    myGroupsButton->setIconSize(QSize(20,20));
+
+    QPixmap pixmapSettings(":/resc/resc/cog.svg");
+    QIcon ButtonIconSettings(pixmapSettings);
+    mySettingsButton->setIcon(ButtonIconSettings);
+    mySettingsButton->setIconSize(QSize(20,20));
+
     // QPushButton *mySettingsButton1 = new QPushButton("qwrqwrewrwer");
 
-
-        //connect(mySettingsButton1, &QPushButton::clicked, this, &MainFragment::Group);
     exitButton = new QPushButton("Выйти из профиля");
+
+    QPixmap pixmapexitButton(":/resc/resc/enter.svg");
+    QIcon ButtonIconexitButton(pixmapexitButton);
+    exitButton->setIcon(ButtonIconexitButton);
+    exitButton->setIconSize(QSize(20,20));
 
     userContainer = new QVBoxLayout;
     QLabel *profileImageLabel = new QLabel("");
@@ -55,14 +80,7 @@ MainFragment::MainFragment() {
 
     QHBoxLayout *fuckContainer = new QHBoxLayout;
 
-//    QString strq = QString::fromUtf8(userNameData.c_str());  // преобразование std string в QString
-
-
-
-
-//    std::cout << user_data::userNameData->toStdString() << std::endl;
-
-
+    //QString strq = QString::fromUtf8(userNameData.c_str());  // преобразование std string в QString
 
     std::string nick = GetNickname();
 
@@ -71,12 +89,12 @@ MainFragment::MainFragment() {
 
     userName = new QLabel(nickQ);
 
+    userName->setAlignment(Qt::AlignCenter);
+
     QLabel *mainTitle = new QLabel("Лента новостей:");
     mainTitle->setAlignment(Qt::AlignCenter);
 
     mainTitle->setStyleSheet(MAIN_TITLE);
-
-
 
     QScrollArea *deskScrollArea = new QScrollArea;
     //deskScrollArea->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -85,14 +103,6 @@ MainFragment::MainFragment() {
     //deskScrollArea->setFrameShape(QFrame::NoFrame);
     QWidget *scrolContainer = new QWidget;
 
-    loading = new WaitingSpinnerWidget(scrolContainer, true, false);
-    loading->setColor(QT_COLOR_PRIMARY);
-
-
-//    QMovie *movie = new QMovie( ":/resc/resc/loader3.gif" );
-//    Qlabel
-//    container->setMovie(movie); // label имеет тип QLabel*
-//    movie->start();
 
     QFrame *loadingExitContainer = new QFrame;
     loadingExitContainer->setMinimumHeight(200);
@@ -103,12 +113,6 @@ MainFragment::MainFragment() {
     scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
     deskScrollArea->setStyleSheet(GLOBAL_BACK_WHITE);
     QHBoxLayout *deskContainer = new QHBoxLayout;
-    start = new QVBoxLayout;
-    start->setAlignment(Qt::AlignTop);
-    end = new QVBoxLayout;
-    end->setAlignment(Qt::AlignTop);
-    deskContainer->addLayout(start);
-    deskContainer->addLayout(end);
     scrolContainer->setLayout(deskContainer);
     deskScrollArea->setWidget(scrolContainer);
     deskScrollArea->setWidgetResizable(true);
@@ -156,9 +160,7 @@ MainFragment::MainFragment() {
 //    centerContainer->setPixmap(profileImage);
 
 
-//    QMovie *movie = new QMovie( ":/resc/resc/loader3.gif" );
-//    centerContainer->setMovie(movie); // label имеет тип QLabel*
-//    movie->start();
+
 
 
     profileContainer->addLayout(userContainer);
@@ -166,13 +168,22 @@ MainFragment::MainFragment() {
     profileContainer->addWidget(myFriendsButton);
     profileContainer->addWidget(myGroupsButton);
     profileContainer->addWidget(mySettingsButton);
-        //profileContainer->addWidget(mySettingsButton1);
     profileContainer->addWidget(exitButton);
     profileContainer->addWidget(loadingExitContainer);
     profileContainer->setAlignment(Qt::AlignTop);
 
     lentContainer->addWidget(mainTitle);
     lentContainer->addWidget(deskScrollArea);
+
+
+    QLabel *centerContainer = new QLabel("");
+    QMovie *movie = new QMovie( ":/resc/resc/loader3.gif" );
+    centerContainer->setMovie(movie); // label имеет тип QLabel*
+    movie->start();
+
+    deskContainer->addWidget(centerContainer);
+
+    deskContainer->setAlignment(Qt::AlignCenter);
 
     mainHLayout->addLayout(profileContainer);
     mainHLayout->addLayout(lentContainer);
@@ -182,57 +193,25 @@ MainFragment::MainFragment() {
     this->setStyleSheet(GLOBAL_BACK_WHITE);
     this->setObjectName("fragment");
 
-    loading->start();
 
     networkManager = new QNetworkAccessManager();
     connect(networkManager, &QNetworkAccessManager::finished, this, &MainFragment::onHttpResult);
-    loadUserName();
 }
 
 MainFragment::~MainFragment() {
     delete networkManager;
     delete userName;
-    delete start;
-    delete end;
     delete loading;
     delete loadingExit;
     delete exitButton;
 }
 
 void MainFragment::onResume() {
-    qDebug("main fragment onResume()");
-    loading->start();
-    loadUserName();
+
 }
 
-void MainFragment::loadUserName() {
-//    QJsonObject getUserNameJson;
-//    getUserNameJson.insert("getUserName", "");
-
-//    QNetworkRequest request(QUrl(SERVER_URL + ""));
-//    request.setHeader(QNetworkRequest::ContentTypeHeader,
-//                      QStringLiteral("application/json;charset=utf-8"));
-//     qDebug() << "request data"<< QJsonDocument(getUserNameJson).toJson(QJsonDocument::Compact) << endl;
-
-//    networkManager->post(
-//        request,
-//      QJsonDocument(getUserNameJson).toJson(QJsonDocument::Compact)
-//    );
-}
 
 void MainFragment::onExit() {
-    loadingExit->start();
-    exitButton->setDisabled(true);
-
-    QNetworkRequest request(QUrl(SERVER_URL + "exit"));
-    request.setHeader(QNetworkRequest::ContentTypeHeader,
-                      QStringLiteral("application/json;charset=utf-8"));
-
-    QNetworkReply* reply = networkManager->post(
-        request,
-        ""
-    );
-    reply->setProperty("type", EXIT);
     navigateTo(START_TAG);
 }
 

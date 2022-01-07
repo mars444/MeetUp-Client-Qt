@@ -307,10 +307,11 @@ Settings::Settings() {
 
     setSettingsButton->setStyleSheet(BUTTON_SOLID);
 
-//    setSettingsButton->setDisabled(true);
+    setSettingsButton->setDisabled(true);
 
     setSettingsButton->setMaximumWidth(355);
     setSettingsButton->setMinimumWidth(355);
+
 
 
 
@@ -324,14 +325,10 @@ Settings::Settings() {
 
     titleContainer->addWidget(backButton);
     titleContainer->addWidget(titleLabel);
-    titleContainer->setContentsMargins(0,24,0,16);
+    titleContainer->setContentsMargins(0,24,0,10);
     titleLabel->setContentsMargins(16,0,0,0);
 
-    titleContainer->setAlignment(Qt::AlignHCenter);
-
-    inputContainer->setAlignment(Qt::AlignLeft);
-
-    settingsInner->addLayout(inputContainer);
+    titleContainer->setAlignment(Qt::AlignCenter);
 
     settingsInner->addLayout(inputNameInner);
     settingsInner->addLayout(inputSurnameInner);
@@ -341,6 +338,29 @@ Settings::Settings() {
     settingsInner->addLayout(inputLabelInner);
     settingsInner->addLayout(inputDescriptionInner);
     settingsInner->addLayout(inputMailInner);
+
+
+    QIcon *ico;
+    ico = new QIcon(":/resc/resc/cog.svg");
+
+    userMailEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userNameEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userStatusEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userAgeEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    usercityEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userLabelEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userindexEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userstreetEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userSurnameEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    usercountryEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userhousingEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userPhoneNumberEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userDescriptionEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userdistrictEdit->addAction(*ico, QLineEdit::LeadingPosition);
+    userbuildingEdit->addAction(*ico, QLineEdit::LeadingPosition);
+
+
+
 
 
     settingButtonContainer->addWidget(setSettingsButton);
@@ -357,7 +377,7 @@ Settings::Settings() {
 
     setSettingsRightButton->setStyleSheet(BUTTON_DISABLED);
 
-//    setSettingsRightButton->setDisabled(true);
+    setSettingsRightButton->setDisabled(true);
 
     setSettingsRightButton->setMaximumWidth(355);
     setSettingsRightButton->setMinimumWidth(355);
@@ -379,11 +399,12 @@ Settings::Settings() {
     innerDataSettigs->addLayout(settingsInnerRight);
 
     innerDataSettigs->setAlignment(Qt::AlignJustify);
+    innerDataSettigs->setAlignment(Qt::AlignTop);
+
 
     mainVLayout->addLayout(titleContainer);
     mainVLayout->addLayout(innerDataSettigs);
 
-    mainVLayout->setAlignment(Qt::AlignJustify);
 
     mainVLayout->setAlignment(Qt::AlignTop);
 

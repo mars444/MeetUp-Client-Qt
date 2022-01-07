@@ -27,7 +27,7 @@ private:
 
     QLabel *noGroupsLabel;
 
-    std::string str;
+    std::string strFriends;
     std::string strGroups;
 
     QVBoxLayout *mainVLayout;

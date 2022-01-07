@@ -67,6 +67,8 @@ Friends::Friends() {
     titleContainer->addWidget(titleLabel);
     titleContainer->setContentsMargins(0,24,0,16);
 
+    titleContainer->setAlignment(Qt::AlignCenter);
+
     titleLabel->setContentsMargins(16,0,0,0);
 
 
@@ -335,6 +337,13 @@ void Friends::onHttpResult(QNetworkReply *reply) {
 
 void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
 
+        friendsCount++;
+
+
+    if(friendsCount == 1) {
+
+        delete noFriendsLabel;
+    }
 
 
     qDebug() << "http finished" << endl;

@@ -104,6 +104,19 @@ LoginFragment::LoginFragment() {
     loadingButtonContainer->addWidget(loadingContaiter);
     buttonContainer->addLayout(loadingButtonContainer);
 
+
+
+    QIcon *icoLogin;
+    icoLogin = new QIcon(":/resc/resc/user.svg");
+
+    loginEdit->addAction(*icoLogin, QLineEdit::LeadingPosition);
+
+
+    QIcon *icoPassword;
+    icoPassword = new QIcon(":/resc/resc/key.svg");
+
+    passwordEdit->addAction(*icoPassword, QLineEdit::LeadingPosition);
+
     startContent->setContentsMargins(50,50,50,50);
 
     backImage->setStyleSheet(BACK_WHITE);

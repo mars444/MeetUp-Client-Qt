@@ -18,19 +18,8 @@ SplashFragment::SplashFragment() {
 
     QVBoxLayout *mainVLayout = new QVBoxLayout;
     QHBoxLayout *mainHLayout = new QHBoxLayout;
-    //QSvgWidget *centerContainer = new QSvgWidget(":/resc/resc/logo.svg");
-
-    //QLabel *titleLabel = new QLabel("Загрузка...");
-    //titleLabel->setStyleSheet(TITLE_LABLE);
-
-
-
 
     QLabel *centerContainer = new QLabel("");
-    //QPixmap profileImage(":/resc/resc/loader.gif");
-    //centerContainer->setPixmap(profileImage);
-
-
     QMovie *movie = new QMovie( ":/resc/resc/loader3.gif" );
     centerContainer->setMovie(movie); // label имеет тип QLabel*
     movie->start();
@@ -40,7 +29,6 @@ SplashFragment::SplashFragment() {
     mainHLayout->setAlignment(Qt::AlignCenter);
 
     mainVLayout->addLayout(mainHLayout);
-     //mainVLayout->addWidget(titleLabel);
     mainVLayout->setAlignment(Qt::AlignCenter);
 
 
@@ -48,7 +36,7 @@ SplashFragment::SplashFragment() {
     this->setObjectName("fragment");
     this->setLayout(mainVLayout);
 
-    QTimer::singleShot(4000, this, SLOT(openStartScreen()));
+    QTimer::singleShot(000, this, SLOT(openStartScreen()));
     qDebug("SplashFragment crete finished!!");
 }
 

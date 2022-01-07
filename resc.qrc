@@ -19,6 +19,13 @@
         <file>resc/user2.png</file>
         <file>resc/group2.svg</file>
         <file>resc/group3.svg</file>
+        <file>resc/enter.svg</file>
+        <file>resc/cog.svg</file>
+        <file>resc/lock.svg</file>
+        <file>resc/users.svg</file>
+        <file>resc/user.svg</file>
+        <file>resc/calendar.svg</file>
+        <file>resc/key.svg</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

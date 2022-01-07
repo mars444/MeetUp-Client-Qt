@@ -72,6 +72,7 @@ Groups::Groups() {
     titleContainer->addWidget(backButton);
     titleContainer->addWidget(titleLabel);
     titleContainer->setContentsMargins(0,24,0,16);
+    titleContainer->setAlignment(Qt::AlignCenter);
 
     titleLabel->setContentsMargins(16,0,0,0);
 
@@ -145,6 +146,8 @@ Groups::Groups() {
     deskScrollArea->setStyleSheet(SCROL_BAR);
     QHBoxLayout *content = new QHBoxLayout;
     //content->setAlignment(Qt::AlignLeft);
+    content->setAlignment(Qt::AlignJustify);
+    content->setAlignment(Qt::AlignTop);
     scrolContainer->setLayout(content);
     deskScrollArea->setWidget(scrolContainer);
     deskScrollArea->setWidgetResizable(true);
@@ -158,7 +161,7 @@ Groups::Groups() {
 
 
     inputContainerGroups = new QVBoxLayout;
-      //inputContainerGroups->setAlignment(Qt::AlignCenter);
+    inputContainerGroups->setAlignment(Qt::AlignCenter);
 
     inputContainerGroups->setAlignment(Qt::AlignTop);
     inputContainer->setAlignment(Qt::AlignTop);
@@ -166,26 +169,32 @@ Groups::Groups() {
 
     inputContainerGroups->addLayout(inputContainer);
 
-     inputContainerGroups->addLayout(addGroupContainer);
+    inputContainer->setAlignment(Qt::AlignCenter);
+
+    addGroupContainer->setAlignment(Qt::AlignCenter);
+
+    inputContainerGroups->addLayout(addGroupContainer);
 
 
     //mainHLayout->addWidget(deskScrollArea);
     //mainHLayout->addStretch();
 
-    mainVLayout->setAlignment(Qt::AlignCenter);
+    inputContainerGroups->setAlignment(Qt::AlignJustify);
 
     content->addLayout(inputContainerGroups);
 
 
 
 
+
+
+
     mainVLayout->addWidget(deskScrollArea);
 
-    //mainVLayout->setAlignment(Qt::AlignCenter);
-    //inputContainerGroups->setAlignment(Qt::AlignCenter);
-    //inputContainer->setAlignment(Qt::AlignCenter);
-    //content->setAlignment(Qt::AlignCenter);
-
+    mainVLayout->setAlignment(Qt::AlignTop);
+    //inputContainerGroups->setAlignment(Qt::AlignTop);
+    inputContainer->setAlignment(Qt::AlignTop);
+    content->setAlignment(Qt::AlignTop);
 
 
 
@@ -194,6 +203,11 @@ Groups::Groups() {
     this->setObjectName("fragment");
 
     checkData();
+
+
+
+    ManagerAddFriendsLayout = new QNetworkAccessManager();
+    connect(ManagerAddFriendsLayout, &QNetworkAccessManager::finished, this, &Groups::onHttpResultManagerAddFriendsLayout);
 
     networkManager = new QNetworkAccessManager();
     connect(networkManager, &QNetworkAccessManager::finished, this, &Groups::onHttpResult);
@@ -205,16 +219,7 @@ Groups::Groups() {
     ManagerAddFriendToGroup = new QNetworkAccessManager();
     connect(ManagerAddFriendToGroup, &QNetworkAccessManager::finished, this, &Groups::onHttpResultAddFriendtoGroup);
 
-
-    ManagerAddFriendsLayout = new QNetworkAccessManager();
-    connect(ManagerAddFriendsLayout, &QNetworkAccessManager::finished, this, &Groups::onHttpResultManagerAddFriendsLayout);
-
-
     loadFriends();
-
-
-   loadGroups();
-
 
 }
 
@@ -300,8 +305,10 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
             stack = new QStackedWidget;
 
+
             QFrame *inviteButtonWidjet = new QFrame;
             QVBoxLayout *inviteButtonLayout = new QVBoxLayout;
+
 
 
             QFrame *backWidget = new QFrame;
@@ -309,6 +316,8 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
             stack->addWidget(inviteButtonWidjet);
             stack->addWidget(backWidget);
+
+
 
             stack->setCurrentIndex(0);
 
@@ -322,7 +331,6 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
 
             QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
-
             inviteGroupButton2->setMaximumWidth(300);
             inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
 
@@ -353,19 +361,23 @@ void Groups::onHttpResult(QNetworkReply *reply) {
                      GroupContainer2->addWidget(GroupNameButton);
 
 
+
     //        GroupContainer2->addLayout(GroupButtonContainer2);
 
 //////////////////////// добавление друзей в слой
 
 
-            std::cout<< "aaaaaaaaaaaaaaaaaaaaaaa  eto yaaa" << str << endl;
+            //std::cout<< "aaaaaaaaaaaaaaaaaaaaaaa  eto yaaa" << str << endl;
 
-            std::string strFriend = "{\"get_contacts\":[\"bogdan111\",\"Alex12345\",\"Kostya44\",\"Danzan_45\"]}";
+          // std::string strFriend = "{\"get_contacts\":[\"bogdan111\",\"Alex12345\",\"Kostya44\",\"Danzan_45\"]}";
 
             //std::string strFriend = *str;
 
 
-            nlohmann::json j = nlohmann::json::parse(strFriend);
+
+
+
+            nlohmann::json j = nlohmann::json::parse(strFriends);
 
             if(j["get_contacts"].is_string()){
 
@@ -390,7 +402,7 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
                  deskScrollArea->setMaximumHeight(250);
                  deskScrollArea->setMaximumWidth(300);
-                 deskScrollArea->setAlignment(Qt::AlignHCenter);
+                 //deskScrollArea->setAlignment(Qt::AlignHCenter);
                  //deskScrollArea->setFrameShape(QFrame::NoFrame);
                  QWidget *scrolContainer = new QWidget;
                  scrolContainer->setObjectName("container");
@@ -399,7 +411,7 @@ void Groups::onHttpResult(QNetworkReply *reply) {
                  scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
                  deskScrollArea->setStyleSheet(SCROL_BAR);
                  QHBoxLayout *content = new QHBoxLayout;
-                 content->setAlignment(Qt::AlignCenter);
+                 content->setAlignment(Qt::AlignHCenter);
                  scrolContainer->setLayout(content);
                  deskScrollArea->setWidget(scrolContainer);
                  deskScrollArea->setWidgetResizable(true);
@@ -452,8 +464,12 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
             GroupContainer2->addWidget(stack);
 
+            GroupContainer2->setAlignment(Qt::AlignCenter);
+
 
             inputContainerGroups->addLayout(GroupContainer2);
+
+            inputContainerGroups->setAlignment(Qt::AlignCenter);
 
              mButtonBackToLayoutMap.insert(backAddtoGroup,GroupContainer2);
 
@@ -726,7 +742,7 @@ void Groups::addGroupButtonPressed() {
 
 
 
-        nlohmann::json j = nlohmann::json::parse(str);
+        nlohmann::json j = nlohmann::json::parse(strFriends);
 
         if(j["get_contacts"].is_string()){
 
@@ -853,11 +869,14 @@ void Groups::onHttpResultManagerAddFriendsLayout(QNetworkReply *reply) {
          QJsonObject obj;
 
 
+
+
          std::string abc = resp.toStdString();
-         str = abc;
+         strFriends = abc;
 
 
-         std::cout << "str  " << str << std::endl;
+
+         std::cout << "str friends server req " << strFriends << std::endl;
 
          } else {
 
@@ -877,6 +896,8 @@ void Groups::onHttpResultManagerAddFriendsLayout(QNetworkReply *reply) {
      reply->deleteLater();
 
      ManagerAddFriendsLayout->clearAccessCache();
+
+     loadGroups();
 
 
 }

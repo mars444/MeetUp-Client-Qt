@@ -50,7 +50,7 @@ Shedule::Shedule() {
 
 
     calendar = new QCalendarWidget;
- calendar->setMinimumDate(QDate::currentDate().addDays(-4));
+ calendar->setMinimumDate(QDate::currentDate());
 
     calendar->setMinimumHeight(350);
 
@@ -101,6 +101,8 @@ Shedule::Shedule() {
     QHBoxLayout *selectorContainer = new QHBoxLayout;
 
     selectorContainer->setContentsMargins(0,0,0,25);
+
+
 
     date1Button = new QPushButton("Понедельник");
     date2Button = new QPushButton("Вторник");
@@ -212,6 +214,12 @@ Shedule::Shedule() {
 
 
     titleEditContainer->addLayout(form);
+
+    form->setAlignment(Qt::AlignTop);
+
+    titleEditContainer->setAlignment(Qt::AlignTop);
+
+
     titleEditContainer->addWidget(addBoxTitleButton);
 
 //        //стак для выбора контента
@@ -224,6 +232,9 @@ Shedule::Shedule() {
 
 
     inputContainer->insertLayout(3,titleEditContainer);
+
+    inputContainer->setAlignment(Qt::AlignTop);
+
 
 
     content->setAlignment(Qt::AlignTop);

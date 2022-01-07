@@ -20,22 +20,12 @@ private:
 
     QPushButton *exitButton;
 
-    QList<DeskModel*> deskList;
     QLabel *userName;
 
     QVBoxLayout *userContainer;
 
-    QVBoxLayout *start;
-    QVBoxLayout *end;
-
     WaitingSpinnerWidget *loading;
     WaitingSpinnerWidget *loadingExit;
-
-
-    const QString EXIT = "req_exit";
-    const QString LIST = "req_list";
-
-    void loadUserName();
 
 public:
     MainFragment();
@@ -51,9 +41,6 @@ public slots:
     void myGroups();
     void mySettings();
     void Group();
-
-
-
     void onHttpResult(QNetworkReply *reply);
 };
 

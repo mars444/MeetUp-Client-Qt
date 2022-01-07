@@ -27,6 +27,8 @@ private:
 
     std::string str;
 
+    int friendsCount = 0;
+
     QMovie *movieloading;
 
     QLabel *centerContainer;

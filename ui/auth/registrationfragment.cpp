@@ -98,6 +98,19 @@ RegistrationFragment::RegistrationFragment() {
     repeatPasswordEdit->setEchoMode(QLineEdit::Password);
     connect(repeatPasswordEdit, &QLineEdit::textChanged, this, &RegistrationFragment::checkData);
 
+
+    QIcon *icoLogin;
+    icoLogin = new QIcon(":/resc/resc/user.svg");
+
+    loginEdit->addAction(*icoLogin, QLineEdit::LeadingPosition);
+
+
+    QIcon *icoPassword;
+    icoPassword = new QIcon(":/resc/resc/key.svg");
+
+    passwordEdit->addAction(*icoPassword, QLineEdit::LeadingPosition);
+    repeatPasswordEdit->addAction(*icoPassword, QLineEdit::LeadingPosition);
+
     loginButton->setStyleSheet(BUTTON_SOLID);
     connect(loginButton, &QPushButton::clicked, this, &RegistrationFragment::onRegPressed);
 
