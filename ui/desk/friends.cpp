@@ -305,9 +305,11 @@ void Friends::onHttpResult(QNetworkReply *reply) {
                     deleteFriendButton2 -> setStyleSheet("text-align: right");
                     deleteFriendButton2->setIconSize(QSize(20,20));
 
-                    inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
+
 
                     deleteFriendButton2->setStyleSheet(BUTTON_SOLID_DELETE);
+
+                    inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
 
                     QHBoxLayout *friendButtonContainer2 = new QHBoxLayout;
 
@@ -341,6 +343,8 @@ void Friends::onHttpResult(QNetworkReply *reply) {
 
 
                     mButtonToLayoutMap.insert(deleteFriendButton2,friendContainer2);
+
+                    mButtonToFrameMap.insert(deleteFriendButton2,friendContainerFrame);
                 }
 
 
@@ -437,7 +441,9 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
 
             inviteGroupButton2 = new QPushButton(tr("Invite to group"));
 
-            deleteFriendButton2 = new QPushButton(tr("Remove from friends   "));
+            QPushButton *deleteFriendButton2 = new QPushButton(tr(""));
+
+            deleteFriendButton2->setMaximumWidth(50);
 
             QPixmap pixmapdeleteFriend(":/resc/resc/bin_white.svg");
             QIcon ButtonIcondeleteFriend(pixmapdeleteFriend);
@@ -449,6 +455,10 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
 
 
 
+            deleteFriendButton2->setStyleSheet(BUTTON_SOLID_DELETE);
+
+
+
            connect(deleteFriendButton2, &QPushButton::clicked, this, &Friends::deleteFriendPressed);
 
 
@@ -456,12 +466,20 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
             inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
 
 
-            deleteFriendButton2->setStyleSheet(BUTTON_SOLID);
-
                  QHBoxLayout *friendButtonContainer2 = new QHBoxLayout;
 
             //friendButtonContainer2->addWidget(inviteGroupButton2);
             friendButtonContainer2->addWidget(deleteFriendButton2);
+
+            friendImageLabel2->setStyleSheet("QFrame {""background: transparent""}");
+            friendImageLabel2->setContentsMargins(0,15,0,0);
+            friendName2->setStyleSheet(TASK_PADDING);
+            friendName2->setContentsMargins(0,15,0,0);
+            friendOnlineStatusLabel2->setStyleSheet("QFrame {""background: transparent""}");
+            friendOnlineStatusLabel2->setContentsMargins(0,15,0,0);
+
+
+
 
 
 
@@ -474,10 +492,19 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
             connect(deleteFriendButton2, &QPushButton::clicked, this, &Friends::deleteFriendPressed);
 
 
-            inputContainerFriends->addLayout(friendContainer2);
+            friendContainerFrame = new QFrame;
+
+            friendContainerFrame->setStyleSheet(EVENT_READY_STYLE);
+
+            friendContainerFrame->setLayout(friendContainer2);
+
+
+            inputContainerFriends->addWidget(friendContainerFrame);
 
 
             mButtonToLayoutMap.insert(deleteFriendButton2,friendContainer2);
+
+            mButtonToFrameMap.insert(deleteFriendButton2,friendContainerFrame);
 
             addFriendEdit->setText("");
              addFriendButton->setStyleSheet(BUTTON_DISABLED);
@@ -673,6 +700,10 @@ void Friends::deleteFriendPressed(){
     QPushButton *button = qobject_cast<QPushButton*>(sender());
 
     QHBoxLayout *layout = mButtonToLayoutMap.take(button);
+
+    QFrame *frame = mButtonToFrameMap.take(button);
+
+    frame->hide();
 
 
     QWidget * widget =  layout->itemAt(1)->widget();

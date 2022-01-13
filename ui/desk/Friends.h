@@ -22,6 +22,7 @@ class Friends : public BaseFragment{
 private:
 
     QHash<QPushButton*,QHBoxLayout*> mButtonToLayoutMap;
+    QHash<QPushButton*,QFrame*> mButtonToFrameMap;
      QString ID_QSTRING;
 
 
