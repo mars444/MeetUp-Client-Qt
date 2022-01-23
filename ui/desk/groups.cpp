@@ -47,12 +47,12 @@ Groups::Groups() {
     NICK_QSTRING = QString::fromUtf8(nickstd.c_str());
 
 
-//    connect(this, SIGNAL(sendGroupNameSignal(const QString &)),
-//            Group, SLOT(sendGroupnameSlot(const QString &)));
+    //    connect(this, SIGNAL(sendGroupNameSignal(const QString &)),
+    //            Group, SLOT(sendGroupnameSlot(const QString &)));
 
 
-//    connect(this, sendGroupNameSignal,
-//            &Group, &Group::sendGroupNameSlot);
+    //    connect(this, sendGroupNameSignal,
+    //            &Group, &Group::sendGroupNameSlot);
 
     mainVLayout = new QVBoxLayout;
     QVBoxLayout *inputContainer = new QVBoxLayout;
@@ -62,7 +62,7 @@ Groups::Groups() {
     titleLabel = new QLabel("Мои группы");
 
     //QFrame *loadingContaiter = new QFrame;
-   // loading = new WaitingSpinnerWidget(loadingContaiter, true, false);
+    // loading = new WaitingSpinnerWidget(loadingContaiter, true, false);
     //loading->setColor(QT_COLOR_PRIMARY);
     //loadingContaiter->setMinimumWidth(100);
 
@@ -290,207 +290,211 @@ void Groups::onHttpResult(QNetworkReply *reply) {
         } else {
 
 
-        for (auto& element :  j["get_groups"]) {
+            for (auto& element :  j["get_groups"]) {
 
-            GroupContainer2 = new QHBoxLayout;
-            QLabel *GroupImageLabel2 = new QLabel("");
-            QPixmap GroupImage2(":/resc/resc/group3.svg");
-            GroupImageLabel2->setPixmap(GroupImage2);
-            GroupImageLabel2->setStyleSheet(GROUP_IMAGE);
+                GroupContainer2 = new QHBoxLayout;
+                QLabel *GroupImageLabel2 = new QLabel("");
+                QPixmap GroupImage2(":/resc/resc/group3.svg");
+                GroupImageLabel2->setPixmap(GroupImage2);
+                GroupImageLabel2->setStyleSheet(GROUP_IMAGE);
 
-            GroupNameButton = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
+                GroupNameButton = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
 
 
-            connect(GroupNameButton, &QPushButton::clicked, this, &Groups::goToGroup);
+                connect(GroupNameButton, &QPushButton::clicked, this, &Groups::goToGroup);
 
-            GroupNameButton->setStyleSheet(FRIEND_NAME_SURNAME);
+                GroupNameButton->setStyleSheet(FRIEND_NAME_SURNAME);
 
-            GroupNameButton->setStyleSheet(BUTTON_WHITE);
+                GroupNameButton->setStyleSheet(BUTTON_WHITE);
 
-            GroupNameButton->setMaximumWidth(300);
+                GroupNameButton->setMaximumWidth(300);
 
 
-            //QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
+                //QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
 
-            stack = new QStackedWidget;
+                stack = new QStackedWidget;
 
 
-            QFrame *inviteButtonWidjet = new QFrame;
-            QVBoxLayout *inviteButtonLayout = new QVBoxLayout;
+                QFrame *inviteButtonWidjet = new QFrame;
+                QVBoxLayout *inviteButtonLayout = new QVBoxLayout;
 
 
 
-            QFrame *backWidget = new QFrame;
-            QHBoxLayout *backLayout = new QHBoxLayout;
+                QFrame *backWidget = new QFrame;
+                QHBoxLayout *backLayout = new QHBoxLayout;
 
-            stack->addWidget(inviteButtonWidjet);
-            stack->addWidget(backWidget);
-            backWidget->setStyleSheet("QFrame {""background: transparent""}");
+                stack->addWidget(inviteButtonWidjet);
+                stack->addWidget(backWidget);
+                backWidget->setStyleSheet("QFrame {""background: transparent""}");
 
 
-            stack->setCurrentIndex(0);
+                stack->setCurrentIndex(0);
 
-            //stack->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+                //stack->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
 
-            inviteButtonWidjet->setLayout(inviteButtonLayout);
+                inviteButtonWidjet->setLayout(inviteButtonLayout);
 
 
-            backWidget->setLayout(backLayout);
+                backWidget->setLayout(backLayout);
 
 
 
 
-            QPushButton *inviteGroupButton2 = new QPushButton(tr("                 Invite to group         "));
+                QPushButton *inviteGroupButton2 = new QPushButton(tr("                 Invite to group         "));
 
-            QPixmap pixmapinviteGroup(":/resc/resc/arrow_right.svg");
-            QIcon ButtonIconinviteGroup(pixmapinviteGroup);
+                QPixmap pixmapinviteGroup(":/resc/resc/arrow_right.svg");
+                QIcon ButtonIconinviteGroup(pixmapinviteGroup);
 
-            inviteGroupButton2->setIcon(ButtonIconinviteGroup);
-            inviteGroupButton2 -> setLayoutDirection ( Qt :: RightToLeft );
+                inviteGroupButton2->setIcon(ButtonIconinviteGroup);
+                inviteGroupButton2 -> setLayoutDirection ( Qt :: RightToLeft );
 
-            inviteGroupButton2->setIconSize(QSize(20,20));
-            inviteGroupButton2->setMaximumWidth(300);
-            inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
+                inviteGroupButton2->setIconSize(QSize(20,20));
+                inviteGroupButton2->setMaximumWidth(300);
+                inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
 
-            connect(inviteGroupButton2, &QPushButton::clicked, this, &Groups::inviteGroupPressed);
+                connect(inviteGroupButton2, &QPushButton::clicked, this, &Groups::inviteGroupPressed);
 
-            inviteButtonLayout->addWidget(inviteGroupButton2);
+                inviteButtonLayout->addWidget(inviteGroupButton2);
 
-            backAddtoGroup = new QPushButton(tr("Cancel"));
+                backAddtoGroup = new QPushButton(tr("Cancel"));
 
-            backAddtoGroup->setMaximumWidth(200);
+                backAddtoGroup->setMaximumWidth(200);
 
-            backAddtoGroup->setStyleSheet(BUTTON_PROFILE_RED);
+                backAddtoGroup->setStyleSheet(BUTTON_PROFILE_RED);
 
-            backLayout->addWidget(backAddtoGroup);
-            backLayout->setAlignment(Qt::AlignRight);
+                backLayout->addWidget(backAddtoGroup);
+                backLayout->setAlignment(Qt::AlignRight);
 
-            connect(backAddtoGroup, &QPushButton::clicked, this, &Groups::backAddtoGroupPressed);
+                connect(backAddtoGroup, &QPushButton::clicked, this, &Groups::backAddtoGroupPressed);
 
 
-            //GroupContainer2->setAlignment(Qt::AlignCenter);
+                //GroupContainer2->setAlignment(Qt::AlignCenter);
 
 
-            //QHBoxLayout *GroupButtonContainer2 = new QHBoxLayout;
+                //QHBoxLayout *GroupButtonContainer2 = new QHBoxLayout;
 
 
-            //GroupButtonContainer2->addWidget(inviteGroupButton2);
-            //GroupButtonContainer2->addWidget(inviteGroupButton2);
+                //GroupButtonContainer2->addWidget(inviteGroupButton2);
+                //GroupButtonContainer2->addWidget(inviteGroupButton2);
 
 
-                    GroupImageLabel2->setStyleSheet("QFrame {""background: transparent""}");
-                    stack->setStyleSheet("QFrame {""background: transparent""}");
-                    GroupImageLabel2->setContentsMargins(0,0,200,0);
-                    stack->setContentsMargins(0,30,0,0);
-//                    GroupNameButton->setContentsMargins(0,10,0,0);
+                GroupImageLabel2->setStyleSheet("QFrame {""background: transparent""}");
+                stack->setStyleSheet("QFrame {""background: transparent""}");
+                GroupImageLabel2->setContentsMargins(0,0,200,0);
+                stack->setContentsMargins(0,30,0,0);
+                //                    GroupNameButton->setContentsMargins(0,10,0,0);
 
-                    GroupContainer2->addWidget(GroupImageLabel2);
-                     GroupContainer2->addWidget(GroupNameButton);
+                GroupContainer2->addWidget(GroupImageLabel2);
+                GroupContainer2->addWidget(GroupNameButton);
 
 
 
-    //        GroupContainer2->addLayout(GroupButtonContainer2);
+                //        GroupContainer2->addLayout(GroupButtonContainer2);
 
-//////////////////////// добавление друзей в слой
+                //////////////////////// добавление друзей в слой
 
 
-            //std::cout<< "aaaaaaaaaaaaaaaaaaaaaaa  eto yaaa" << str << endl;
+                //std::cout<< "aaaaaaaaaaaaaaaaaaaaaaa  eto yaaa" << str << endl;
 
-          // std::string strFriend = "{\"get_contacts\":[\"bogdan111\",\"Alex12345\",\"Kostya44\",\"Danzan_45\"]}";
+                // std::string strFriend = "{\"get_contacts\":[\"bogdan111\",\"Alex12345\",\"Kostya44\",\"Danzan_45\"]}";
 
-            //std::string strFriend = *str;
+                //std::string strFriend = *str;
 
 
 
 
 
-            nlohmann::json j = nlohmann::json::parse(strFriends);
+                nlohmann::json j = nlohmann::json::parse(strFriends);
 
-            if(j["get_contacts"].is_string()){
+                if(j["get_contacts"].is_string()){
 
 
-            } else {
+                } else {
 
 
 
-                 friendContainer2 = new QVBoxLayout;
+                    friendContainer2 = new QVBoxLayout;
 
-//                 innerScrollFriends = new QVBoxLayout;
-//                 QLabel *friendNamesTitle = new QLabel("Выберите кого пригласить:");
+                    //                 innerScrollFriends = new QVBoxLayout;
+                    //                 QLabel *friendNamesTitle = new QLabel("Выберите кого пригласить:");
 
-                 //friendNamesTitle->setAlignment(Qt::AlignCenter);
-                 //innerScroll->addWidget(friendNamesTitle);
+                    //friendNamesTitle->setAlignment(Qt::AlignCenter);
+                    //innerScroll->addWidget(friendNamesTitle);
 
-               //  innerScroll->setAlignment(Qt::AlignCenter);
-        //         innerScrollFriends->setAlignment(Qt::AlignRight);
+                    //  innerScroll->setAlignment(Qt::AlignCenter);
+                    //         innerScrollFriends->setAlignment(Qt::AlignRight);
 
 
-                 QScrollArea *deskScrollAreaFriends = new QScrollArea;
+                    QScrollArea *deskScrollAreaFriends = new QScrollArea;
 
-                 deskScrollAreaFriends->setMaximumHeight(200);
-                 deskScrollAreaFriends->setMinimumHeight(200);
-                 deskScrollAreaFriends->setMaximumWidth(300);
-                 deskScrollAreaFriends->setMinimumWidth(300);
-                 deskScrollAreaFriends->setAlignment(Qt::AlignHCenter);
-                 deskScrollAreaFriends->setFrameShape(QFrame::NoFrame);
-                 QWidget *scrolContainer = new QWidget;
+                    deskScrollAreaFriends->setMaximumHeight(200);
+                    deskScrollAreaFriends->setMinimumHeight(200);
+                    deskScrollAreaFriends->setMaximumWidth(300);
+                    deskScrollAreaFriends->setMinimumWidth(300);
+                    deskScrollAreaFriends->setAlignment(Qt::AlignHCenter);
+                    //deskScrollAreaFriends->setFrameShape(QFrame::NoFrame);
+                    QWidget *scrolContainer = new QWidget;
 
 
 
 
-                 scrolContainer->setStyleSheet("QFrame {""background: transparent""}");
-                 deskScrollAreaFriends->setStyleSheet(SCROL_BAR);
-                 QHBoxLayout *content = new QHBoxLayout;
-                 content->setAlignment(Qt::AlignHCenter);
-                 scrolContainer->setLayout(content);
-                 //scrolContainer->setMaximumWidth(500);
-                 deskScrollAreaFriends->setWidget(scrolContainer);
-                 deskScrollAreaFriends->setWidgetResizable(true);
-                 deskScrollAreaFriends->horizontalScrollBar()->setEnabled(false);
-                 content->setContentsMargins(0,0,0,0);
+                    scrolContainer->setStyleSheet("QFrame {""background: transparent""}");
+                    deskScrollAreaFriends->setStyleSheet(SCROL_BAR);
+                    QHBoxLayout *content = new QHBoxLayout;
+                    content->setAlignment(Qt::AlignHCenter);
+                    scrolContainer->setLayout(content);
+                    //scrolContainer->setMaximumWidth(500);
+                    deskScrollAreaFriends->setWidget(scrolContainer);
+                    deskScrollAreaFriends->setWidgetResizable(true);
+                    deskScrollAreaFriends->horizontalScrollBar()->setEnabled(false);
+                    //content->setContentsMargins(0,0,0,0);
 
 
-        //         QSvgWidget *done = new QSvgWidget(":/resc/resc/done_outline.svg");
-        //        done->setMinimumSize(QSize(24,24));
-        //        done->setMaximumSize(QSize(24,24));
+                    //         QSvgWidget *done = new QSvgWidget(":/resc/resc/done_outline.svg");
+                    //        done->setMinimumSize(QSize(24,24));
+                    //        done->setMaximumSize(QSize(24,24));
 
-                for (auto& element : j["get_contacts"]) {
+                    for (auto& element : j["get_contacts"]) {
 
-                    friendName2 = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
+                        friendName2 = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
 
 
-                    friendName2->setStyleSheet(BUTTON_SOLID);
-                    friendName2->setMinimumWidth(290);
-                      friendName2->setMaximumWidth(300);
+                        friendName2->setStyleSheet(BUTTON_SOLID);
+                        friendName2->setMinimumWidth(290);
+                        friendName2->setMaximumWidth(300);
 
 
 
-                    //friendContainer2->addWidget(friendNamesTitle);
-                    friendContainer2->addWidget(friendName2);
+                        //friendContainer2->addWidget(friendNamesTitle);
+                        friendContainer2->addWidget(friendName2);
 
-                    //friendName2->setStyleSheet("QFrame {""background: transparent""}");
+                        //friendName2->setStyleSheet("QFrame {""background: transparent""}");
 
 
 
 
-                    connect(friendName2, &QPushButton::clicked, this, &Groups::friendName2Pressed);
+                        connect(friendName2, &QPushButton::clicked, this, &Groups::friendName2Pressed);
 
 
-                    //innerScrollFriends->addWidget(friendName2);
+                        //innerScrollFriends->addWidget(friendName2);
 
-                    content->addLayout(friendContainer2);
+                        content->addLayout(friendContainer2);
 
-                    ///innerScroll->addLayout(friendContainer2);
+                        ///innerScroll->addLayout(friendContainer2);
 
 
 
-                   // backLayout->addLayout(innerScrollFriends);
+                        // backLayout->addLayout(innerScrollFriends);
 
-                    backLayout->addWidget(deskScrollAreaFriends);
-                    deskScrollAreaFriends->setStyleSheet("QFrame {""background: transparent""}");
+                        backLayout->addWidget(deskScrollAreaFriends);
+                        deskScrollAreaFriends->setStyleSheet("QFrame {""background: transparent""}");
 
 
+
+
+
+                    }
 
 
 
@@ -498,50 +502,45 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
 
 
-}
+                QFrame  *GroupsFrame = new QFrame;
 
+                GroupsFrame->setStyleSheet(GROUPS_FRAME);
 
-
-           QFrame  *GroupsFrame = new QFrame;
-
-            GroupsFrame->setStyleSheet(GROUPS_FRAME);
-
-            GroupsFrame->setLayout(GroupContainer2);
-            GroupsFrame->setMaximumHeight(200);
+                GroupsFrame->setLayout(GroupContainer2);
 
 
 
 
 
 
-                       inputContainerGroups->addWidget(GroupsFrame);
+                inputContainerGroups->addWidget(GroupsFrame);
 
 
-                       inputContainerGroups->setContentsMargins(100,0,100,0);
-
-
-
-
-
-            GroupContainer2->addWidget(stack);
+                inputContainerGroups->setContentsMargins(100,0,100,0);
 
 
 
 
 
-
-            inputContainerGroups->setAlignment(Qt::AlignVCenter);
-
-             mButtonBackToLayoutMap.insert(backAddtoGroup,GroupContainer2);
-
-
-            mButtonToLayoutMap.insert(inviteGroupButton2,GroupContainer2);
-
-}
+                GroupContainer2->addWidget(stack);
 
 
 
-    }} else {
+
+
+
+                inputContainerGroups->setAlignment(Qt::AlignVCenter);
+
+                mButtonBackToLayoutMap.insert(backAddtoGroup,GroupContainer2);
+
+
+                mButtonToLayoutMap.insert(inviteGroupButton2,GroupContainer2);
+
+            }
+
+
+
+        }} else {
 
         qDebug() << reply->errorString();
 
@@ -550,7 +549,7 @@ void Groups::onHttpResult(QNetworkReply *reply) {
         qDebug () << reply -> error ();
 
         QMessageBox::warning(this, tr("Ошибка"),
-        "Connection ERROR!\n");
+                             "Connection ERROR!\n");
 
 
     }
@@ -585,9 +584,9 @@ void Groups::onHttpResultAddGroup(QNetworkReply *reply) {
 
             std::cout << "ADD GROUP: " << addGroup << std::endl;
 
-}
+        }
 
-        } else {
+    } else {
 
         qDebug() << reply->errorString();
 
@@ -596,14 +595,14 @@ void Groups::onHttpResultAddGroup(QNetworkReply *reply) {
         qDebug () << reply -> error ();
 
         QMessageBox::warning(this, tr("Error"),
-            "Connection ERROR!\n");
+                             "Connection ERROR!\n");
 
-}
+    }
 
     reply->deleteLater();
 
 
-     addManagerGroup->clearAccessCache();
+    addManagerGroup->clearAccessCache();
 
 
 
@@ -620,7 +619,7 @@ void Groups::loadGroups() {
     QJsonObject loadGroupsJson;
     QJsonObject userIDJson;
 
-   // nlohmann::json aaa = nlohmann::json::parse(loadGroupsJson);
+    // nlohmann::json aaa = nlohmann::json::parse(loadGroupsJson);
 
 
     QJsonArray nickArray;
@@ -632,22 +631,22 @@ void Groups::loadGroups() {
 
     loadGroupsJson.insert("get_groups", userIDJson);
 
-        qDebug() << "create request" << endl;
+    qDebug() << "create request" << endl;
 
 
 
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json;charset=utf-8"));
-        qDebug() << "request data"<< QJsonDocument(loadGroupsJson).toJson(QJsonDocument::Compact) << endl;
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json;charset=utf-8"));
+    qDebug() << "request data"<< QJsonDocument(loadGroupsJson).toJson(QJsonDocument::Compact) << endl;
 
-        request.setRawHeader("JSON_DATA", QJsonDocument(loadGroupsJson).toJson(QJsonDocument::Compact));
-        networkManager->post(
-            request,
-            QJsonDocument(loadGroupsJson).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
-    }
+    request.setRawHeader("JSON_DATA", QJsonDocument(loadGroupsJson).toJson(QJsonDocument::Compact));
+    networkManager->post(
+                request,
+                QJsonDocument(loadGroupsJson).toJson(QJsonDocument::Compact)
+                );
+    qDebug() << "request send" << endl;
+}
 
 
 
@@ -656,25 +655,25 @@ void Groups::loadFriends() {
     QJsonObject loadFriendsJson;
     QJsonObject userIDJson;
 
-   // nlohmann::json aaa = nlohmann::json::parse(loadFriendsJson);
+    // nlohmann::json aaa = nlohmann::json::parse(loadFriendsJson);
 
     userIDJson.insert("user_id", ID_QSTRING);
     loadFriendsJson.insert("get_contacts", userIDJson);
 
-        qDebug() << "create request" << endl;
+    qDebug() << "create request" << endl;
 
 
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json;charset=utf-8"));
-        qDebug() << "request data"<< QJsonDocument(loadFriendsJson).toJson(QJsonDocument::Compact) << endl;
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json;charset=utf-8"));
+    qDebug() << "request data"<< QJsonDocument(loadFriendsJson).toJson(QJsonDocument::Compact) << endl;
 
-        request.setRawHeader("JSON_DATA", QJsonDocument(loadFriendsJson).toJson(QJsonDocument::Compact));
-        ManagerAddFriendsLayout->post(
-            request,
-            QJsonDocument(loadFriendsJson).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
+    request.setRawHeader("JSON_DATA", QJsonDocument(loadFriendsJson).toJson(QJsonDocument::Compact));
+    ManagerAddFriendsLayout->post(
+                request,
+                QJsonDocument(loadFriendsJson).toJson(QJsonDocument::Compact)
+                );
+    qDebug() << "request send" << endl;
 }
 
 
@@ -697,282 +696,282 @@ void Groups::addGroupButtonPressed() {
 
 
 
-        qDebug() << "create request" << endl;
+    qDebug() << "create request" << endl;
 
 
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json;charset=utf-8"));
-        qDebug() << "request data"<< QJsonDocument(addGroupJson).toJson(QJsonDocument::Compact) << endl;
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json;charset=utf-8"));
+    qDebug() << "request data"<< QJsonDocument(addGroupJson).toJson(QJsonDocument::Compact) << endl;
 
-         request.setRawHeader("JSON_DATA", QJsonDocument(addGroupJson).toJson(QJsonDocument::Compact));
-        addManagerGroup->post(
-            request,
-            QJsonDocument(addGroupJson).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
+    request.setRawHeader("JSON_DATA", QJsonDocument(addGroupJson).toJson(QJsonDocument::Compact));
+    addManagerGroup->post(
+                request,
+                QJsonDocument(addGroupJson).toJson(QJsonDocument::Compact)
+                );
+    qDebug() << "request send" << endl;
 
 
 
-        GroupContainer2 = new QHBoxLayout;
-        QLabel *GroupImageLabel2 = new QLabel("");
-        QPixmap GroupImage2(":/resc/resc/group3.svg");
-        GroupImageLabel2->setPixmap(GroupImage2);
-        GroupImageLabel2->setStyleSheet(GROUP_IMAGE);
+    GroupContainer2 = new QHBoxLayout;
+    QLabel *GroupImageLabel2 = new QLabel("");
+    QPixmap GroupImage2(":/resc/resc/group3.svg");
+    GroupImageLabel2->setPixmap(GroupImage2);
+    GroupImageLabel2->setStyleSheet(GROUP_IMAGE);
 
 
 
 
 
-        GroupNameButton = new QPushButton(addGroupEdit->text());
+    GroupNameButton = new QPushButton(addGroupEdit->text());
 
-        connect(GroupNameButton, &QPushButton::clicked, this, &Groups::goToGroup);
+    connect(GroupNameButton, &QPushButton::clicked, this, &Groups::goToGroup);
 
-        addGroupEdit->setText("");
+    addGroupEdit->setText("");
 
-        GroupNameButton->setStyleSheet(FRIEND_NAME_SURNAME);
+    GroupNameButton->setStyleSheet(FRIEND_NAME_SURNAME);
 
-        GroupNameButton->setStyleSheet(BUTTON_WHITE);
+    GroupNameButton->setStyleSheet(BUTTON_WHITE);
 
-        GroupNameButton->setMaximumWidth(300);
-///////////////////////////////////////////////////////////////////////////////////////////////
+    GroupNameButton->setMaximumWidth(300);
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-        stack = new QStackedWidget;
+    stack = new QStackedWidget;
 
-        QFrame *inviteButtonWidjet = new QFrame;
-        QVBoxLayout *inviteButtonLayout = new QVBoxLayout;
+    QFrame *inviteButtonWidjet = new QFrame;
+    QVBoxLayout *inviteButtonLayout = new QVBoxLayout;
 
 
-        QFrame *backWidget = new QFrame;
-        QHBoxLayout *backLayout = new QHBoxLayout;
+    QFrame *backWidget = new QFrame;
+    QHBoxLayout *backLayout = new QHBoxLayout;
 
-        stack->addWidget(inviteButtonWidjet);
-        stack->addWidget(backWidget);
+    stack->addWidget(inviteButtonWidjet);
+    stack->addWidget(backWidget);
 
-        stack->setCurrentIndex(0);
+    stack->setCurrentIndex(0);
 
-        stack->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    stack->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
 
 
 
-        inviteButtonWidjet->setLayout(inviteButtonLayout);
+    inviteButtonWidjet->setLayout(inviteButtonLayout);
 
 
-        backWidget->setLayout(backLayout);
+    backWidget->setLayout(backLayout);
 
 
-        QPushButton *inviteGroupButton2 = new QPushButton(tr("              Invite to group          "));
+    QPushButton *inviteGroupButton2 = new QPushButton(tr("              Invite to group          "));
 
-        QPixmap pixmapinviteGroup(":/resc/resc/arrow_right.svg");
-        QIcon ButtonIconinviteGroup(pixmapinviteGroup);
+    QPixmap pixmapinviteGroup(":/resc/resc/arrow_right.svg");
+    QIcon ButtonIconinviteGroup(pixmapinviteGroup);
 
-        inviteGroupButton2->setIcon(ButtonIconinviteGroup);
-        inviteGroupButton2 -> setLayoutDirection ( Qt :: RightToLeft );
+    inviteGroupButton2->setIcon(ButtonIconinviteGroup);
+    inviteGroupButton2 -> setLayoutDirection ( Qt :: RightToLeft );
 
-        inviteGroupButton2->setIconSize(QSize(20,20));
+    inviteGroupButton2->setIconSize(QSize(20,20));
 
-        inviteGroupButton2->setMaximumWidth(300);
-        inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
+    inviteGroupButton2->setMaximumWidth(300);
+    inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
 
-        connect(inviteGroupButton2, &QPushButton::clicked, this, &Groups::inviteGroupPressed);
+    connect(inviteGroupButton2, &QPushButton::clicked, this, &Groups::inviteGroupPressed);
 
-        inviteButtonLayout->addWidget(inviteGroupButton2);
+    inviteButtonLayout->addWidget(inviteGroupButton2);
 
-        backAddtoGroup = new QPushButton("Отмена");
+    backAddtoGroup = new QPushButton("Отмена");
 
-        backAddtoGroup->setMaximumWidth(200);
+    backAddtoGroup->setMaximumWidth(200);
 
-        backAddtoGroup->setStyleSheet(BUTTON_PROFILE_RED);
+    backAddtoGroup->setStyleSheet(BUTTON_PROFILE_RED);
 
-        backLayout->addWidget(backAddtoGroup);
+    backLayout->addWidget(backAddtoGroup);
 
-        connect(backAddtoGroup, &QPushButton::clicked, this, &Groups::backAddtoGroupPressed);
+    connect(backAddtoGroup, &QPushButton::clicked, this, &Groups::backAddtoGroupPressed);
 
 
-//        QHBoxLayout *GroupButtonContainer2 = new QHBoxLayout;
+    //        QHBoxLayout *GroupButtonContainer2 = new QHBoxLayout;
 
 
-//        //GroupButtonContainer2->addWidget(inviteGroupButton2);
-//        //GroupButtonContainer2->addWidget(inviteGroupButton2);
+    //        //GroupButtonContainer2->addWidget(inviteGroupButton2);
+    //        //GroupButtonContainer2->addWidget(inviteGroupButton2);
 
 
 
-                GroupContainer2->addWidget(GroupImageLabel2);
-                 GroupContainer2->addWidget(GroupNameButton);
+    GroupContainer2->addWidget(GroupImageLabel2);
+    GroupContainer2->addWidget(GroupNameButton);
 
 
-//        GroupContainer2->addLayout(GroupButtonContainer2);
+    //        GroupContainer2->addLayout(GroupButtonContainer2);
 
 
 
-        //str = "{\"userID\":\"213564544\",\"Friends\":[\"mars123456\", \"user666666\",  \"Alex\",  \"qwe\", \"piotr\"]}";
+    //str = "{\"userID\":\"213564544\",\"Friends\":[\"mars123456\", \"user666666\",  \"Alex\",  \"qwe\", \"piotr\"]}";
 
 
 
-        nlohmann::json j = nlohmann::json::parse(strFriends);
+    nlohmann::json j = nlohmann::json::parse(strFriends);
 
-        if(j["get_contacts"].is_string()){
+    if(j["get_contacts"].is_string()){
 
 
-        } else {
+    } else {
 
-            std::cout << j.size() << std::endl;
-            std::cout << j << std::endl;
+        std::cout << j.size() << std::endl;
+        std::cout << j << std::endl;
 
-            nlohmann::json::iterator it = j.begin();
-            std::cout << it.key() << std::endl;
+        nlohmann::json::iterator it = j.begin();
+        std::cout << it.key() << std::endl;
 
-            std::string key = it.key();
+        std::string key = it.key();
 
-            nlohmann::json value = j[key];
+        nlohmann::json value = j[key];
 
-            std::cout << value << std::endl;
+        std::cout << value << std::endl;
 
 
-            std::set<std::string> s_friends;
+        std::set<std::string> s_friends;
 
-             friendContainer2 = new QVBoxLayout;
+        friendContainer2 = new QVBoxLayout;
 
-             innerScrollFriends = new QVBoxLayout;
-             QLabel *friendNamesTitle = new QLabel(tr("Выберите кого пригласить:"));
+        innerScrollFriends = new QVBoxLayout;
+        QLabel *friendNamesTitle = new QLabel(tr("Выберите кого пригласить:"));
 
-             //friendNamesTitle->setAlignment(Qt::AlignCenter);
-             //innerScroll->addWidget(friendNamesTitle);
+        //friendNamesTitle->setAlignment(Qt::AlignCenter);
+        //innerScroll->addWidget(friendNamesTitle);
 
-           //  innerScroll->setAlignment(Qt::AlignCenter);
-    //         innerScrollFriends->setAlignment(Qt::AlignRight);
+        //  innerScroll->setAlignment(Qt::AlignCenter);
+        //         innerScrollFriends->setAlignment(Qt::AlignRight);
 
 
-    //         QScrollArea *deskScrollArea = new QScrollArea;
+        //         QScrollArea *deskScrollArea = new QScrollArea;
 
-    //         deskScrollArea->setMaximumHeight(250);
-    //         deskScrollArea->setMaximumWidth(300);
-    //         deskScrollArea->setAlignment(Qt::AlignHCenter);
-    //         //deskScrollArea->setFrameShape(QFrame::NoFrame);
-    //         QWidget *scrolContainer = new QWidget;
-    //         scrolContainer->setObjectName("container");
+        //         deskScrollArea->setMaximumHeight(250);
+        //         deskScrollArea->setMaximumWidth(300);
+        //         deskScrollArea->setAlignment(Qt::AlignHCenter);
+        //         //deskScrollArea->setFrameShape(QFrame::NoFrame);
+        //         QWidget *scrolContainer = new QWidget;
+        //         scrolContainer->setObjectName("container");
 
 
-    //         scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
-    //         deskScrollArea->setStyleSheet(SCROL_BAR);
-    //         QHBoxLayout *content = new QHBoxLayout;
-    //         content->setAlignment(Qt::AlignCenter);
-    //         scrolContainer->setLayout(content);
-    //         deskScrollArea->setWidget(scrolContainer);
-    //         deskScrollArea->setWidgetResizable(true);
-    //         deskScrollArea->horizontalScrollBar()->setEnabled(false);
+        //         scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
+        //         deskScrollArea->setStyleSheet(SCROL_BAR);
+        //         QHBoxLayout *content = new QHBoxLayout;
+        //         content->setAlignment(Qt::AlignCenter);
+        //         scrolContainer->setLayout(content);
+        //         deskScrollArea->setWidget(scrolContainer);
+        //         deskScrollArea->setWidgetResizable(true);
+        //         deskScrollArea->horizontalScrollBar()->setEnabled(false);
 
 
-    //         QSvgWidget *done = new QSvgWidget(":/resc/resc/done_outline.svg");
-    //        done->setMinimumSize(QSize(24,24));
-    //        done->setMaximumSize(QSize(24,24));
+        //         QSvgWidget *done = new QSvgWidget(":/resc/resc/done_outline.svg");
+        //        done->setMinimumSize(QSize(24,24));
+        //        done->setMaximumSize(QSize(24,24));
 
-            for (auto& element : j["get_contacts"]) {
+        for (auto& element : j["get_contacts"]) {
 
-                friendName2 = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
+            friendName2 = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
 
-                friendName2->setStyleSheet(FRIEND_NAME_SURNAME);
+            friendName2->setStyleSheet(FRIEND_NAME_SURNAME);
 
 
-                friendName2->setStyleSheet(BUTTON_SOLID);
-                friendName2->setMinimumWidth(200);
-                  friendName2->setMaximumWidth(300);
+            friendName2->setStyleSheet(BUTTON_SOLID);
+            friendName2->setMinimumWidth(200);
+            friendName2->setMaximumWidth(300);
 
 
 
-                friendContainer2->addWidget(friendNamesTitle);
-                friendContainer2->addWidget(friendName2);
+            friendContainer2->addWidget(friendNamesTitle);
+            friendContainer2->addWidget(friendName2);
 
 
-                connect(friendName2, &QPushButton::clicked, this, &Groups::friendName2Pressed);
+            connect(friendName2, &QPushButton::clicked, this, &Groups::friendName2Pressed);
 
 
-                innerScrollFriends->addWidget(friendName2);
+            innerScrollFriends->addWidget(friendName2);
 
-                //content->addLayout(friendContainer2);
+            //content->addLayout(friendContainer2);
 
-                ///innerScroll->addLayout(friendContainer2);
+            ///innerScroll->addLayout(friendContainer2);
 
 
 
-                backLayout->addLayout(innerScrollFriends);
+            backLayout->addLayout(innerScrollFriends);
 
 
-            }
+        }
 
 
-
-}
-
-
-
-        QWidget *controlsRestrictorWidget = new QWidget();
-        controlsRestrictorWidget->setLayout(GroupContainer2);
-        controlsRestrictorWidget->setMaximumWidth(1120);
-        GroupContainer2->setContentsMargins(50,0,50,0);
-
-        inputContainerGroups->addWidget(controlsRestrictorWidget);
-
-
-
-
-
-        GroupContainer2->addWidget(stack);
-
-
-
-         mButtonBackToLayoutMap.insert(backAddtoGroup,GroupContainer2);
-
-
-        mButtonToLayoutMap.insert(inviteGroupButton2,GroupContainer2);
-
-//////////////
 
     }
+
+
+
+    QWidget *controlsRestrictorWidget = new QWidget();
+    controlsRestrictorWidget->setLayout(GroupContainer2);
+    controlsRestrictorWidget->setMaximumWidth(1120);
+    GroupContainer2->setContentsMargins(50,0,50,0);
+
+    inputContainerGroups->addWidget(controlsRestrictorWidget);
+
+
+
+
+
+    GroupContainer2->addWidget(stack);
+
+
+
+    mButtonBackToLayoutMap.insert(backAddtoGroup,GroupContainer2);
+
+
+    mButtonToLayoutMap.insert(inviteGroupButton2,GroupContainer2);
+
+    //////////////
+
+}
 
 
 void Groups::onHttpResultManagerAddFriendsLayout(QNetworkReply *reply) {
 
 
-     qDebug() << "http finished" << endl;
+    qDebug() << "http finished" << endl;
 
 
-     if(!reply->error()) {  //
-         QByteArray resp = reply->readAll();
-         qDebug() <<"ETO OTVET SERVERA GET CONTACTS for group layout :  " + resp  << endl;
-         QJsonDocument doc = QJsonDocument::fromJson(resp);
-         QJsonObject obj;
-
-
-
-
-         std::string abc = resp.toStdString();
-         strFriends = abc;
+    if(!reply->error()) {  //
+        QByteArray resp = reply->readAll();
+        qDebug() <<"ETO OTVET SERVERA GET CONTACTS for group layout :  " + resp  << endl;
+        QJsonDocument doc = QJsonDocument::fromJson(resp);
+        QJsonObject obj;
 
 
 
-         std::cout << "str friends server req " << strFriends << std::endl;
 
-         } else {
+        std::string abc = resp.toStdString();
+        strFriends = abc;
 
 
-         qDebug() << reply->errorString();
 
-         qDebug() <<  reply->readAll() << endl;
+        std::cout << "str friends server req " << strFriends << std::endl;
 
-         qDebug () << reply -> error ();
+    } else {
 
-         QMessageBox::warning(this, tr("Error"),
-             "Connection ERROR!\n");
 
- }
+        qDebug() << reply->errorString();
 
-     reply->deleteLater();
+        qDebug() <<  reply->readAll() << endl;
 
-     ManagerAddFriendsLayout->clearAccessCache();
+        qDebug () << reply -> error ();
 
-     loadGroups();
+        QMessageBox::warning(this, tr("Error"),
+                             "Connection ERROR!\n");
+
+    }
+
+    reply->deleteLater();
+
+    ManagerAddFriendsLayout->clearAccessCache();
+
+    loadGroups();
 
 
 }
@@ -983,25 +982,25 @@ void Groups::onHttpResultManagerAddFriendsLayout(QNetworkReply *reply) {
 void Groups::checkNameGroup() {
     if (addGroupEdit->text().length() >= 4) {
         addGroupButton->setStyleSheet(BUTTON_SOLID);
-         addGroupButton->setDisabled(false);
+        addGroupButton->setDisabled(false);
 
-         QPixmap pixmapaddGroup(":/resc/resc/plus_white.svg");
-         QIcon ButtonIconaddGroup(pixmapaddGroup);
+        QPixmap pixmapaddGroup(":/resc/resc/plus_white.svg");
+        QIcon ButtonIconaddGroup(pixmapaddGroup);
 
-         addGroupButton->setIcon(ButtonIconaddGroup);
-         addGroupButton -> setLayoutDirection ( Qt :: RightToLeft );
+        addGroupButton->setIcon(ButtonIconaddGroup);
+        addGroupButton -> setLayoutDirection ( Qt :: RightToLeft );
 
-         addGroupButton->setIconSize(QSize(20,20));
+        addGroupButton->setIconSize(QSize(20,20));
     } else {
         addGroupButton->setStyleSheet(BUTTON_DISABLED);
-         addGroupButton->setDisabled(true);
-         QPixmap pixmapaddGroup(":/resc/resc/plus.svg");
-         QIcon ButtonIconaddGroup(pixmapaddGroup);
+        addGroupButton->setDisabled(true);
+        QPixmap pixmapaddGroup(":/resc/resc/plus.svg");
+        QIcon ButtonIconaddGroup(pixmapaddGroup);
 
-         addGroupButton->setIcon(ButtonIconaddGroup);
-         addGroupButton -> setLayoutDirection ( Qt :: RightToLeft );
+        addGroupButton->setIcon(ButtonIconaddGroup);
+        addGroupButton -> setLayoutDirection ( Qt :: RightToLeft );
 
-         addGroupButton->setIconSize(QSize(20,20));
+        addGroupButton->setIconSize(QSize(20,20));
     }
 }
 
@@ -1018,21 +1017,21 @@ void Groups::inviteGroupPressed(){
 
 
 
-        QWidget * stackWidjet =  layout->itemAt(2)->widget();
+    QWidget * stackWidjet =  layout->itemAt(2)->widget();
 
-        QStackedWidget* stack = dynamic_cast<QStackedWidget*>(stackWidjet);
+    QStackedWidget* stack = dynamic_cast<QStackedWidget*>(stackWidjet);
 
-        stack->setCurrentIndex(1);
-
-
-        layout->update();
+    stack->setCurrentIndex(1);
 
 
-        QWidget * widget =  layout->itemAt(1)->widget();
+    layout->update();
 
-        QPushButton* groupName = dynamic_cast<QPushButton*>(widget);
 
-        groupNameString = groupName->text();
+    QWidget * widget =  layout->itemAt(1)->widget();
+
+    QPushButton* groupName = dynamic_cast<QPushButton*>(widget);
+
+    groupNameString = groupName->text();
 
 
 
@@ -1040,7 +1039,7 @@ void Groups::inviteGroupPressed(){
 
     //QStackedWidget* stack = dynamic_cast<QStackedWidget*>(stack);
 
-   //groupNameString = stack->text();
+    //groupNameString = stack->text();
 
 }
 
@@ -1059,49 +1058,49 @@ void Groups::friendName2Pressed(){
 
 
 
-            QJsonObject inviteGroupJson;
-            QJsonObject bodyJson;
+    QJsonObject inviteGroupJson;
+    QJsonObject bodyJson;
 
-            QJsonArray arrayUsers;
-            arrayUsers.push_back(friendq);
+    QJsonArray arrayUsers;
+    arrayUsers.push_back(friendq);
 
-            bodyJson.insert("title", groupNameString);
-            bodyJson.insert("members", arrayUsers);
+    bodyJson.insert("title", groupNameString);
+    bodyJson.insert("members", arrayUsers);
 
-            inviteGroupJson.insert("invite", bodyJson);
+    inviteGroupJson.insert("invite", bodyJson);
 
-                qDebug() << "create request" << endl;
+    qDebug() << "create request" << endl;
 
 
-                QNetworkRequest request(QUrl(SERVER_URL + ""));
-                request.setHeader(QNetworkRequest::ContentTypeHeader,
-                                  QStringLiteral("application/json;charset=utf-8"));
-                qDebug() << "request data"<< QJsonDocument(inviteGroupJson).toJson(QJsonDocument::Compact) << endl;
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json;charset=utf-8"));
+    qDebug() << "request data"<< QJsonDocument(inviteGroupJson).toJson(QJsonDocument::Compact) << endl;
 
-                request.setRawHeader("JSON_DATA", QJsonDocument(inviteGroupJson).toJson(QJsonDocument::Compact));
+    request.setRawHeader("JSON_DATA", QJsonDocument(inviteGroupJson).toJson(QJsonDocument::Compact));
 
-                qDebug() << "JSON_DATA send" << endl;
+    qDebug() << "JSON_DATA send" << endl;
 
-                ManagerAddFriendToGroup->post(
-                    request,
-                    QJsonDocument(inviteGroupJson).toJson(QJsonDocument::Compact)
+    ManagerAddFriendToGroup->post(
+                request,
+                QJsonDocument(inviteGroupJson).toJson(QJsonDocument::Compact)
                 );
-                qDebug() << "request send" << endl;
+    qDebug() << "request send" << endl;
 
 
-           delete button;
+    delete button;
 
-  }
+}
 
 
 
 void Groups::goToGroup() {
-       inviteGroupButton = qobject_cast<QPushButton*>(sender());
+    inviteGroupButton = qobject_cast<QPushButton*>(sender());
 
-        QString GroupName = inviteGroupButton->text();
+    QString GroupName = inviteGroupButton->text();
 
-        std::string GroupNamestd = GroupName.toStdString();
-        WriteGroupTitle(GroupNamestd);
+    std::string GroupNamestd = GroupName.toStdString();
+    WriteGroupTitle(GroupNamestd);
 
 
 
@@ -1124,13 +1123,6 @@ void Groups::backAddtoGroupPressed() {
     layout->update();
 
 }
-
-void Groups::onHttpResultDeleteGroup(QNetworkReply *reply) {
-
-
-}
-
-
 
 void Groups::onHttpResultAddFriendtoGroup(QNetworkReply *reply) {
 
@@ -1158,9 +1150,9 @@ void Groups::onHttpResultAddFriendtoGroup(QNetworkReply *reply) {
 
             std::cout << "invite friebd: " << invite_friend_result << std::endl;
 
-}
+        }
 
-        } else {
+    } else {
 
         qDebug() << reply->errorString();
 
@@ -1169,13 +1161,13 @@ void Groups::onHttpResultAddFriendtoGroup(QNetworkReply *reply) {
         qDebug () << reply -> error ();
 
         QMessageBox::warning(this, tr("Error"),
-            "Connection ERROR!\n");
+                             "Connection ERROR!\n");
 
 
-}
+    }
 
     reply->deleteLater();
 
-        ManagerAddFriendToGroup->clearAccessCache();
+    ManagerAddFriendToGroup->clearAccessCache();
 }
 

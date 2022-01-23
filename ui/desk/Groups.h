@@ -42,7 +42,7 @@ private:
     QLabel *titleLabel;
 
 
-     QHBoxLayout *GroupContainer2;
+    QHBoxLayout *GroupContainer2;
 
     QPushButton *inviteGroupButton2;
 
@@ -85,7 +85,7 @@ private:
 public:
     Groups();
     ~Groups();
-        QPushButton *GroupNameButton;
+    QPushButton *GroupNameButton;
 
 
 
@@ -98,7 +98,7 @@ public slots:
 
 
 
-     void friendName2Pressed();
+    void friendName2Pressed();
 
 
     void loadGroups();
@@ -111,7 +111,7 @@ public slots:
 
     void inviteGroupPressed();
 
-        void goToGroup();
+    void goToGroup();
 
     void addGroupButtonPressed();
     void checkNameGroup();
@@ -121,7 +121,6 @@ public slots:
 
     void onHttpResult(QNetworkReply *reply);
 
-    void onHttpResultDeleteGroup(QNetworkReply *reply);
 
     void onHttpResultAddFriendtoGroup(QNetworkReply *reply);
     void onHttpResultManagerAddFriendsLayout(QNetworkReply *reply);

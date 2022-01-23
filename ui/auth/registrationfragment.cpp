@@ -35,7 +35,7 @@ RegistrationFragment::RegistrationFragment() {
     QVBoxLayout *startMainLayout = new QVBoxLayout;
     QHBoxLayout *startContent = new QHBoxLayout;
     QSvgWidget *mainImage = new QSvgWidget(":/resc/resc/logo.svg");
-       mainImage->setMaximumSize(175,175);
+    mainImage->setMaximumSize(175,175);
 
     QVBoxLayout *backContainer = new QVBoxLayout;
     QSvgButton *backImage = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(25,25));
@@ -47,7 +47,7 @@ RegistrationFragment::RegistrationFragment() {
                                      "Login min 4 characters.\n"
                                      "Password min 8 characters.\n")
 
-                );
+                                  );
     loginEdit = new QLineEdit;
     passwordEdit = new QLineEdit;
     repeatPasswordEdit = new QLineEdit;
@@ -75,7 +75,7 @@ RegistrationFragment::RegistrationFragment() {
 
     startMainLayout->addLayout(startVerticalContent);
     startMainLayout->addLayout(buttonContainer);
-     startMainLayout->setContentsMargins(100,0,0,0);
+    startMainLayout->setContentsMargins(100,0,0,0);
 
 
     loginEdit->setMaximumWidth(355);
@@ -162,7 +162,7 @@ RegistrationFragment::~RegistrationFragment() {
 void RegistrationFragment::onRegPressed() {
 
     if(passwordEdit->text() != repeatPasswordEdit->text()){
-         QMessageBox::warning(this,tr("Регистрация"),tr("Пароли не совпадают!"));
+        QMessageBox::warning(this,tr("Регистрация"),tr("Пароли не совпадают!"));
     } else {
 
         std::string NizkName = loginEdit->text().toStdString();
@@ -190,9 +190,9 @@ void RegistrationFragment::onRegPressed() {
             qDebug() << "request data"<< QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact) << endl;
             request.setRawHeader("JSON_DATA", QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact));
             networkManager->post(
-                request,
-                 QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact)
-            );
+                        request,
+                        QJsonDocument(loginPasswordValues).toJson(QJsonDocument::Compact)
+                        );
             qDebug() << "request send" << endl;
         }
     }
@@ -201,7 +201,7 @@ void RegistrationFragment::onRegPressed() {
 
 
 
- }
+}
 
 
 
@@ -218,32 +218,32 @@ void RegistrationFragment::onRegResult(QNetworkReply *reply) {
 
         qDebug() <<"ETO OTVET SERVERA REG :  " + resp  << endl;
 
-          std::string str = resp.toStdString();
+        std::string str = resp.toStdString();
 
-          std::cout << "str  " + str << std::endl;
+        std::cout << "str  " + str << std::endl;
 
-          nlohmann::json j = nlohmann::json::parse(str);
+        nlohmann::json j = nlohmann::json::parse(str);
 
-          if(j["registration"].contains("user_id")) {
+        if(j["registration"].contains("user_id")) {
 
-              std::string IDValue = j["registration"]["user_id"].get<std::string>();
+            std::string IDValue = j["registration"]["user_id"].get<std::string>();
 
-              std::cout << "ID: " << IDValue << std::endl;
+            std::cout << "ID: " << IDValue << std::endl;
 
 
-              WriteId(IDValue);
-              newRootScreen(MAIN_TAG);
+            WriteId(IDValue);
+            newRootScreen(MAIN_TAG);
 
-          } else {
+        } else {
 
-             std::string reg_error = j["registration"].get<std::string>();
-             std::cout << "error: " << reg_error << std::endl;
+            std::string reg_error = j["registration"].get<std::string>();
+            std::cout << "error: " << reg_error << std::endl;
 
-             qDebug("registration error");
+            qDebug("registration error");
 
-             QMessageBox::warning(this, tr("Error"), tr("User with this name exists!"));
+            QMessageBox::warning(this, tr("Error"), tr("User with this name exists!"));
 
-  }
+        }
 
     } else {
 
@@ -255,12 +255,12 @@ void RegistrationFragment::onRegResult(QNetworkReply *reply) {
 
 
         QMessageBox::warning(this, tr("Error"),
-            tr("Connection ERROR!\n"));
+                             tr("Connection ERROR!\n"));
 
 
 
-}
-      reply->deleteLater();
+    }
+    reply->deleteLater();
 }
 
 void RegistrationFragment::checkData() {

@@ -403,6 +403,9 @@ namespace styles{
             "}";
 
     static const QString SCROL_BAR =
+
+            "QFrame {"
+            "   border-radius: 10px;""}"
             "QScrollBar:vertical {"
             "   border: 0px solid "+COLOR_BORDER+";"
             "   background: "+COLOR_BORDER+";"

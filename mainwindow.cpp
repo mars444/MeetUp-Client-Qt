@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
         this->navigator = new Navigator(
                     this->container,
                     this->factory
-        );
+                    );
 
         QString mainStyle = "QWidget#window {"
                             "background-color:#EFF5FC;"

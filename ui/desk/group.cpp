@@ -112,11 +112,11 @@ Group::Group() {
     connect(groupDeleteNo, &QPushButton::clicked, this, &Group::groupDeleteNoPressed);
 
 
-      connect(groupList, &QPushButton::clicked, this, &Group::groupListPressed);
+    connect(groupList, &QPushButton::clicked, this, &Group::groupListPressed);
 
-      connect(groupMeets, &QPushButton::clicked, this, &Group::groupMeetsPressed);
+    connect(groupMeets, &QPushButton::clicked, this, &Group::groupMeetsPressed);
 
-      connect(groupDelete, &QPushButton::clicked, this, &Group::groupDeletePressed);
+    connect(groupDelete, &QPushButton::clicked, this, &Group::groupDeletePressed);
 
 
 
@@ -144,51 +144,51 @@ Group::Group() {
 
     groupButtonsContainer->addWidget(groupMeets);
 
-     groupButtonsContainer->addWidget(groupList);
+    groupButtonsContainer->addWidget(groupList);
 
-     groupButtonsContainer->addWidget(groupDelete);
+    groupButtonsContainer->addWidget(groupDelete);
 
-     groupButtonsContainer->addLayout(deleteLayout);
-
-
+    groupButtonsContainer->addLayout(deleteLayout);
 
 
 
-      QHBoxLayout *daysButtonsContainer = new QHBoxLayout;
-      QDate date =   QDate::currentDate();
 
 
-      day1Button = new QPushButton(date.toString("dd-MM-yyyy"));
-      day2Button = new QPushButton(date.addDays(1).toString("dd-MM-yyyy"));
-      day3Button = new QPushButton(date.addDays(2).toString("dd-MM-yyyy"));
-      day4Button = new QPushButton(date.addDays(3).toString("dd-MM-yyyy"));
-      day5Button = new QPushButton(date.addDays(4).toString("dd-MM-yyyy"));
-      day6Button = new QPushButton(date.addDays(5).toString("dd-MM-yyyy"));
-      day7Button = new QPushButton(date.addDays(6).toString("dd-MM-yyyy"));
+    QHBoxLayout *daysButtonsContainer = new QHBoxLayout;
+    QDate date =   QDate::currentDate();
 
-      day1Button->setStyleSheet(BUTTON_SOLID);
-      day2Button->setStyleSheet(BUTTON_DISABLED);
-      day3Button->setStyleSheet(BUTTON_DISABLED);
-      day4Button->setStyleSheet(BUTTON_DISABLED);
-      day5Button->setStyleSheet(BUTTON_DISABLED);
-      day6Button->setStyleSheet(BUTTON_DISABLED);
-      day7Button->setStyleSheet(BUTTON_DISABLED);
 
-      daysButtonsContainer->addWidget(day1Button);
-      daysButtonsContainer->addWidget(day2Button);
-      daysButtonsContainer->addWidget(day3Button);
-      daysButtonsContainer->addWidget(day4Button);
-      daysButtonsContainer->addWidget(day5Button);
-      daysButtonsContainer->addWidget(day6Button);
-      daysButtonsContainer->addWidget(day7Button);
+    day1Button = new QPushButton(date.toString("dd-MM-yyyy"));
+    day2Button = new QPushButton(date.addDays(1).toString("dd-MM-yyyy"));
+    day3Button = new QPushButton(date.addDays(2).toString("dd-MM-yyyy"));
+    day4Button = new QPushButton(date.addDays(3).toString("dd-MM-yyyy"));
+    day5Button = new QPushButton(date.addDays(4).toString("dd-MM-yyyy"));
+    day6Button = new QPushButton(date.addDays(5).toString("dd-MM-yyyy"));
+    day7Button = new QPushButton(date.addDays(6).toString("dd-MM-yyyy"));
 
-      connect(day1Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
-      connect(day2Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
-      connect(day3Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
-      connect(day4Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
-      connect(day5Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
-      connect(day6Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
-      connect(day7Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
+    day1Button->setStyleSheet(BUTTON_SOLID);
+    day2Button->setStyleSheet(BUTTON_DISABLED);
+    day3Button->setStyleSheet(BUTTON_DISABLED);
+    day4Button->setStyleSheet(BUTTON_DISABLED);
+    day5Button->setStyleSheet(BUTTON_DISABLED);
+    day6Button->setStyleSheet(BUTTON_DISABLED);
+    day7Button->setStyleSheet(BUTTON_DISABLED);
+
+    daysButtonsContainer->addWidget(day1Button);
+    daysButtonsContainer->addWidget(day2Button);
+    daysButtonsContainer->addWidget(day3Button);
+    daysButtonsContainer->addWidget(day4Button);
+    daysButtonsContainer->addWidget(day5Button);
+    daysButtonsContainer->addWidget(day6Button);
+    daysButtonsContainer->addWidget(day7Button);
+
+    connect(day1Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
+    connect(day2Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
+    connect(day3Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
+    connect(day4Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
+    connect(day5Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
+    connect(day6Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
+    connect(day7Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
 
 
     QHBoxLayout *GroupContainer = new QHBoxLayout;
@@ -196,9 +196,9 @@ Group::Group() {
     groupEventDateLabel = new QLabel("12-12-21");
     groupEventDateLabel->setStyleSheet(SETTINGS_LABEL);
     groupEventstart = new QLabel("11:00");
-     groupEventstart->setStyleSheet(SETTINGS_LABEL);
+    groupEventstart->setStyleSheet(SETTINGS_LABEL);
     groupEventend = new QLabel("15:00");
-     groupEventend->setStyleSheet(SETTINGS_LABEL);
+    groupEventend->setStyleSheet(SETTINGS_LABEL);
 
     //GroupContainer->addWidget(groupEventDateLabel);
     GroupContainer->addWidget(groupEventstart);
@@ -213,7 +213,7 @@ Group::Group() {
 
 
     //QFrame *loadingContaiter = new QFrame;
-   // loading = new WaitingSpinnerWidget(loadingContaiter, true, false);
+    // loading = new WaitingSpinnerWidget(loadingContaiter, true, false);
     //loading->setColor(QT_COLOR_PRIMARY);
     //loadingContaiter->setMinimumWidth(100);
 
@@ -250,10 +250,10 @@ Group::Group() {
     stackMeetsWidget->setLayout(stackMeets);
 
 
-   stackListWidget = new QFrame;
-   stackListWidget->setLayout(stackList);
+    stackListWidget = new QFrame;
+    stackListWidget->setLayout(stackList);
 
-   stackList->setAlignment(Qt::AlignCenter);
+    stackList->setAlignment(Qt::AlignCenter);
 
 
     stack->addWidget(stackMeetsWidget);
@@ -305,8 +305,8 @@ Group::Group() {
 
 
 
-  getMeets();
-  loadFriends();
+    getMeets();
+    loadFriends();
 }
 
 Group::~Group() {
@@ -323,19 +323,19 @@ void Group::getMeets() {
 
     getMeetsJson.insert("getMeets", bodyJson);
 
-        qDebug() << "create request" << endl;
+    qDebug() << "create request" << endl;
 
 
 
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json"));
-        qDebug() << "request data"<< QJsonDocument(getMeetsJson).toJson(QJsonDocument::Compact) << endl;
-        networkManagerGetMeets->post(
-            request,
-            QJsonDocument(getMeetsJson).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json"));
+    qDebug() << "request data"<< QJsonDocument(getMeetsJson).toJson(QJsonDocument::Compact) << endl;
+    networkManagerGetMeets->post(
+                request,
+                QJsonDocument(getMeetsJson).toJson(QJsonDocument::Compact)
+                );
+    qDebug() << "request send" << endl;
 
 
 }
@@ -384,35 +384,29 @@ void Group::loadFriends() {
     QJsonObject loadFriendsGroupJson;
     QJsonObject usernameGroupJson;
 
-   // nlohmann::json aaa = nlohmann::json::parse(loadFriendsJson);
+    // nlohmann::json aaa = nlohmann::json::parse(loadFriendsJson);
 
     usernameGroupJson.insert("title", GROUP_TITLE_QSTRING);
     loadFriendsGroupJson.insert("get_data_group", usernameGroupJson);
 
-        qDebug() << "create request" << endl;
+    qDebug() << "create request" << endl;
 
 
 
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
 
-        request.setRawHeader("JSON_DATA", QJsonDocument(loadFriendsGroupJson).toJson(QJsonDocument::Compact));
+    request.setRawHeader("JSON_DATA", QJsonDocument(loadFriendsGroupJson).toJson(QJsonDocument::Compact));
 
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json;charset=utf-8"));
-        qDebug() << "request data"<< QJsonDocument(loadFriendsGroupJson).toJson(QJsonDocument::Compact) << endl;
-        networkManagerloadFriends->post(
-            request,
-            QJsonDocument(loadFriendsGroupJson).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
-    }
-
-
-
-
-void Group::onHttpResult(QNetworkReply *reply) {
-
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json;charset=utf-8"));
+    qDebug() << "request data"<< QJsonDocument(loadFriendsGroupJson).toJson(QJsonDocument::Compact) << endl;
+    networkManagerloadFriends->post(
+                request,
+                QJsonDocument(loadFriendsGroupJson).toJson(QJsonDocument::Compact)
+                );
+    qDebug() << "request send" << endl;
 }
+
 
 void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
 
@@ -508,12 +502,12 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
                 friendContainer2->addWidget(friendOnlineStatusLabel2);
                 friendContainer2->addLayout(friendButtonContainer2);
 
-               connect(deleteFriendButton2, &QPushButton::clicked, this, &Group::deleteFriendPressed);
+                connect(deleteFriendButton2, &QPushButton::clicked, this, &Group::deleteFriendPressed);
 
-               // friendContainer2->setAlignment(Qt::AlignCenter);
+                // friendContainer2->setAlignment(Qt::AlignCenter);
 
 
-               QFrame  *FriendFrame = new QFrame;
+                QFrame  *FriendFrame = new QFrame;
 
                 FriendFrame->setStyleSheet(GROUPS_FRAME);
 
@@ -531,9 +525,9 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
                 std::cout << member.get<std::string>() << std::endl;  // выводит в cout участников всех групп. Если подается одна группа, то в рамках одной группы
             }
         }
-        }
+    }
 
-         else {
+    else {
 
         qDebug() << reply->errorString();
 
@@ -542,9 +536,9 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
         qDebug () << reply -> error ();
 
         QMessageBox::warning(this, tr("Error"),
-            "Connection ERROR!\n");
+                             "Connection ERROR!\n");
 
-}
+    }
 
     reply->deleteLater();
     networkManagerloadFriends->clearAccessCache();
@@ -579,9 +573,9 @@ void Group::onHttpResultnetworkManagerDeleteFriendFromGroup(QNetworkReply *reply
 
             std::cout << "delete friebd from group: " << delete_group_result << std::endl;
 
-}
+        }
 
-        } else {
+    } else {
 
         qDebug() << reply->errorString();
 
@@ -590,14 +584,14 @@ void Group::onHttpResultnetworkManagerDeleteFriendFromGroup(QNetworkReply *reply
         qDebug () << reply -> error ();
 
         QMessageBox::warning(this, tr("Error"),
-            "Connection ERROR!\n");
+                             "Connection ERROR!\n");
 
 
-}
+    }
     reply->deleteLater();
 
 
-     networkManagerDeleteFriendFromGroup->clearAccessCache();
+    networkManagerDeleteFriendFromGroup->clearAccessCache();
 
 
 
@@ -630,34 +624,34 @@ void Group::deleteFriendPressed() {
     //emit sendGroupNameSignal(friendq); //вызывая сигнал нужно в скобочках указать текст, который мы передаем другому классу,
 
 
-            QJsonObject deleFromGroupJson;
-            QJsonObject bodyJson;
+    QJsonObject deleFromGroupJson;
+    QJsonObject bodyJson;
 
-            QJsonArray arrayUsers;
-            arrayUsers.push_back(nameGroup);
+    QJsonArray arrayUsers;
+    arrayUsers.push_back(nameGroup);
 
-            bodyJson.insert("title", GROUP_TITLE_QSTRING);
-            bodyJson.insert("members", arrayUsers);
+    bodyJson.insert("title", GROUP_TITLE_QSTRING);
+    bodyJson.insert("members", arrayUsers);
 
-            deleFromGroupJson.insert("kick", bodyJson);
+    deleFromGroupJson.insert("kick", bodyJson);
 
-                qDebug() << "create request" << endl;
+    qDebug() << "create request" << endl;
 
 
-                QNetworkRequest request(QUrl(SERVER_URL + ""));
-                request.setHeader(QNetworkRequest::ContentTypeHeader,
-                                  QStringLiteral("application/json;charset=utf-8"));
-                qDebug() << "request data"<< QJsonDocument(deleFromGroupJson).toJson(QJsonDocument::Compact) << endl;
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json;charset=utf-8"));
+    qDebug() << "request data"<< QJsonDocument(deleFromGroupJson).toJson(QJsonDocument::Compact) << endl;
 
-                request.setRawHeader("JSON_DATA", QJsonDocument(deleFromGroupJson).toJson(QJsonDocument::Compact));
+    request.setRawHeader("JSON_DATA", QJsonDocument(deleFromGroupJson).toJson(QJsonDocument::Compact));
 
-                qDebug() << "JSON_DATA send" << endl;
+    qDebug() << "JSON_DATA send" << endl;
 
-                networkManagerDeleteFriendFromGroup->post(
-                    request,
-                    QJsonDocument(deleFromGroupJson).toJson(QJsonDocument::Compact)
+    networkManagerDeleteFriendFromGroup->post(
+                request,
+                QJsonDocument(deleFromGroupJson).toJson(QJsonDocument::Compact)
                 );
-                qDebug() << "request send" << endl;
+    qDebug() << "request send" << endl;
 
 
 
@@ -715,20 +709,20 @@ void Group::groupDeleteYesPressed(){
 
     deleteGroupJson.insert("delete_group", bodyJson);
 
-        qDebug() << "create request" << endl;
+    qDebug() << "create request" << endl;
 
 
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json;charset=utf-8"));
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json;charset=utf-8"));
 
-        request.setRawHeader("JSON_DATA", QJsonDocument(deleteGroupJson).toJson(QJsonDocument::Compact));
-        qDebug() << "request data"<< QJsonDocument(deleteGroupJson).toJson(QJsonDocument::Compact) << endl;
-        networkManagerDeleteGroup->post(
-            request,
-            QJsonDocument(deleteGroupJson).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
+    request.setRawHeader("JSON_DATA", QJsonDocument(deleteGroupJson).toJson(QJsonDocument::Compact));
+    qDebug() << "request data"<< QJsonDocument(deleteGroupJson).toJson(QJsonDocument::Compact) << endl;
+    networkManagerDeleteGroup->post(
+                request,
+                QJsonDocument(deleteGroupJson).toJson(QJsonDocument::Compact)
+                );
+    qDebug() << "request send" << endl;
 
 
 }
@@ -777,15 +771,15 @@ void Group::onHttpResultDeleteGroup(QNetworkReply *reply){
         if(delete_group_result == "OK") {
 
             QMessageBox::information(this, tr("Group deleting"),
-                tr("Group is delete!\n"));
+                                     tr("Group is delete!\n"));
 
             newRootScreen(MAIN_TAG);
 
             std::cout << "delete group: " << delete_group_result << std::endl;
 
-}
+        }
 
-        } else {
+    } else {
 
         qDebug() << reply->errorString();
 
@@ -794,14 +788,14 @@ void Group::onHttpResultDeleteGroup(QNetworkReply *reply){
         qDebug () << reply -> error ();
 
         QMessageBox::warning(this, tr("Error"),
-            "Connection ERROR!\n");
+                             "Connection ERROR!\n");
         // newRootScreen(MAIN_TAG);
 
-}
+    }
     reply->deleteLater();
 
 
-     networkManagerDeleteGroup->clearAccessCache();
+    networkManagerDeleteGroup->clearAccessCache();
 
 
 }

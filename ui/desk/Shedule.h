@@ -31,17 +31,21 @@ private:
 
     QHash<QPushButton*,QPushButton*> doneButtonYesToLayoutMap;
 
+    QHash<QPushButton*,QFrame*> taskFrameDeleteLayoutMap;
+
     QHBoxLayout *mainHLayout;
+
+    QFrame *formFrame;
+
     QVBoxLayout *inputContainer;
 
     QHBoxLayout *form;
 
-    QFrame *formFrame;
 
     QString strDinamicckeck = "";
 
-   QCalendarWidget *calendar;
-   QString ID_QSTRING;
+    QCalendarWidget *calendar;
+    QString ID_QSTRING;
 
     QLineEdit *titleEdit;
     QLineEdit *cardTitleEdit;
@@ -140,7 +144,7 @@ private:
 
     QNetworkAccessManager *networkManageraddEvent;
 
-      QNetworkAccessManager *networkManagerDeleteEvent;
+    QNetworkAccessManager *networkManagerDeleteEvent;
 
 public:
     Shedule();
@@ -165,7 +169,7 @@ public slots:
 
     void onHttpResultAddEvent(QNetworkReply *reply);
 
-     void onHttpResultDeleteEvent(QNetworkReply *reply);
+    void onHttpResultDeleteEvent(QNetworkReply *reply);
     void onBoxTitleAdd();
 
     void loadSheduleFromDate();

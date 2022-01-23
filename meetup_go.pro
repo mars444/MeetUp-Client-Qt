@@ -128,7 +128,6 @@ HEADERS += \
     ui/auth/registrationfragment.h \
     ui/auth/startfragment.h \
     ui/desk/mytimeedit.h \
-    ui/invite/invitelistfragment.h \
     ui/mainfragment.h \
     ui/splashfragment.h \
     ui/view/deletesvgbutton.h \
@@ -148,9 +147,6 @@ RESOURCES += \
 
 
 win32:RC_ICONS += resc/icon.ico
-
-FORMS += \
-    ui/desk/dialog.ui
 
 DISTFILES += \
     resc/QtLanguage_ru.qm \

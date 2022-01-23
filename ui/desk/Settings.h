@@ -80,8 +80,8 @@ private:
 
 
 
-//    QPushButton *setSettingsButton;
-//    QPushButton *setSettingsRightButton;
+    //    QPushButton *setSettingsButton;
+    //    QPushButton *setSettingsRightButton;
 
 
 
@@ -93,7 +93,7 @@ private:
     QNetworkAccessManager *networkManagerRight;
 
     QNetworkAccessManager *networkManagerSetSettings;
-     QNetworkAccessManager *networkManagerSetSettingsRight;
+    QNetworkAccessManager *networkManagerSetSettingsRight;
 
     void setData(BaseModel* model) override;
 public:

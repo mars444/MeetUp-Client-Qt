@@ -23,7 +23,7 @@ private:
 
     QHash<QPushButton*,QHBoxLayout*> mButtonToLayoutMap;
     QHash<QPushButton*,QFrame*> mButtonToFrameMap;
-     QString ID_QSTRING;
+    QString ID_QSTRING;
 
 
     std::string str;
@@ -71,7 +71,7 @@ public:
     Friends();
     ~Friends();
 
-     QLabel *friendName2;
+    QLabel *friendName2;
 
 
 public slots:

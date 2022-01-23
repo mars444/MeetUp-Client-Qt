@@ -16,9 +16,6 @@
 #include <QCheckBox>
 
 
-
-
-
 #include "ui/auth/user_data.h"
 
 #include <QJsonArray>
@@ -325,20 +322,20 @@ Shedule::Shedule() {
     titleEditContainer->addWidget(addBoxTitleButton);
 
 
-//        //стак для выбора контента
+    //        //стак для выбора контента
 
 
-//        QVBoxLayout *day1Layout = new QVBoxLayout;
+    //        QVBoxLayout *day1Layout = new QVBoxLayout;
 
-//        day1Layout->setAlignment(Qt::AlignTop);
-
-
-//    QLabel *bgEvents = new QLabel("");
-//    QPixmap profileImage(":/resc/resc/bg-events.png");
-//    bgEvents->setPixmap(profileImage);
+    //        day1Layout->setAlignment(Qt::AlignTop);
 
 
-//    inputContainer->addWidget(bgEvents);
+    //    QLabel *bgEvents = new QLabel("");
+    //    QPixmap profileImage(":/resc/resc/bg-events.png");
+    //    bgEvents->setPixmap(profileImage);
+
+
+    //    inputContainer->addWidget(bgEvents);
 
     inputContainer->addLayout(titleEditContainer);
 
@@ -385,7 +382,7 @@ Shedule::Shedule() {
     loadSheduleFromDate();
     checkData();
 
-   // qDebug() << "TTTILE EDIT COUNNTT  "<<  this->titleEditContainer->count() << endl;
+    // qDebug() << "TTTILE EDIT COUNNTT  "<<  this->titleEditContainer->count() << endl;
 
 
 
@@ -415,13 +412,13 @@ Shedule::~Shedule() {
 void Shedule::checkData() {
 
     if (titleList.size() != 0) {
-          createButton_2->setStyleSheet(BUTTON_SOLID);
-          createButton_2->setDisabled(false);
+        createButton_2->setStyleSheet(BUTTON_SOLID);
+        createButton_2->setDisabled(false);
 
-      } else {
-          createButton_2->setStyleSheet(BUTTON_DISABLED);
-           createButton_2->setDisabled(true);
-      }
+    } else {
+        createButton_2->setStyleSheet(BUTTON_DISABLED);
+        createButton_2->setDisabled(true);
+    }
 
 }
 
@@ -504,7 +501,7 @@ void Shedule::setTimeRightTimeEdit(const QTime &time) {
 void Shedule::setTimeLeftTimeEdit() {
 
 
-        left->setTime(right->time());
+    left->setTime(right->time());
 }
 
 void Shedule::onBackPressed() {
@@ -550,9 +547,9 @@ void Shedule::onHttpResultDeleteEvent(QNetworkReply *reply) {
 
             std::cout << "delete event okkk: " << delete_event_result << std::endl;
 
-}
+        }
 
-        } else {
+    } else {
 
         qDebug() << reply->errorString();
 
@@ -561,14 +558,14 @@ void Shedule::onHttpResultDeleteEvent(QNetworkReply *reply) {
         qDebug () << reply -> error ();
 
         QMessageBox::warning(this, tr("Error"),
-            "Connection ERROR!\n");
+                             "Connection ERROR!\n");
 
-}
+    }
 
     reply->deleteLater();
 
 
-     networkManagerDeleteEvent->clearAccessCache();
+    networkManagerDeleteEvent->clearAccessCache();
 
 }
 
@@ -680,27 +677,27 @@ void Shedule::checkBoxTitle() {
 void Shedule::clearTasks() {
 
 
-   QVBoxLayout *layout_inner = task_container_inner;
+    QVBoxLayout *layout_inner = task_container_inner;
 
 
-   // layout_inner - слой со слоями
+    // layout_inner - слой со слоями
 
 
-//   while(QLayoutItem *layout = layout_inner->takeAt(0)){
+    //   while(QLayoutItem *layout = layout_inner->takeAt(0)){
 
 
-//       // layout - слой с виджетами уже
+    //       // layout - слой с виджетами уже
 
-//        while(QLayoutItem *tmpItem = layout->takeAt(0)) {
-//            layout->removeItem(tmpItem);
-//            layout->removeWidget(tmpItem->widget());
-//            delete tmpItem->widget();
-//            delete tmpItem;
-//        }
+    //        while(QLayoutItem *tmpItem = layout->takeAt(0)) {
+    //            layout->removeItem(tmpItem);
+    //            layout->removeWidget(tmpItem->widget());
+    //            delete tmpItem->widget();
+    //            delete tmpItem;
+    //        }
 
 
 
-//   }
+    //   }
 
 
 
@@ -740,7 +737,7 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
     QLineEdit *cardTitleEditAdd = new QLineEdit;
 
-     QLineEdit *cardDescriptionEditAdd = new QLineEdit;
+    QLineEdit *cardDescriptionEditAdd = new QLineEdit;
 
     //QHBoxLayout *titleEditContainerLoad = new QHBoxLayout;
 
@@ -798,7 +795,7 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
     form->addWidget(deleteTaskButton);   //7
 
-    QFrame *formFrame = new QFrame;
+    formFrame = new QFrame;
 
     formFrame->setStyleSheet(EVENT_STYLE_LOAD);
 
@@ -810,6 +807,9 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
     task_container_inner->addWidget(formFrame);
 
     deleteTaskButtonToLayoutMap.insert(deleteTaskButton,form);
+
+    taskFrameDeleteLayoutMap.insert(deleteTaskButton,formFrame);
+
     doneButtonToLayoutMap.insert(doneButton,doneButtonYes);
 
     doneButtonYesToLayoutMap.insert(doneButtonYes,doneButton);
@@ -843,26 +843,26 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
     addEventJson.insert("add_event", eventArray);
 
-        qDebug() << "create request" << endl;
+    qDebug() << "create request" << endl;
 
 
 
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json;charset=utf-8"));
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json;charset=utf-8"));
 
-        request.setRawHeader("JSON_DATA", QJsonDocument(addEventJson).toJson(QJsonDocument::Compact));
-        qDebug() << "request data"<< QJsonDocument(addEventJson).toJson(QJsonDocument::Compact) << endl;
-        networkManageraddEvent->post(
-            request,
-            QJsonDocument(addEventJson).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
+    request.setRawHeader("JSON_DATA", QJsonDocument(addEventJson).toJson(QJsonDocument::Compact));
+    qDebug() << "request data"<< QJsonDocument(addEventJson).toJson(QJsonDocument::Compact) << endl;
+    networkManageraddEvent->post(
+                request,
+                QJsonDocument(addEventJson).toJson(QJsonDocument::Compact)
+                );
+    qDebug() << "request send" << endl;
 
 
 
-        cardTitleEdit->setText("");
-        cardDescriptionEdit->setText("");
+    cardTitleEdit->setText("");
+    cardDescriptionEdit->setText("");
 
 
 }
@@ -893,9 +893,9 @@ void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
 
             std::cout << "delete friebd: " << add_event_result << std::endl;
 
-}
+        }
 
-        } else {
+    } else {
 
         qDebug() << reply->errorString();
 
@@ -904,14 +904,14 @@ void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
         qDebug () << reply -> error ();
 
         QMessageBox::warning(this, tr("Error"),
-            "Connection ERROR!\n");
+                             "Connection ERROR!\n");
 
-}
+    }
 
     reply->deleteLater();
 
 
-     networkManageraddEvent->clearAccessCache();
+    networkManageraddEvent->clearAccessCache();
 
 
 }
@@ -929,47 +929,53 @@ void Shedule::deleteButton_pressed() {
 
 
     QPushButton *button = qobject_cast<QPushButton*>(sender());
+
+
     qDebug()<<"qqqqqq1111111111"<<endl;
 
     QHBoxLayout *layout = deleteTaskButtonToLayoutMap.take(button);
 
-       qDebug()<<"qqqqqq2222222"<<endl;
+    QFrame *frame = taskFrameDeleteLayoutMap.take(button);
+
+    //frame->hide();
+
+    qDebug()<<"qqqqqq2222222"<<endl;
 
 
     ////////////////////////////////////////////
 
-//    task_container->addWidget(mainImageTask);       изображение      0000
-//    task_container->addWidget(timeLabelTask);         время       1111111    qlabel
-//    task_container->addWidget(boxTitleTask);          евент наэйм  222222222    qlabel
-//    task_container->addWidget(deleteTaskButton);  к
+    //    task_container->addWidget(mainImageTask);       изображение      0000
+    //    task_container->addWidget(timeLabelTask);         время       1111111    qlabel
+    //    task_container->addWidget(boxTitleTask);          евент наэйм  222222222    qlabel
+    //    task_container->addWidget(deleteTaskButton);  к
 
 
 
-//    form->addWidget(idLabel);   //2
+    //    form->addWidget(idLabel);   //2
 
-//    QWidget *event_name = layout->takeAt(4)->widget();
-//    QLabel* event_nameLabel = dynamic_cast<QLabel*>(event_name);
-//    QString event_nameString = event_nameLabel->text();
-//    qDebug() <<"deleteeeeeee event"  <<  event_nameString  << endl;
+    //    QWidget *event_name = layout->takeAt(4)->widget();
+    //    QLabel* event_nameLabel = dynamic_cast<QLabel*>(event_name);
+    //    QString event_nameString = event_nameLabel->text();
+    //    qDebug() <<"deleteeeeeee event"  <<  event_nameString  << endl;
 
 
 
-//    QWidget *time = layout->takeAt(3)->widget();
-//    QLabel* timeLabel = dynamic_cast<QLabel*>(time);
-//    QString timeString = timeLabel->text();
-//    qDebug() <<"Time===  "  <<  timeString  << endl;
+    //    QWidget *time = layout->takeAt(3)->widget();
+    //    QLabel* timeLabel = dynamic_cast<QLabel*>(time);
+    //    QString timeString = timeLabel->text();
+    //    qDebug() <<"Time===  "  <<  timeString  << endl;
 
-//    std::string time_begin = timeString.toStdString().substr(0,5);
+    //    std::string time_begin = timeString.toStdString().substr(0,5);
 
-//    std::string time_end = timeString.toStdString().substr(9,13);
+    //    std::string time_end = timeString.toStdString().substr(9,13);
 
-//    QString begin_str = QString::fromStdString(time_begin);
+    //    QString begin_str = QString::fromStdString(time_begin);
 
-//    QString end_str = QString::fromStdString(time_end);
+    //    QString end_str = QString::fromStdString(time_end);
 
-//    qDebug() <<"timeeeeee  begin  "  <<  begin_str  << endl;
+    //    qDebug() <<"timeeeeee  begin  "  <<  begin_str  << endl;
 
-//    qDebug() <<"timeeeeee  end  "  <<  end_str  << endl;
+    //    qDebug() <<"timeeeeee  end  "  <<  end_str  << endl;
 
     QWidget *event_id = layout->takeAt(2)->widget();
 
@@ -1004,21 +1010,21 @@ void Shedule::deleteButton_pressed() {
 
     deleteEventJson.insert("delete_event", eventArray);
 
-        qDebug() << "create request" << endl;
+    qDebug() << "create request" << endl;
 
 
 
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json;charset=utf-8"));
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json;charset=utf-8"));
 
-        request.setRawHeader("JSON_DATA", QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact));
-        qDebug() << "request data"<< QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact) << endl;
-        networkManagerDeleteEvent->post(
-            request,
-            QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
+    request.setRawHeader("JSON_DATA", QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact));
+    qDebug() << "request data"<< QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact) << endl;
+    networkManagerDeleteEvent->post(
+                request,
+                QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact)
+                );
+    qDebug() << "request send" << endl;
 
 
     while(QLayoutItem *tmpItem = layout->itemAt(0)) {
@@ -1049,20 +1055,20 @@ void Shedule::calendar_btn(const QDate &date) {
 
 
 
-//        while(QLayoutItem *tmpItem = task_container->itemAt(0)) {
-//            this->task_container->removeItem(tmpItem);
-//            this->task_container->removeWidget(tmpItem->widget());
-//            delete tmpItem->widget();
-//            delete tmpItem;
-//        }
-//        this->task_container->update();
-//        delete task_container;
+    //        while(QLayoutItem *tmpItem = task_container->itemAt(0)) {
+    //            this->task_container->removeItem(tmpItem);
+    //            this->task_container->removeWidget(tmpItem->widget());
+    //            delete tmpItem->widget();
+    //            delete tmpItem;
+    //        }
+    //        this->task_container->update();
+    //        delete task_container;
 
 
 
 
-      QString strdate = date.toString();
-      dateTotask = date.toString("dd-MM-yy");
+    QString strdate = date.toString();
+    dateTotask = date.toString("dd-MM-yy");
 
 
     if(!strDinamicckeck.contains(strdate) && date !=   calendar->selectedDate()){
@@ -1070,37 +1076,37 @@ void Shedule::calendar_btn(const QDate &date) {
 
 
 
-//        if(titleEditContainer->count() != 0){
+        //        if(titleEditContainer->count() != 0){
 
-//            while (titleEditContainer->count() != 0) {
-////                QLayoutItem *item = titleEditContainer->takeAt(0);
-////                delete item->widget();
-//                //delete item;
-//                delete titleEditContainer;
-//            }
-//        }
+        //            while (titleEditContainer->count() != 0) {
+        ////                QLayoutItem *item = titleEditContainer->takeAt(0);
+        ////                delete item->widget();
+        //                //delete item;
+        //                delete titleEditContainer;
+        //            }
+        //        }
 
-//          if(titleEditContainer->count() != 0){
+        //          if(titleEditContainer->count() != 0){
 
-//        QHBoxLayout *layout = titleEditContainer;
+        //        QHBoxLayout *layout = titleEditContainer;
 
-//        while(QLayoutItem *tmpItem = layout->itemAt(0)) {
-//            layout->removeItem(tmpItem);
-//            layout->removeWidget(tmpItem->widget());
-//            delete tmpItem->widget();
-//            delete tmpItem;
-//        }
-//        layout->update();
+        //        while(QLayoutItem *tmpItem = layout->itemAt(0)) {
+        //            layout->removeItem(tmpItem);
+        //            layout->removeWidget(tmpItem->widget());
+        //            delete tmpItem->widget();
+        //            delete tmpItem;
+        //        }
+        //        layout->update();
 
-//        }
+        //        }
 
 
 
         // стак для дел
 
-//        day1Layout->setContentsMargins(0,0,0,0);
-//        day1Layout->addLayout(titleWidgetList);
-//    day1Layout->addLayout(titleEditContainer);
+        //        day1Layout->setContentsMargins(0,0,0,0);
+        //        day1Layout->addLayout(titleWidgetList);
+        //    day1Layout->addLayout(titleEditContainer);
 
 
     }
@@ -1119,191 +1125,191 @@ void Shedule::calendar_btn(const QDate &date) {
 
 
     if(strcheck.contains("пн")) {
-         date1Button->setStyleSheet(BUTTON_SOLID);
-         date2Button->setStyleSheet(BUTTON_DISABLED);
-         date3Button->setStyleSheet(BUTTON_DISABLED);
-         date4Button->setStyleSheet(BUTTON_DISABLED);
-         date5Button->setStyleSheet(BUTTON_DISABLED);
-         date6Button->setStyleSheet(BUTTON_DISABLED);
-         date7Button->setStyleSheet(BUTTON_DISABLED);
+        date1Button->setStyleSheet(BUTTON_SOLID);
+        date2Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
 
-          str1 = date.toString("dddd\n dd MMMM");
-          str2 = date.addDays(1).toString("dddd\n dd MMMM");
-          str3 = date.addDays(2).toString("dddd\n dd MMMM");
-          str4 = date.addDays(3).toString("dddd\n dd MMMM");
-          str5 = date.addDays(4).toString("dddd\n dd MMMM");
-          str6 = date.addDays(5).toString("dddd\n dd MMMM");
-          str7 = date.addDays(6).toString("dddd\n dd MMMM");
-
-
-          date1 = date;
-          date2 = date.addDays(1);
-          date3 = date.addDays(2);
-          date4 = date.addDays(3);
-          date5 = date.addDays(4);
-          date6 = date.addDays(5);
-          date7 = date.addDays(6);
-
-     } else if(strcheck.contains("вт")) {
-
-         date2Button->setStyleSheet(BUTTON_SOLID);
-         date1Button->setStyleSheet(BUTTON_DISABLED);
-         date3Button->setStyleSheet(BUTTON_DISABLED);
-         date4Button->setStyleSheet(BUTTON_DISABLED);
-         date5Button->setStyleSheet(BUTTON_DISABLED);
-         date6Button->setStyleSheet(BUTTON_DISABLED);
-         date7Button->setStyleSheet(BUTTON_DISABLED);
-
-          str1 = date.addDays(-1).toString("dddd\n dd MMMM");
-          str2 = date.toString("dddd\n dd MMMM");
-          str3 = date.addDays(1).toString("dddd\n dd MMMM");
-          str4 = date.addDays(2).toString("dddd\n dd MMMM");
-          str5 = date.addDays(3).toString("dddd\n dd MMMM");
-          str6 = date.addDays(4).toString("dddd\n dd MMMM");
-          str7 = date.addDays(5).toString("dddd\n dd MMMM");
-
-          date1 = date.addDays(-1);
-          date2 = date;
-          date3 = date.addDays(1);
-          date4 = date.addDays(2);
-          date5 = date.addDays(3);
-          date6 = date.addDays(4);
-          date7 = date.addDays(5);
-     } else if(strcheck.contains("ср")) {
-
-         date3Button->setStyleSheet(BUTTON_SOLID);
-         date2Button->setStyleSheet(BUTTON_DISABLED);
-         date1Button->setStyleSheet(BUTTON_DISABLED);
-         date4Button->setStyleSheet(BUTTON_DISABLED);
-         date5Button->setStyleSheet(BUTTON_DISABLED);
-         date6Button->setStyleSheet(BUTTON_DISABLED);
-         date7Button->setStyleSheet(BUTTON_DISABLED);
-
-          str1 = date.addDays(-2).toString("dddd\n dd MMMM");
-          str2 = date.addDays(-1).toString("dddd\n dd MMMM");
-          str3 = date.toString("dddd\n dd MMMM");
-          str4 = date.addDays(1).toString("dddd\n dd MMMM");
-          str5 = date.addDays(2).toString("dddd\n dd MMMM");
-          str6 = date.addDays(3).toString("dddd\n dd MMMM");
-          str7 = date.addDays(4).toString("dddd\n dd MMMM");
-
-          date1 = date.addDays(-2);
-          date2 = date.addDays(-1);
-          date3 = date;
-          date4 = date.addDays(1);
-          date5 = date.addDays(2);
-          date6 = date.addDays(3);
-          date7 = date.addDays(4);
+        str1 = date.toString("dddd\n dd MMMM");
+        str2 = date.addDays(1).toString("dddd\n dd MMMM");
+        str3 = date.addDays(2).toString("dddd\n dd MMMM");
+        str4 = date.addDays(3).toString("dddd\n dd MMMM");
+        str5 = date.addDays(4).toString("dddd\n dd MMMM");
+        str6 = date.addDays(5).toString("dddd\n dd MMMM");
+        str7 = date.addDays(6).toString("dddd\n dd MMMM");
 
 
+        date1 = date;
+        date2 = date.addDays(1);
+        date3 = date.addDays(2);
+        date4 = date.addDays(3);
+        date5 = date.addDays(4);
+        date6 = date.addDays(5);
+        date7 = date.addDays(6);
 
-     } else if(strcheck.contains("чт")) {
+    } else if(strcheck.contains("вт")) {
 
-         date4Button->setStyleSheet(BUTTON_SOLID);
-         date1Button->setStyleSheet(BUTTON_DISABLED);
-         date2Button->setStyleSheet(BUTTON_DISABLED);
-         date3Button->setStyleSheet(BUTTON_DISABLED);
-         date5Button->setStyleSheet(BUTTON_DISABLED);
-         date6Button->setStyleSheet(BUTTON_DISABLED);
-         date7Button->setStyleSheet(BUTTON_DISABLED);
+        date2Button->setStyleSheet(BUTTON_SOLID);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
 
-          str1 = date.addDays(-3).toString("dddd\n dd MMMM");
-          str2 = date.addDays(-2).toString("dddd\n dd MMMM");
-          str3 = date.addDays(-1).toString("dddd\n dd MMMM");
-          str4 = date.toString("dddd\n dd MMMM");
-          str5 = date.addDays(1).toString("dddd\n dd MMMM");
-          str6 = date.addDays(2).toString("dddd\n dd MMMM");
-          str7 = date.addDays(3).toString("dddd\n dd MMMM");
+        str1 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str2 = date.toString("dddd\n dd MMMM");
+        str3 = date.addDays(1).toString("dddd\n dd MMMM");
+        str4 = date.addDays(2).toString("dddd\n dd MMMM");
+        str5 = date.addDays(3).toString("dddd\n dd MMMM");
+        str6 = date.addDays(4).toString("dddd\n dd MMMM");
+        str7 = date.addDays(5).toString("dddd\n dd MMMM");
 
+        date1 = date.addDays(-1);
+        date2 = date;
+        date3 = date.addDays(1);
+        date4 = date.addDays(2);
+        date5 = date.addDays(3);
+        date6 = date.addDays(4);
+        date7 = date.addDays(5);
+    } else if(strcheck.contains("ср")) {
 
-          date1 = date.addDays(-3);
-          date2 = date.addDays(-2);
-          date3 = date.addDays(-1);
-          date4 = date;
-          date5 = date.addDays(1);
-          date6 = date.addDays(2);
-          date7 = date.addDays(3);
+        date3Button->setStyleSheet(BUTTON_SOLID);
+        date2Button->setStyleSheet(BUTTON_DISABLED);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
 
-     } else if(strcheck.contains("пт")) {
+        str1 = date.addDays(-2).toString("dddd\n dd MMMM");
+        str2 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str3 = date.toString("dddd\n dd MMMM");
+        str4 = date.addDays(1).toString("dddd\n dd MMMM");
+        str5 = date.addDays(2).toString("dddd\n dd MMMM");
+        str6 = date.addDays(3).toString("dddd\n dd MMMM");
+        str7 = date.addDays(4).toString("dddd\n dd MMMM");
 
-         date5Button->setStyleSheet(BUTTON_SOLID);
-         date1Button->setStyleSheet(BUTTON_DISABLED);
-         date3Button->setStyleSheet(BUTTON_DISABLED);
-         date4Button->setStyleSheet(BUTTON_DISABLED);
-         date2Button->setStyleSheet(BUTTON_DISABLED);
-         date6Button->setStyleSheet(BUTTON_DISABLED);
-         date7Button->setStyleSheet(BUTTON_DISABLED);
-
-          str1 = date.addDays(-4).toString("dddd\n dd MMMM");
-          str2 = date.addDays(-3).toString("dddd\n dd MMMM");
-          str3 = date.addDays(-2).toString("dddd\n dd MMMM");
-          str4 = date.addDays(-1).toString("dddd\n dd MMMM");
-          str5 = date.toString("dddd\n dd MMMM");
-          str6 = date.addDays(1).toString("dddd\n dd MMMM");
-          str7 = date.addDays(2).toString("dddd\n dd MMMM");
-
-
-          date1 = date.addDays(-4);
-          date2 = date.addDays(-3);
-          date3 = date.addDays(-2);
-          date4 = date.addDays(-1);
-          date5 = date;
-          date6 = date.addDays(1);
-          date7 = date.addDays(2);
-
-
-     } else if(strcheck.contains("сб")) {
-
-         date6Button->setStyleSheet(BUTTON_SOLID);
-         date1Button->setStyleSheet(BUTTON_DISABLED);
-         date3Button->setStyleSheet(BUTTON_DISABLED);
-         date4Button->setStyleSheet(BUTTON_DISABLED);
-         date5Button->setStyleSheet(BUTTON_DISABLED);
-         date1Button->setStyleSheet(BUTTON_DISABLED);
-         date7Button->setStyleSheet(BUTTON_DISABLED);
-
-          str1 = date.addDays(-5).toString("dddd\n dd MMMM");
-          str2 = date.addDays(-4).toString("dddd\n dd MMMM");
-          str3 = date.addDays(-3).toString("dddd\n dd MMMM");
-          str4 = date.addDays(-2).toString("dddd\n dd MMMM");
-          str5 = date.addDays(-1).toString("dddd\n dd MMMM");
-          str6 = date.toString("dddd\n dd MMMM");
-          str7 = date.addDays(1).toString("dddd\n dd MMMM");
+        date1 = date.addDays(-2);
+        date2 = date.addDays(-1);
+        date3 = date;
+        date4 = date.addDays(1);
+        date5 = date.addDays(2);
+        date6 = date.addDays(3);
+        date7 = date.addDays(4);
 
 
-          date1 = date.addDays(-5);
-          date2 = date.addDays(-4);
-          date3 = date.addDays(-3);
-          date4 = date.addDays(-2);
-          date5 = date.addDays(-1);
-          date6 = date;
-          date7 = date.addDays(1);
-     }   else if(strcheck.contains("вс")) {
 
-         date7Button->setStyleSheet(BUTTON_SOLID);
-         date1Button->setStyleSheet(BUTTON_DISABLED);
-         date3Button->setStyleSheet(BUTTON_DISABLED);
-         date4Button->setStyleSheet(BUTTON_DISABLED);
-         date5Button->setStyleSheet(BUTTON_DISABLED);
-         date6Button->setStyleSheet(BUTTON_DISABLED);
-         date1Button->setStyleSheet(BUTTON_DISABLED);
+    } else if(strcheck.contains("чт")) {
 
-          str1 = date.addDays(-6).toString("dddd\n dd MMMM");
-          str2 = date.addDays(-5).toString("dddd\n dd MMMM");
-          str3 = date.addDays(-4).toString("dddd\n dd MMMM");
-          str4 = date.addDays(-3).toString("dddd\n dd MMMM");
-          str5 = date.addDays(-2).toString("dddd\n dd MMMM");
-          str6 = date.addDays(-1).toString("dddd\n dd MMMM");
-          str7 = date.toString("dddd\n dd MMMM");
+        date4Button->setStyleSheet(BUTTON_SOLID);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date2Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
 
-          date1 = date.addDays(-6);
-          date2 = date.addDays(-5);
-          date3 = date.addDays(-4);
-          date4 = date.addDays(-2);
-          date5 = date.addDays(-2);
-          date6 = date.addDays(-1);
-          date7 = date;
-     }
+        str1 = date.addDays(-3).toString("dddd\n dd MMMM");
+        str2 = date.addDays(-2).toString("dddd\n dd MMMM");
+        str3 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str4 = date.toString("dddd\n dd MMMM");
+        str5 = date.addDays(1).toString("dddd\n dd MMMM");
+        str6 = date.addDays(2).toString("dddd\n dd MMMM");
+        str7 = date.addDays(3).toString("dddd\n dd MMMM");
+
+
+        date1 = date.addDays(-3);
+        date2 = date.addDays(-2);
+        date3 = date.addDays(-1);
+        date4 = date;
+        date5 = date.addDays(1);
+        date6 = date.addDays(2);
+        date7 = date.addDays(3);
+
+    } else if(strcheck.contains("пт")) {
+
+        date5Button->setStyleSheet(BUTTON_SOLID);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date2Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
+
+        str1 = date.addDays(-4).toString("dddd\n dd MMMM");
+        str2 = date.addDays(-3).toString("dddd\n dd MMMM");
+        str3 = date.addDays(-2).toString("dddd\n dd MMMM");
+        str4 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str5 = date.toString("dddd\n dd MMMM");
+        str6 = date.addDays(1).toString("dddd\n dd MMMM");
+        str7 = date.addDays(2).toString("dddd\n dd MMMM");
+
+
+        date1 = date.addDays(-4);
+        date2 = date.addDays(-3);
+        date3 = date.addDays(-2);
+        date4 = date.addDays(-1);
+        date5 = date;
+        date6 = date.addDays(1);
+        date7 = date.addDays(2);
+
+
+    } else if(strcheck.contains("сб")) {
+
+        date6Button->setStyleSheet(BUTTON_SOLID);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
+
+        str1 = date.addDays(-5).toString("dddd\n dd MMMM");
+        str2 = date.addDays(-4).toString("dddd\n dd MMMM");
+        str3 = date.addDays(-3).toString("dddd\n dd MMMM");
+        str4 = date.addDays(-2).toString("dddd\n dd MMMM");
+        str5 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str6 = date.toString("dddd\n dd MMMM");
+        str7 = date.addDays(1).toString("dddd\n dd MMMM");
+
+
+        date1 = date.addDays(-5);
+        date2 = date.addDays(-4);
+        date3 = date.addDays(-3);
+        date4 = date.addDays(-2);
+        date5 = date.addDays(-1);
+        date6 = date;
+        date7 = date.addDays(1);
+    }   else if(strcheck.contains("вс")) {
+
+        date7Button->setStyleSheet(BUTTON_SOLID);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+
+        str1 = date.addDays(-6).toString("dddd\n dd MMMM");
+        str2 = date.addDays(-5).toString("dddd\n dd MMMM");
+        str3 = date.addDays(-4).toString("dddd\n dd MMMM");
+        str4 = date.addDays(-3).toString("dddd\n dd MMMM");
+        str5 = date.addDays(-2).toString("dddd\n dd MMMM");
+        str6 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str7 = date.toString("dddd\n dd MMMM");
+
+        date1 = date.addDays(-6);
+        date2 = date.addDays(-5);
+        date3 = date.addDays(-4);
+        date4 = date.addDays(-2);
+        date5 = date.addDays(-2);
+        date6 = date.addDays(-1);
+        date7 = date;
+    }
 
 
 
@@ -1339,287 +1345,287 @@ void Shedule::setButtonDate(void) {
 
 
     for (int i = 0; i < task_container_inner->count();)
-      {
+    {
         QLayoutItem *item = task_container_inner->itemAt(i);
         if (item->layout() != nullptr)     // Check whether item contains a layout
             delete task_container_inner->takeAt(i);  // Delete item with layout on it
         else i++;
-      }
+    }
 
 
     QDate date =   calendar->selectedDate();
 
-            QString strcheck = date.toString();
+    QString strcheck = date.toString();
 
-            QString str1;
-            QString str2;
-            QString str3;
-            QString str4;
-            QString str5;
-            QString str6;
-            QString str7;
-
-
-             if(strcheck.contains("пн")) {
-                 date1Button->setStyleSheet(BUTTON_SOLID);
-                 date2Button->setStyleSheet(BUTTON_DISABLED);
-                 date3Button->setStyleSheet(BUTTON_DISABLED);
-                 date4Button->setStyleSheet(BUTTON_DISABLED);
-                 date5Button->setStyleSheet(BUTTON_DISABLED);
-                 date6Button->setStyleSheet(BUTTON_DISABLED);
-                 date7Button->setStyleSheet(BUTTON_DISABLED);
-
-                  str1 = date.toString("dddd\n dd MMMM");
-                  str2 = date.addDays(1).toString("dddd\n dd MMMM");
-                  str3 = date.addDays(2).toString("dddd\n dd MMMM");
-                  str4 = date.addDays(3).toString("dddd\n dd MMMM");
-                  str5 = date.addDays(4).toString("dddd\n dd MMMM");
-                  str6 = date.addDays(5).toString("dddd\n dd MMMM");
-                  str7 = date.addDays(6).toString("dddd\n dd MMMM");
-
-                  date1 = date;
-                  date2 = date.addDays(1);
-                  date3 = date.addDays(2);
-                  date4 = date.addDays(3);
-                  date5 = date.addDays(4);
-                  date6 = date.addDays(5);
-                  date7 = date.addDays(6);
-
-             } else if(strcheck.contains("вт")) {
-
-                 date2Button->setStyleSheet(BUTTON_SOLID);
-                 date1Button->setStyleSheet(BUTTON_DISABLED);
-                 date3Button->setStyleSheet(BUTTON_DISABLED);
-                 date4Button->setStyleSheet(BUTTON_DISABLED);
-                 date5Button->setStyleSheet(BUTTON_DISABLED);
-                 date6Button->setStyleSheet(BUTTON_DISABLED);
-                 date7Button->setStyleSheet(BUTTON_DISABLED);
-
-                  str1 = date.addDays(-1).toString("dddd\n dd MMMM");
-                  str2 = date.toString("dddd\n dd MMMM");
-                  str3 = date.addDays(1).toString("dddd\n dd MMMM");
-                  str4 = date.addDays(2).toString("dddd\n dd MMMM");
-                  str5 = date.addDays(3).toString("dddd\n dd MMMM");
-                  str6 = date.addDays(4).toString("dddd\n dd MMMM");
-                  str7 = date.addDays(5).toString("dddd\n dd MMMM");
-
-                  date1 = date.addDays(-1);
-                  date2 = date;
-                  date3 = date.addDays(1);
-                  date4 = date.addDays(2);
-                  date5 = date.addDays(3);
-                  date6 = date.addDays(4);
-                  date7 = date.addDays(5);
-
-             } else if(strcheck.contains("ср")) {
-
-                 date3Button->setStyleSheet(BUTTON_SOLID);
-                 date2Button->setStyleSheet(BUTTON_DISABLED);
-                 date1Button->setStyleSheet(BUTTON_DISABLED);
-                 date4Button->setStyleSheet(BUTTON_DISABLED);
-                 date5Button->setStyleSheet(BUTTON_DISABLED);
-                 date6Button->setStyleSheet(BUTTON_DISABLED);
-                 date7Button->setStyleSheet(BUTTON_DISABLED);
-
-                  str1 = date.addDays(-2).toString("dddd\n dd MMMM");
-                  str2 = date.addDays(-1).toString("dddd\n dd MMMM");
-                  str3 = date.toString("dddd\n dd MMMM");
-                  str4 = date.addDays(1).toString("dddd\n dd MMMM");
-                  str5 = date.addDays(2).toString("dddd\n dd MMMM");
-                  str6 = date.addDays(3).toString("dddd\n dd MMMM");
-                  str7 = date.addDays(4).toString("dddd\n dd MMMM");
-
-                  date1 = date.addDays(-2);
-                  date2 = date.addDays(-1);
-                  date3 = date;
-                  date4 = date.addDays(1);
-                  date5 = date.addDays(2);
-                  date6 = date.addDays(3);
-                  date7 = date.addDays(4);
-             } else if(strcheck.contains("чт")) {
-
-                 date4Button->setStyleSheet(BUTTON_SOLID);
-                 date1Button->setStyleSheet(BUTTON_DISABLED);
-                 date3Button->setStyleSheet(BUTTON_DISABLED);
-                 date1Button->setStyleSheet(BUTTON_DISABLED);
-                 date5Button->setStyleSheet(BUTTON_DISABLED);
-                 date6Button->setStyleSheet(BUTTON_DISABLED);
-                 date7Button->setStyleSheet(BUTTON_DISABLED);
-
-                  str1 = date.addDays(-3).toString("dddd\n dd MMMM");
-                  str2 = date.addDays(-2).toString("dddd\n dd MMMM");
-                  str3 = date.addDays(-1).toString("dddd\n dd MMMM");
-                  str4 = date.toString("dddd\n dd MMMM");
-                  str5 = date.addDays(1).toString("dddd\n dd MMMM");
-                  str6 = date.addDays(2).toString("dddd\n dd MMMM");
-                  str7 = date.addDays(3).toString("dddd\n dd MMMM");
-
-                  date1 = date.addDays(-3);
-                  date2 = date.addDays(-2);
-                  date3 = date.addDays(-1);
-                  date4 = date;
-                  date5 = date.addDays(1);
-                  date6 = date.addDays(2);
-                  date7 = date.addDays(3);
-             } else if(strcheck.contains("пт")) {
-
-                 date5Button->setStyleSheet(BUTTON_SOLID);
-                 date1Button->setStyleSheet(BUTTON_DISABLED);
-                 date3Button->setStyleSheet(BUTTON_DISABLED);
-                 date4Button->setStyleSheet(BUTTON_DISABLED);
-                 date2Button->setStyleSheet(BUTTON_DISABLED);
-                 date6Button->setStyleSheet(BUTTON_DISABLED);
-                 date7Button->setStyleSheet(BUTTON_DISABLED);
-
-                  str1 = date.addDays(-4).toString("dddd\n dd MMMM");
-                  str2 = date.addDays(-3).toString("dddd\n dd MMMM");
-                  str3 = date.addDays(-2).toString("dddd\n dd MMMM");
-                  str4 = date.addDays(-1).toString("dddd\n dd MMMM");
-                  str5 = date.toString("dddd\n dd MMMM");
-                  str6 = date.addDays(1).toString("dddd\n dd MMMM");
-                  str7 = date.addDays(2).toString("dddd\n dd MMMM");
+    QString str1;
+    QString str2;
+    QString str3;
+    QString str4;
+    QString str5;
+    QString str6;
+    QString str7;
 
 
-                  date1 = date.addDays(-4);
-                  date2 = date.addDays(-3);
-                  date3 = date.addDays(-2);
-                  date4 = date.addDays(-1);
-                  date5 = date;
-                  date6 = date.addDays(1);
-                  date7 = date.addDays(2);
+    if(strcheck.contains("пн")) {
+        date1Button->setStyleSheet(BUTTON_SOLID);
+        date2Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
 
-             } else if(strcheck.contains("сб")) {
+        str1 = date.toString("dddd\n dd MMMM");
+        str2 = date.addDays(1).toString("dddd\n dd MMMM");
+        str3 = date.addDays(2).toString("dddd\n dd MMMM");
+        str4 = date.addDays(3).toString("dddd\n dd MMMM");
+        str5 = date.addDays(4).toString("dddd\n dd MMMM");
+        str6 = date.addDays(5).toString("dddd\n dd MMMM");
+        str7 = date.addDays(6).toString("dddd\n dd MMMM");
 
-                 date6Button->setStyleSheet(BUTTON_SOLID);
-                 date1Button->setStyleSheet(BUTTON_DISABLED);
-                 date3Button->setStyleSheet(BUTTON_DISABLED);
-                 date4Button->setStyleSheet(BUTTON_DISABLED);
-                 date5Button->setStyleSheet(BUTTON_DISABLED);
-                 date1Button->setStyleSheet(BUTTON_DISABLED);
-                 date7Button->setStyleSheet(BUTTON_DISABLED);
+        date1 = date;
+        date2 = date.addDays(1);
+        date3 = date.addDays(2);
+        date4 = date.addDays(3);
+        date5 = date.addDays(4);
+        date6 = date.addDays(5);
+        date7 = date.addDays(6);
 
-                  str1 = date.addDays(-5).toString("dddd\n dd MMMM");
-                  str2 = date.addDays(-4).toString("dddd\n dd MMMM");
-                  str3 = date.addDays(-3).toString("dddd\n dd MMMM");
-                  str4 = date.addDays(-2).toString("dddd\n dd MMMM");
-                  str5 = date.addDays(-1).toString("dddd\n dd MMMM");
-                  str6 = date.toString("dddd\n dd MMMM");
-                  str7 = date.addDays(1).toString("dddd\n dd MMMM");
+    } else if(strcheck.contains("вт")) {
+
+        date2Button->setStyleSheet(BUTTON_SOLID);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
+
+        str1 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str2 = date.toString("dddd\n dd MMMM");
+        str3 = date.addDays(1).toString("dddd\n dd MMMM");
+        str4 = date.addDays(2).toString("dddd\n dd MMMM");
+        str5 = date.addDays(3).toString("dddd\n dd MMMM");
+        str6 = date.addDays(4).toString("dddd\n dd MMMM");
+        str7 = date.addDays(5).toString("dddd\n dd MMMM");
+
+        date1 = date.addDays(-1);
+        date2 = date;
+        date3 = date.addDays(1);
+        date4 = date.addDays(2);
+        date5 = date.addDays(3);
+        date6 = date.addDays(4);
+        date7 = date.addDays(5);
+
+    } else if(strcheck.contains("ср")) {
+
+        date3Button->setStyleSheet(BUTTON_SOLID);
+        date2Button->setStyleSheet(BUTTON_DISABLED);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
+
+        str1 = date.addDays(-2).toString("dddd\n dd MMMM");
+        str2 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str3 = date.toString("dddd\n dd MMMM");
+        str4 = date.addDays(1).toString("dddd\n dd MMMM");
+        str5 = date.addDays(2).toString("dddd\n dd MMMM");
+        str6 = date.addDays(3).toString("dddd\n dd MMMM");
+        str7 = date.addDays(4).toString("dddd\n dd MMMM");
+
+        date1 = date.addDays(-2);
+        date2 = date.addDays(-1);
+        date3 = date;
+        date4 = date.addDays(1);
+        date5 = date.addDays(2);
+        date6 = date.addDays(3);
+        date7 = date.addDays(4);
+    } else if(strcheck.contains("чт")) {
+
+        date4Button->setStyleSheet(BUTTON_SOLID);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
+
+        str1 = date.addDays(-3).toString("dddd\n dd MMMM");
+        str2 = date.addDays(-2).toString("dddd\n dd MMMM");
+        str3 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str4 = date.toString("dddd\n dd MMMM");
+        str5 = date.addDays(1).toString("dddd\n dd MMMM");
+        str6 = date.addDays(2).toString("dddd\n dd MMMM");
+        str7 = date.addDays(3).toString("dddd\n dd MMMM");
+
+        date1 = date.addDays(-3);
+        date2 = date.addDays(-2);
+        date3 = date.addDays(-1);
+        date4 = date;
+        date5 = date.addDays(1);
+        date6 = date.addDays(2);
+        date7 = date.addDays(3);
+    } else if(strcheck.contains("пт")) {
+
+        date5Button->setStyleSheet(BUTTON_SOLID);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date2Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
+
+        str1 = date.addDays(-4).toString("dddd\n dd MMMM");
+        str2 = date.addDays(-3).toString("dddd\n dd MMMM");
+        str3 = date.addDays(-2).toString("dddd\n dd MMMM");
+        str4 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str5 = date.toString("dddd\n dd MMMM");
+        str6 = date.addDays(1).toString("dddd\n dd MMMM");
+        str7 = date.addDays(2).toString("dddd\n dd MMMM");
 
 
-                  date1 = date.addDays(-5);
-                  date2 = date.addDays(-4);
-                  date3 = date.addDays(-3);
-                  date4 = date.addDays(-2);
-                  date5 = date.addDays(-1);
-                  date6 = date;
-                  date7 = date.addDays(1);
-             }   else if(strcheck.contains("вс")) {
+        date1 = date.addDays(-4);
+        date2 = date.addDays(-3);
+        date3 = date.addDays(-2);
+        date4 = date.addDays(-1);
+        date5 = date;
+        date6 = date.addDays(1);
+        date7 = date.addDays(2);
 
-                 date7Button->setStyleSheet(BUTTON_SOLID);
-                 date1Button->setStyleSheet(BUTTON_DISABLED);
-                 date3Button->setStyleSheet(BUTTON_DISABLED);
-                 date4Button->setStyleSheet(BUTTON_DISABLED);
-                 date5Button->setStyleSheet(BUTTON_DISABLED);
-                 date6Button->setStyleSheet(BUTTON_DISABLED);
-                 date1Button->setStyleSheet(BUTTON_DISABLED);
+    } else if(strcheck.contains("сб")) {
 
-                  str1 = date.addDays(-6).toString("dddd\n dd MMMM");
-                  str2 = date.addDays(-5).toString("dddd\n dd MMMM");
-                  str3 = date.addDays(-4).toString("dddd\n dd MMMM");
-                  str4 = date.addDays(-3).toString("dddd\n dd MMMM");
-                  str5 = date.addDays(-2).toString("dddd\n dd MMMM");
-                  str6 = date.addDays(-1).toString("dddd\n dd MMMM");
-                  str7 = date.toString("dddd\n dd MMMM");
+        date6Button->setStyleSheet(BUTTON_SOLID);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date7Button->setStyleSheet(BUTTON_DISABLED);
 
-                  date1 = date.addDays(-5);
-                  date2 = date.addDays(-4);
-                  date3 = date.addDays(-3);
-                  date4 = date.addDays(-2);
-                  date5 = date.addDays(-1);
-                  date6 = date;
-                  date7 = date.addDays(1);
-             }
+        str1 = date.addDays(-5).toString("dddd\n dd MMMM");
+        str2 = date.addDays(-4).toString("dddd\n dd MMMM");
+        str3 = date.addDays(-3).toString("dddd\n dd MMMM");
+        str4 = date.addDays(-2).toString("dddd\n dd MMMM");
+        str5 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str6 = date.toString("dddd\n dd MMMM");
+        str7 = date.addDays(1).toString("dddd\n dd MMMM");
 
 
+        date1 = date.addDays(-5);
+        date2 = date.addDays(-4);
+        date3 = date.addDays(-3);
+        date4 = date.addDays(-2);
+        date5 = date.addDays(-1);
+        date6 = date;
+        date7 = date.addDays(1);
+    }   else if(strcheck.contains("вс")) {
 
-            QString text1 = QString("%1").arg(str1);
-            QString text2 = QString("%1").arg(str2);
-            QString text3 = QString("%1").arg(str3);
-            QString text4 = QString("%1").arg(str4);
-            QString text5 = QString("%1").arg(str5);
-            QString text6 = QString("%1").arg(str6);
-            QString text7 = QString("%1").arg(str7);
+        date7Button->setStyleSheet(BUTTON_SOLID);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+        date3Button->setStyleSheet(BUTTON_DISABLED);
+        date4Button->setStyleSheet(BUTTON_DISABLED);
+        date5Button->setStyleSheet(BUTTON_DISABLED);
+        date6Button->setStyleSheet(BUTTON_DISABLED);
+        date1Button->setStyleSheet(BUTTON_DISABLED);
+
+        str1 = date.addDays(-6).toString("dddd\n dd MMMM");
+        str2 = date.addDays(-5).toString("dddd\n dd MMMM");
+        str3 = date.addDays(-4).toString("dddd\n dd MMMM");
+        str4 = date.addDays(-3).toString("dddd\n dd MMMM");
+        str5 = date.addDays(-2).toString("dddd\n dd MMMM");
+        str6 = date.addDays(-1).toString("dddd\n dd MMMM");
+        str7 = date.toString("dddd\n dd MMMM");
+
+        date1 = date.addDays(-5);
+        date2 = date.addDays(-4);
+        date3 = date.addDays(-3);
+        date4 = date.addDays(-2);
+        date5 = date.addDays(-1);
+        date6 = date;
+        date7 = date.addDays(1);
+    }
 
 
+
+    QString text1 = QString("%1").arg(str1);
+    QString text2 = QString("%1").arg(str2);
+    QString text3 = QString("%1").arg(str3);
+    QString text4 = QString("%1").arg(str4);
+    QString text5 = QString("%1").arg(str5);
+    QString text6 = QString("%1").arg(str6);
+    QString text7 = QString("%1").arg(str7);
 
 
 
 
 
-            date1Button->setText(text1);
-            date2Button->setText(text2);
-            date3Button->setText(text3);
-            date4Button->setText(text4);
-            date5Button->setText(text5);
-            date6Button->setText(text6);
-            date7Button->setText(text7);
+
+
+    date1Button->setText(text1);
+    date2Button->setText(text2);
+    date3Button->setText(text3);
+    date4Button->setText(text4);
+    date5Button->setText(text5);
+    date6Button->setText(text6);
+    date7Button->setText(text7);
 
 }
 
 
 void Shedule::sendShedulePressed() {
 
-//    QJsonObject loadSheduleJson;
+    //    QJsonObject loadSheduleJson;
 
-//    QJsonObject Shedule;
+    //    QJsonObject Shedule;
 
-//          QJsonObject SheduleTask;
-
-
-//    for(int i = 0; i < titleList.size(); i=i+3 ){
-
-//        QString s = QString::number(i);
+    //          QJsonObject SheduleTask;
 
 
+    //    for(int i = 0; i < titleList.size(); i=i+3 ){
 
-//        SheduleTask.insert("taskTitle" + s , titleList[i]);
-//        SheduleTask.insert("taskBegin" + s, titleList[i+1]);
-//        SheduleTask.insert("taskEnd" + s, titleList[i+2]);
-
-
-//         Shedule.insert("qq",SheduleTask);
-//    }
+    //        QString s = QString::number(i);
 
 
 
-//    Shedule.insert("date",dateTotask);
+    //        SheduleTask.insert("taskTitle" + s , titleList[i]);
+    //        SheduleTask.insert("taskBegin" + s, titleList[i+1]);
+    //        SheduleTask.insert("taskEnd" + s, titleList[i+2]);
 
 
+    //         Shedule.insert("qq",SheduleTask);
+    //    }
+
+
+
+    //    Shedule.insert("date",dateTotask);
 
 
 
 
 
-//    qDebug() << titleList.size() << endl;
 
 
-//    loadSheduleJson.insert("sendSheduleFromDate", Shedule);
-
-//        qDebug() << "create request" << endl;
+    //    qDebug() << titleList.size() << endl;
 
 
+    //    loadSheduleJson.insert("sendSheduleFromDate", Shedule);
 
-//        QNetworkRequest request(QUrl(SERVER_URL + ""));
-//        request.setHeader(QNetworkRequest::ContentTypeHeader,
-//                          QStringLiteral("application/json;charset=utf-8"));
-//        qDebug() << "request data"<< QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact) << endl;
-//        networkManagerSendShedule->post(
-//            request,
-//            QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact)
-//        );
-//        qDebug() << "request send" << endl;
-    }
+    //        qDebug() << "create request" << endl;
+
+
+
+    //        QNetworkRequest request(QUrl(SERVER_URL + ""));
+    //        request.setHeader(QNetworkRequest::ContentTypeHeader,
+    //                          QStringLiteral("application/json;charset=utf-8"));
+    //        qDebug() << "request data"<< QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact) << endl;
+    //        networkManagerSendShedule->post(
+    //            request,
+    //            QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact)
+    //        );
+    //        qDebug() << "request send" << endl;
+}
 
 
 void Shedule::onHttpResultSendShedule(QNetworkReply *reply){
@@ -1635,7 +1641,7 @@ void Shedule::onHttpResultSendShedule(QNetworkReply *reply){
 
 void Shedule::loadSheduleFromDate() {
 
-     qDebug() << "this id.........." << ID_QSTRING;
+    qDebug() << "this id.........." << ID_QSTRING;
 
     QDate date = calendar->selectedDate();
     QJsonObject loadSheduleJson;
@@ -1650,23 +1656,23 @@ void Shedule::loadSheduleFromDate() {
 
     loadSheduleJson.insert("get_events", data);
 
-        qDebug() << "create request" << endl;
+    qDebug() << "create request" << endl;
 
 
 
-        QNetworkRequest request(QUrl(SERVER_URL + ""));
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
 
-        request.setRawHeader("JSON_DATA", QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact));
+    request.setRawHeader("JSON_DATA", QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact));
 
-        request.setHeader(QNetworkRequest::ContentTypeHeader,
-                          QStringLiteral("application/json;charset=utf-8"));
-        qDebug() << "request data"<< QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact) << endl;
-        networkManagerGetEvents->post(
-            request,
-            QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact)
-        );
-        qDebug() << "request send" << endl;
-    }
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json;charset=utf-8"));
+    qDebug() << "request data"<< QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact) << endl;
+    networkManagerGetEvents->post(
+                request,
+                QJsonDocument(loadSheduleJson).toJson(QJsonDocument::Compact)
+                );
+    qDebug() << "request send" << endl;
+}
 
 
 void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
@@ -1683,11 +1689,11 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
         std::string str = resp.toStdString();
 
         std::cout << "str  " + str << std::endl;
-//        "{\"userID\":\"213564544\",\"Friends\":[\"Misha1991\", \"Igor\",  \"Alex\",  \"qwe\", \"piotr\"]}";
+        //        "{\"userID\":\"213564544\",\"Friends\":[\"Misha1991\", \"Igor\",  \"Alex\",  \"qwe\", \"piotr\"]}";
 
         //std::string parser_str = "{\"get_events\":[{\"description\":\"breakfast\","
-                                 " \"time_begin\":\"10:00\",""\"time_end\":\"10:45\"}, {\"description\":\"lansh\", \"time_begin\":"
-                                          "\"19:00\", \"time_end\":\"20:00\"}]}";
+        " \"time_begin\":\"10:00\",""\"time_end\":\"10:45\"}, {\"description\":\"lansh\", \"time_begin\":"
+        "\"19:00\", \"time_end\":\"20:00\"}]}";
 
 
         nlohmann::json j = nlohmann::json::parse(str);
@@ -1705,9 +1711,9 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
             {
 
                 std::string time_end_str;
-                 std::string time_begin_str;
-                  std::string event_name;
-                  std::string event_description;
+                std::string time_begin_str;
+                std::string event_name;
+                std::string event_description;
 
 
                 if(element.contains("event_name"))
@@ -1727,15 +1733,15 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
 
                 if(element.contains("time_begin"))
                 {
-                     time_begin_str = element["time_begin"].get<std::string>();
-                     std::cout << time_begin_str << std::endl;
+                    time_begin_str = element["time_begin"].get<std::string>();
+                    std::cout << time_begin_str << std::endl;
                 }
 
                 if(element.contains("time_end"))
                 {
                     time_end_str = element["time_end"].get<std::string>();
 
-                     std::cout << time_end_str << std::endl;
+                    std::cout << time_end_str << std::endl;
                 }
 
                 deleteTaskButton = new QSvgButton(":/resc/resc/cross.svg", QSize(25,25));
@@ -1756,11 +1762,11 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
                 doneButton->setStyleSheet("border-radius:5px;");
                 connect(doneButton, &QSvgButton::clicked, this, &Shedule::doneButton_pressed);
 
-//                timeLabelTask = new QLabel;
-//                timeLabelTask->setStyleSheet("QFrame {""background: transparent""}");
-//                timeLabelTask->setAlignment(Qt::AlignCenter);
-//                timeLabelTask->setAlignment(Qt::AlignVCenter);
-//                timeLabelTask->setContentsMargins(0,15,0,0);
+                //                timeLabelTask = new QLabel;
+                //                timeLabelTask->setStyleSheet("QFrame {""background: transparent""}");
+                //                timeLabelTask->setAlignment(Qt::AlignCenter);
+                //                timeLabelTask->setAlignment(Qt::AlignVCenter);
+                //                timeLabelTask->setContentsMargins(0,15,0,0);
 
 
                 time_begin_string = QString::fromUtf8(time_begin_str.c_str());
@@ -1790,7 +1796,7 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
 
                 QLineEdit *cardTitleEdit = new QLineEdit;
 
-                 QLineEdit *cardDescriptionEdit = new QLineEdit;
+                QLineEdit *cardDescriptionEdit = new QLineEdit;
 
                 //QHBoxLayout *titleEditContainerLoad = new QHBoxLayout;
 
@@ -1870,18 +1876,18 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
 
 
 
-             }
+            }
 
         }
 
 
 
-        } else {
+    } else {
 
 
 
 
-}
+    }
 
     qDebug() << reply->errorString();
 

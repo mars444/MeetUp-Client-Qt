@@ -33,7 +33,7 @@ public:
     MainFragment();
     ~MainFragment();
 
-     QString user_ID;
+    QString user_ID;
 
     void onResume() override;
 public slots:

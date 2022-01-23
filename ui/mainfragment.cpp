@@ -180,9 +180,9 @@ MainFragment::MainFragment() {
 
 
 
-//    QLabel *centerContainer = new QLabel("");
-//    QPixmap profileImage(":/resc/resc/loader.gif");
-//    centerContainer->setPixmap(profileImage);
+    //    QLabel *centerContainer = new QLabel("");
+    //    QPixmap profileImage(":/resc/resc/loader.gif");
+    //    centerContainer->setPixmap(profileImage);
 
 
 
@@ -267,26 +267,26 @@ void MainFragment::imageFunc() {
 
 
 
-//    QPixmap pixmap = QPixmap(size());
-//      pixmap.fill(Qt::transparent);
+    //    QPixmap pixmap = QPixmap(size());
+    //      pixmap.fill(Qt::transparent);
 
-//      QPixmap p(QFileDialog::getOpenFileName(this, tr("Open Image"), "", tr("Image Files (*.png *.jpg)")));
+    //      QPixmap p(QFileDialog::getOpenFileName(this, tr("Open Image"), "", tr("Image Files (*.png *.jpg)")));
 
 
-//    QPainter painter (&pixmap);
+    //    QPainter painter (&pixmap);
 
-//        painter.setRenderHint(QPainter::Antialiasing, true);
-//        painter.setRenderHint(QPainter::HighQualityAntialiasing, true);
-//        painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+    //        painter.setRenderHint(QPainter::Antialiasing, true);
+    //        painter.setRenderHint(QPainter::HighQualityAntialiasing, true);
+    //        painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
 
-//        QPainterPath path = QPainterPath();
-//        path.addRoundedRect(100, 100, 200, 200, 0, 0);
-//        painter.setClipPath(path);
-//      painter.drawPixmap(200, 200, p.scaled(150, 150, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+    //        QPainterPath path = QPainterPath();
+    //        path.addRoundedRect(100, 100, 200, 200, 0, 0);
+    //        painter.setClipPath(path);
+    //      painter.drawPixmap(200, 200, p.scaled(150, 150, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
 
-        profileImageLabel->setMaximumWidth(270);
-        profileImageLabel->setAlignment(Qt::AlignCenter);
-        profileImageLabel->setPixmap(pixmap.scaled(150, 150, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+    profileImageLabel->setMaximumWidth(270);
+    profileImageLabel->setAlignment(Qt::AlignCenter);
+    profileImageLabel->setPixmap(pixmap.scaled(150, 150, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
 
 
 }

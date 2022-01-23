@@ -18,14 +18,14 @@
 int main(int argc, char *argv[])
 {
 
-   qDebug("Start programm");
+    qDebug("Start programm");
 
     //Поддержка HighDpi в проекте.
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     QApplication a(argc, argv);
 
-//Установка русского языка
+    //Установка русского языка
 
     QTranslator qtLanguageTranslator;
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     qApp->installTranslator(&qtLanguageTranslator);
 
-//Установка русского языка
+    //Установка русского языка
 
     MainWindow w;
     w.show();
