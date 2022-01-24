@@ -207,10 +207,11 @@ namespace styles{
             "QLabel {"
             "   font-size: 25px;"
             "   text-align: center;"
+
             "   color: "+COLOR_PRIMARY+";"
 
             "}"
-            "QFrame {""background: transparent""}";
+            "QFrame {""background: #fff""}";
 
 
 
@@ -281,7 +282,7 @@ namespace styles{
             "background-color:"+COLOR_PRIMARY+";"
             "border:none;"
             "padding:12px;"
-            "border-radius:22px;"
+            "border-radius:25px;"
             "font-size:16px;"
             "}"
             "QPushButton:hover {"

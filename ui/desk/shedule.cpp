@@ -741,7 +741,7 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
     //QHBoxLayout *titleEditContainerLoad = new QHBoxLayout;
 
-    QHBoxLayout *form = new QHBoxLayout;
+    form = new QHBoxLayout;
 
     TimeEdit *leftAdd = new TimeEdit;
     TimeEdit *rightAdd = new TimeEdit;
@@ -795,7 +795,7 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
     form->addWidget(deleteTaskButton);   //7
 
-    formFrame = new QFrame;
+    QFrame *formFrame = new QFrame;
 
     formFrame->setStyleSheet(EVENT_STYLE_LOAD);
 
@@ -937,7 +937,7 @@ void Shedule::deleteButton_pressed() {
 
     QFrame *frame = taskFrameDeleteLayoutMap.take(button);
 
-    //frame->hide();
+    frame->hide();
 
     qDebug()<<"qqqqqq2222222"<<endl;
 
@@ -1800,7 +1800,7 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
 
                 //QHBoxLayout *titleEditContainerLoad = new QHBoxLayout;
 
-                QHBoxLayout *form = new QHBoxLayout;
+                form = new QHBoxLayout;
 
                 TimeEdit *left = new TimeEdit;
                 TimeEdit *right = new TimeEdit;
@@ -1864,17 +1864,20 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
 
                 formFrame->setLayout(form);
 
+                formFrame->setLayout(form);
+
 
 
 
                 task_container_inner->addWidget(formFrame);
 
                 deleteTaskButtonToLayoutMap.insert(deleteTaskButton,form);
+
+                taskFrameDeleteLayoutMap.insert(deleteTaskButton,formFrame);
+
                 doneButtonToLayoutMap.insert(doneButton,doneButtonYes);
 
                 doneButtonYesToLayoutMap.insert(doneButtonYes,doneButton);
-
-
 
             }
 

@@ -37,9 +37,11 @@ private:
 
     QFrame *formFrame;
 
-    QVBoxLayout *inputContainer;
+    QFrame *formFrameq;
 
     QHBoxLayout *form;
+
+    QVBoxLayout *inputContainer;
 
 
     QString strDinamicckeck = "";

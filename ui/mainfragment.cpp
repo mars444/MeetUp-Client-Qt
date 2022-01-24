@@ -53,6 +53,8 @@ MainFragment::MainFragment() {
     QPushButton *myFriendsButton = new QPushButton(tr("          My  friends    "));
     QPushButton *myGroupsButton = new QPushButton(tr("           My  groups    "));
     QPushButton *mySettingsButton = new QPushButton(tr("               Profile       "));
+    QPushButton *mySettingsSettingsButton = new QPushButton(tr("             Settings       "));
+
 
 
     QPixmap pixmapShedule(":/resc/resc/calendar.svg");
@@ -71,10 +73,15 @@ MainFragment::MainFragment() {
     myGroupsButton->setIcon(ButtonIconGroups);
     myGroupsButton->setIconSize(QSize(20,20));
 
-    QPixmap pixmapSettings(":/resc/resc/cog.svg");
+    QPixmap pixmapSettings(":/resc/resc/profile.svg");
     QIcon ButtonIconSettings(pixmapSettings);
     mySettingsButton->setIcon(ButtonIconSettings);
     mySettingsButton->setIconSize(QSize(20,20));
+
+    QPixmap pixmapSettingsSettings(":/resc/resc/cog.svg");
+    QIcon ButtonIconSettingsSettings(pixmapSettingsSettings);
+    mySettingsSettingsButton->setIcon(ButtonIconSettingsSettings);
+    mySettingsSettingsButton->setIconSize(QSize(20,20));
 
     // QPushButton *mySettingsButton1 = new QPushButton("qwrqwrewrwer");
 
@@ -171,7 +178,12 @@ MainFragment::MainFragment() {
     mySettingsButton->setStyleSheet(BUTTON_PROFILE);
     mySettingsButton->setMaximumWidth(270);
     mySettingsButton->setMinimumWidth(270);
-    connect(mySettingsButton, &QPushButton::clicked, this, &MainFragment::mySettings);
+    connect(mySettingsButton, &QPushButton::clicked, this, &MainFragment::myProfile);
+
+    mySettingsSettingsButton->setStyleSheet(BUTTON_PROFILE);
+    mySettingsSettingsButton->setMaximumWidth(270);
+    mySettingsSettingsButton->setMinimumWidth(270);
+    connect(mySettingsSettingsButton, &QPushButton::clicked, this, &MainFragment::mySettings);
 
     exitButton->setStyleSheet(BUTTON_PROFILE_RED);
     exitButton->setMaximumWidth(270);
@@ -204,6 +216,7 @@ MainFragment::MainFragment() {
     buttonsInner->addWidget(myFriendsButton);
     buttonsInner->addWidget(myGroupsButton);
     buttonsInner->addWidget(mySettingsButton);
+    buttonsInner->addWidget(mySettingsSettingsButton);
     buttonsInner->addWidget(exitButton);
 
 
@@ -226,10 +239,10 @@ MainFragment::MainFragment() {
     lentContainer->addWidget(deskScrollArea);
 
 
-    QLabel *centerContainer = new QLabel("");
-    QMovie *movie = new QMovie( ":/resc/resc/loader3.gif" );
-    centerContainer->setMovie(movie); // label имеет тип QLabel*
-    movie->start();
+    QLabel *centerContainer = new QLabel("here is the news feed");
+//    QMovie *movie = new QMovie( ":/resc/resc/loader3.gif" );
+//    centerContainer->setMovie(movie); // label имеет тип QLabel*
+//    movie->start();
 
     deskContainer->addWidget(centerContainer);
 
@@ -311,6 +324,11 @@ void MainFragment::myShedule() {
 
 void MainFragment::mySettings() {
     navigateTo(MY_SETTINGS_SCREEN);
+}
+
+void MainFragment::myProfile() {
+
+    navigateTo(MY_PROFILE_SCREEN);
 }
 
 void MainFragment::Group() {

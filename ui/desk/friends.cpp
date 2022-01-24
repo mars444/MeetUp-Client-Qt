@@ -286,13 +286,14 @@ void Friends::onHttpResult(QNetworkReply *reply) {
                 friendOnlineStatusLabel2->setPixmap(friendOnlineStatusImage2.scaled(15,15, Qt::KeepAspectRatio));
 
 
+
                 QPushButton *inviteGroupButton2 = new QPushButton(tr("Invite to group"));
 
                 QPushButton *deleteFriendButton2 = new QPushButton(tr(""));
 
                 deleteFriendButton2->setMaximumWidth(50);
 
-                QPixmap pixmapdeleteFriend(":/resc/resc/bin_white.svg");
+                QPixmap pixmapdeleteFriend(":/resc/resc/cross.svg");
                 QIcon ButtonIcondeleteFriend(pixmapdeleteFriend);
 
                 deleteFriendButton2->setIcon(ButtonIcondeleteFriend);
@@ -313,8 +314,9 @@ void Friends::onHttpResult(QNetworkReply *reply) {
 
                 friendImageLabel2->setStyleSheet("QFrame {""background: transparent""}");
                 friendImageLabel2->setContentsMargins(0,15,0,0);
-                friendName2->setStyleSheet(TASK_PADDING);
-                friendName2->setContentsMargins(0,15,0,0);
+                //friendName2->setStyleSheet(TASK_PADDING);
+               // friendName2->setContentsMargins(0,15,0,0);
+                friendName2->setAlignment(Qt::AlignCenter);
                 friendOnlineStatusLabel2->setStyleSheet("QFrame {""background: transparent""}");
                 friendOnlineStatusLabel2->setContentsMargins(0,15,0,0);
 
@@ -440,7 +442,7 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
 
             deleteFriendButton2->setMaximumWidth(50);
 
-            QPixmap pixmapdeleteFriend(":/resc/resc/bin_white.svg");
+            QPixmap pixmapdeleteFriend(":/resc/resc/cross.svg");
             QIcon ButtonIcondeleteFriend(pixmapdeleteFriend);
 
             deleteFriendButton2->setIcon(ButtonIcondeleteFriend);
@@ -467,9 +469,11 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
 
             friendImageLabel2->setStyleSheet("QFrame {""background: transparent""}");
             friendImageLabel2->setContentsMargins(0,15,0,0);
-            friendName2->setStyleSheet(TASK_PADDING);
-            friendName2->setContentsMargins(0,15,0,0);
-            friendOnlineStatusLabel2->setStyleSheet("QFrame {""background: transparent""}");
+           // friendName2->setStyleSheet(TASK_PADDING);
+            //friendName2->setContentsMargins(0,15,0,0);
+            friendName2->setAlignment(Qt::AlignCenter);
+            friendOnlineStatusLabel2->setStyleSheet("QFrame"
+                                                    " {""background: transparent""}");
             friendOnlineStatusLabel2->setContentsMargins(0,15,0,0);
 
 

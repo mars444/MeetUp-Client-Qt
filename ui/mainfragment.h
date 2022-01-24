@@ -44,6 +44,7 @@ public slots:
     void myShedule();
     void myGroups();
     void mySettings();
+    void myProfile();
     void Group();
     void onHttpResult(QNetworkReply *reply);
 };

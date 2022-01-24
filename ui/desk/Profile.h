@@ -15,7 +15,7 @@
 
 #include <models/deskmodel.h>
 
-class Settings : public BaseFragment{
+class profile : public BaseFragment{
     Q_OBJECT
 
 private:
@@ -32,7 +32,7 @@ private:
     QString ID_QSTRING;
 
 
-    QStackedWidget stackSettings;
+    QStackedWidget stackprofile;
 
     QLineEdit *userPhoneNumberEdit;
     QLabel *userPhoneNumberLabel;
@@ -72,16 +72,16 @@ private:
     QLabel *userDescriptionLabel;
 
 
-    QPushButton *setSettingsButton;
-    QPushButton *setSettingsRightButton;
+    QPushButton *setprofileButton;
+    QPushButton *setprofileRightButton;
 
 
 
 
 
 
-    //    QPushButton *setSettingsButton;
-    //    QPushButton *setSettingsRightButton;
+    //    QPushButton *setprofileButton;
+    //    QPushButton *setprofileRightButton;
 
 
 
@@ -92,16 +92,38 @@ private:
     QNetworkAccessManager *networkManager;
     QNetworkAccessManager *networkManagerRight;
 
-    QNetworkAccessManager *networkManagerSetSettings;
-    QNetworkAccessManager *networkManagerSetSettingsRight;
+    QNetworkAccessManager *networkManagerSetprofile;
+    QNetworkAccessManager *networkManagerSetprofileRight;
 
+    void setData(BaseModel* model) override;
 public:
-    Settings();
-    ~Settings();
+    profile();
+    ~profile();
 
 
 public slots:
     void onBackPressed();
+    void onCreatePressed();
+    void checkprofile();
+
+    void checkprofileRight();
 
 
+    void setprofile();
+
+    void setprofileRightPressed();
+    void getprofile();
+    void getprofileRight();
+    void onHttpResult(QNetworkReply *reply);
+    void onHttpResultRight(QNetworkReply *reply);
+    void onHttpResultSetprofile(QNetworkReply *reply);
+    void onHttpResultSetprofileRight(QNetworkReply *reply);
+
+    /**
+     * @brief checkData
+     *
+     * проверка введенных данных
+     * на корректность.
+     */
+    void checkData();
 };

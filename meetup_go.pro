@@ -52,6 +52,7 @@ SOURCES += \
     ui/desk/group.cpp \
     ui/desk/groups.cpp \
     ui/desk/mytimeedit.cpp \
+    ui/desk/profile.cpp \
     ui/desk/settings.cpp \
     ui/desk/shedule.cpp \
     ui/mainfragment.cpp \
@@ -122,6 +123,7 @@ HEADERS += \
     ui/desk/Groups.h \
     ui/desk/Layouts/Shedule_generation.h \
     ui/desk/Layouts/friendlayout.h \
+    ui/desk/Profile.h \
     ui/desk/Settings.h \
     ui/desk/Shedule.h \
     ui/auth/loginfragment.h \
