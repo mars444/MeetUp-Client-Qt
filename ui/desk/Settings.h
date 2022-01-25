@@ -20,69 +20,10 @@ class Settings : public BaseFragment{
 
 private:
 
-    QLineEdit *userNameEdit;
-    QLabel *userNameLabel;
-
-    std::string str;
-    QLineEdit *userSurnameEdit;
-    QLabel *userSurnameLabel;
 
     QLineEdit *userAgeEdit;
     QLabel *userAgeLabel;
     QString ID_QSTRING;
-
-
-    QStackedWidget stackSettings;
-
-    QLineEdit *userPhoneNumberEdit;
-    QLabel *userPhoneNumberLabel;
-
-    QLineEdit *userMailEdit;
-    QLabel *userMailLabel;
-
-
-    QLineEdit *usercountryEdit;
-    QLabel *usercountryLabel;
-
-    QLineEdit *userindexEdit;
-    QLabel *userindexLabel;
-
-    QLineEdit *usercityEdit;
-    QLabel *usercityLabel;
-
-    QLineEdit *userdistrictEdit;
-    QLabel *userdistrictLabel;
-
-    QLineEdit *userstreetEdit;
-    QLabel *userstreetLabel;
-
-    QLineEdit *userhousingEdit;
-    QLabel *userhousingLabel;
-
-    QLineEdit *userbuildingEdit;
-    QLabel *userbuildingLabel;
-
-    QLineEdit *userStatusEdit;
-    QLabel *userStatusLabel;
-
-    QLineEdit *userLabelEdit;
-    QLabel *userLabelLabel;
-
-    QLineEdit *userDescriptionEdit;
-    QLabel *userDescriptionLabel;
-
-
-    QPushButton *setSettingsButton;
-    QPushButton *setSettingsRightButton;
-
-
-
-
-
-
-    //    QPushButton *setSettingsButton;
-    //    QPushButton *setSettingsRightButton;
-
 
 
     QLabel *titleLabel;

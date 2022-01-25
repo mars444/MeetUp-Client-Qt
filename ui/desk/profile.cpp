@@ -1157,6 +1157,7 @@ void profile::check_stack_lay_acc() {
 
 
 
+
     } else if (stack_lay_acc == 2){
 
         left_btn = ":/resc/resc/chevron-left.svg";
@@ -1164,18 +1165,14 @@ void profile::check_stack_lay_acc() {
         right_btn = ":/resc/resc/chevron-right-disabled.svg";
 
 
+
     } else {
         left_btn = ":/resc/resc/chevron-left.svg";
         right_btn = ":/resc/resc/chevron-right.svg";
-}
 
 }
 
-
-
-
-
-
-void profile::setData(BaseModel *model) {
-
 }
+
+
+

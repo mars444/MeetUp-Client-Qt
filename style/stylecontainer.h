@@ -228,6 +228,49 @@ namespace styles{
             "}"
             "QFrame {""background: #fff""}";
 
+    static const QString SETTINGSS_LABEL  =
+            "QLabel {"
+            "   font-size: 20px;"
+            "   text-align: center;"
+
+            "   padding: 10px 50px;"
+            "   border-radius: 10px;"
+            "   margin-right: 50px;"
+
+            "   color: #000;"
+
+            "}"
+            "QFrame {""background: #fff""}";
+
+
+    static const QString LIGHT  =
+            "QLabel {"
+            "   font-size: 20px;"
+            "   text-align: center;"
+
+            "   padding: 5px;"
+            "   border-radius: 30px;"
+
+
+            "   color: #000;"
+
+            "}"
+            "QFrame {""background: #fff""}";
+
+
+    static const QString DARK  =
+            "QLabel {"
+            "   font-size: 20px;"
+            "   text-align: center;"
+
+            "   padding: 5px;"
+            "   border-radius: 30px;"
+
+            "   color: #fff;"
+
+            "}"
+            "QFrame {""background: #000""}";
+
 
     static const QString PROFILE_LABEL_TITLE  =
             "QLabel {"

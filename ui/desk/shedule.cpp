@@ -711,108 +711,7 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
 
 
-    deleteTaskButton = new QSvgButton(":/resc/resc/cross.svg", QSize(25,25));
-    deleteTaskButton->setStyleSheet("border-radius:5px;");
-    connect(deleteTaskButton, &QSvgButton::clicked, this, &Shedule::deleteButton_pressed);
 
-
-    updateTaskButton = new QSvgButton(":/resc/resc/arrow_up.svg", QSize(40,40));
-    updateTaskButton->setStyleSheet("border-radius:20px;");
-    connect(updateTaskButton, &QSvgButton::clicked, this, &Shedule::updateTaskButton_pressed);
-
-    doneButtonYes = new QSvgButton(":/resc/resc/checkbox-checked.svg", QSize(30,30));
-    doneButtonYes->hide();
-    doneButtonYes->setStyleSheet("border-radius:5px;");
-    connect(doneButtonYes, &QSvgButton::clicked, this, &Shedule::doneButtonYes_pressed);
-
-    doneButton = new QSvgButton(":/resc/resc/checkbox-unchecked.svg", QSize(30,30));
-    doneButton->setStyleSheet("border-radius:5px;");
-    connect(doneButton, &QSvgButton::clicked, this, &Shedule::doneButton_pressed);
-
-
-
-    QLabel *idLabel  = new QLabel("id event");
-
-    idLabel->hide();
-
-    QLineEdit *cardTitleEditAdd = new QLineEdit;
-
-    QLineEdit *cardDescriptionEditAdd = new QLineEdit;
-
-    //QHBoxLayout *titleEditContainerLoad = new QHBoxLayout;
-
-    form = new QHBoxLayout;
-
-    TimeEdit *leftAdd = new TimeEdit;
-    TimeEdit *rightAdd = new TimeEdit;
-
-
-    leftAdd->setTime(left->time());
-    rightAdd->setTime(right->time());
-
-    leftAdd->setStyleSheet(Qtimestyle);
-    rightAdd->setStyleSheet(Qtimestyle);
-
-    leftAdd->setMaximumWidth(100);
-    rightAdd->setMaximumWidth(100);
-
-    cardTitleEditAdd->setStyleSheet(EDIT_TEXT_EVENT_TITLE);
-    cardTitleEditAdd->setMaximumWidth(200);
-    cardTitleEditAdd->setText(cardTitleEdit->text());
-    cardTitleEditAdd->setAlignment(Qt::AlignCenter);
-
-    cardDescriptionEditAdd->setStyleSheet(EDIT_TEXT_SMALL);
-    cardDescriptionEditAdd->setText(cardDescriptionEdit->text());
-    cardDescriptionEditAdd->setMaximumWidth(500);
-    cardDescriptionEditAdd->setMinimumHeight(50);
-    cardDescriptionEditAdd->setMaximumHeight(50);
-
-    cardDescriptionEditAdd->setAlignment(Qt::AlignCenter);
-
-    leftAdd->setAlignment(Qt::AlignCenter);
-    rightAdd->setAlignment(Qt::AlignCenter);
-
-    QHBoxLayout *timeInner = new QHBoxLayout;
-
-    timeInner->addWidget(leftAdd);
-
-    timeInner->addWidget(rightAdd);
-
-    form->addWidget(doneButtonYes);  //0
-
-    form->addWidget(doneButton);   //1
-
-    form->addWidget(idLabel);   //2
-
-    form->addWidget(cardTitleEditAdd);   //3
-
-    form->addWidget(cardDescriptionEditAdd);   //4
-
-    form->addWidget(leftAdd);  //5
-    form->addWidget(rightAdd);  //5
-
-    form->addWidget(updateTaskButton);   //6
-
-    form->addWidget(deleteTaskButton);   //7
-
-    QFrame *formFrame = new QFrame;
-
-    formFrame->setStyleSheet(EVENT_STYLE_LOAD);
-
-    formFrame->setLayout(form);
-
-
-
-
-    task_container_inner->addWidget(formFrame);
-
-    deleteTaskButtonToLayoutMap.insert(deleteTaskButton,form);
-
-    taskFrameDeleteLayoutMap.insert(deleteTaskButton,formFrame);
-
-    doneButtonToLayoutMap.insert(doneButton,doneButtonYes);
-
-    doneButtonYesToLayoutMap.insert(doneButtonYes,doneButton);
 
     checkData();
 
@@ -886,12 +785,116 @@ void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
 
         nlohmann::json j = nlohmann::json::parse(str);
 
-        std::string add_event_result = j["add_event"].get<std::string>();
+        std::string add_event_id = j["event_id"].get<std::string>();
 
-        if(add_event_result == "OK") {
+        if(j["event_id"] != nullptr) {
 
 
-            std::cout << "delete friebd: " << add_event_result << std::endl;
+            std::cout << "add event id: " << add_event_id << std::endl;
+
+
+            deleteTaskButton = new QSvgButton(":/resc/resc/cross.svg", QSize(25,25));
+            deleteTaskButton->setStyleSheet("border-radius:5px;");
+            connect(deleteTaskButton, &QSvgButton::clicked, this, &Shedule::deleteButton_pressed);
+
+
+            updateTaskButton = new QSvgButton(":/resc/resc/arrow_up.svg", QSize(40,40));
+            updateTaskButton->setStyleSheet("border-radius:20px;");
+            connect(updateTaskButton, &QSvgButton::clicked, this, &Shedule::updateTaskButton_pressed);
+
+            doneButtonYes = new QSvgButton(":/resc/resc/checkbox-checked.svg", QSize(30,30));
+            doneButtonYes->hide();
+            doneButtonYes->setStyleSheet("border-radius:5px;");
+            connect(doneButtonYes, &QSvgButton::clicked, this, &Shedule::doneButtonYes_pressed);
+
+            doneButton = new QSvgButton(":/resc/resc/checkbox-unchecked.svg", QSize(30,30));
+            doneButton->setStyleSheet("border-radius:5px;");
+            connect(doneButton, &QSvgButton::clicked, this, &Shedule::doneButton_pressed);
+
+
+
+            QLabel *idLabel  = new QLabel(add_event_id.c_str());
+
+            //idLabel->hide();
+
+            QLineEdit *cardTitleEditAdd = new QLineEdit;
+
+            QLineEdit *cardDescriptionEditAdd = new QLineEdit;
+
+            //QHBoxLayout *titleEditContainerLoad = new QHBoxLayout;
+
+            form = new QHBoxLayout;
+
+            TimeEdit *leftAdd = new TimeEdit;
+            TimeEdit *rightAdd = new TimeEdit;
+
+
+            leftAdd->setTime(left->time());
+            rightAdd->setTime(right->time());
+
+            leftAdd->setStyleSheet(Qtimestyle);
+            rightAdd->setStyleSheet(Qtimestyle);
+
+            leftAdd->setMaximumWidth(100);
+            rightAdd->setMaximumWidth(100);
+
+            cardTitleEditAdd->setStyleSheet(EDIT_TEXT_EVENT_TITLE);
+            cardTitleEditAdd->setMaximumWidth(200);
+            cardTitleEditAdd->setText(cardTitleEdit->text());
+            cardTitleEditAdd->setAlignment(Qt::AlignCenter);
+
+            cardDescriptionEditAdd->setStyleSheet(EDIT_TEXT_SMALL);
+            cardDescriptionEditAdd->setText(cardDescriptionEdit->text());
+            cardDescriptionEditAdd->setMaximumWidth(500);
+            cardDescriptionEditAdd->setMinimumHeight(50);
+            cardDescriptionEditAdd->setMaximumHeight(50);
+
+            cardDescriptionEditAdd->setAlignment(Qt::AlignCenter);
+
+            leftAdd->setAlignment(Qt::AlignCenter);
+            rightAdd->setAlignment(Qt::AlignCenter);
+
+            QHBoxLayout *timeInner = new QHBoxLayout;
+
+            timeInner->addWidget(leftAdd);
+
+            timeInner->addWidget(rightAdd);
+
+            form->addWidget(doneButtonYes);  //0
+
+            form->addWidget(doneButton);   //1
+
+            form->addWidget(idLabel);   //2
+
+            form->addWidget(cardTitleEditAdd);   //3
+
+            form->addWidget(cardDescriptionEditAdd);   //4
+
+            form->addWidget(leftAdd);  //5
+            form->addWidget(rightAdd);  //5
+
+            form->addWidget(updateTaskButton);   //6
+
+            form->addWidget(deleteTaskButton);   //7
+
+            QFrame *formFrame = new QFrame;
+
+            formFrame->setStyleSheet(EVENT_STYLE_LOAD);
+
+            formFrame->setLayout(form);
+
+
+
+
+            task_container_inner->addWidget(formFrame);
+
+            deleteTaskButtonToLayoutMap.insert(deleteTaskButton,form);
+
+            taskFrameDeleteLayoutMap.insert(deleteTaskButton,formFrame);
+
+            doneButtonToLayoutMap.insert(doneButton,doneButtonYes);
+
+            doneButtonYesToLayoutMap.insert(doneButtonYes,doneButton);
 
         }
 
@@ -985,6 +988,7 @@ void Shedule::deleteButton_pressed() {
     QLabel* event_idLabel = dynamic_cast<QLabel*>(event_id);
 
     qDebug()<<"qqqqqq444444444"<<endl;
+
     QString event_idString = event_idLabel->text();
 
     qDebug()<<"qqqqqq5555555555"<<endl;
@@ -1714,6 +1718,7 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
                 std::string time_begin_str;
                 std::string event_name;
                 std::string event_description;
+                std::string event_id;
 
 
                 if(element.contains("event_name"))
@@ -1742,6 +1747,13 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
                     time_end_str = element["time_end"].get<std::string>();
 
                     std::cout << time_end_str << std::endl;
+                }
+
+                if(element.contains("event_id"))
+                {
+                    event_id = element["event_id"].get<std::string>();
+
+                    std::cout << event_id << std::endl;
                 }
 
                 deleteTaskButton = new QSvgButton(":/resc/resc/cross.svg", QSize(25,25));
@@ -1787,11 +1799,10 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
 
 
                 QString titleEvent = QString::fromUtf8(event_name.c_str());
-                QString descriptionEvent = "Hellow";
+                QString descriptionEvent = event_description.c_str();
 
-                QLabel *idLabel  = new QLabel("");
+                QLabel *idLabel  = new QLabel(event_id.c_str());
 
-                idLabel->setText(titleEvent);
                 idLabel->hide();
 
                 QLineEdit *cardTitleEdit = new QLineEdit;

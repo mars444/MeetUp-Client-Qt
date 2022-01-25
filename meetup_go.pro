@@ -55,6 +55,7 @@ SOURCES += \
     ui/desk/profile.cpp \
     ui/desk/settings.cpp \
     ui/desk/shedule.cpp \
+    ui/desk/switch.cpp \
     ui/mainfragment.cpp \
     ui/splashfragment.cpp \
     ui/view/deletesvgbutton.cpp \
@@ -130,6 +131,7 @@ HEADERS += \
     ui/auth/registrationfragment.h \
     ui/auth/startfragment.h \
     ui/desk/mytimeedit.h \
+    ui/desk/switch.h \
     ui/mainfragment.h \
     ui/splashfragment.h \
     ui/view/deletesvgbutton.h \

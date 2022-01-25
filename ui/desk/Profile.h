@@ -123,7 +123,7 @@ private:
     QNetworkAccessManager *networkManagerSetprofile;
     QNetworkAccessManager *networkManagerSetprofileRight;
 
-    void setData(BaseModel* model) override;
+
 public:
     profile();
     ~profile();
