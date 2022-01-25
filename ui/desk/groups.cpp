@@ -59,7 +59,7 @@ Groups::Groups() {
 
     QHBoxLayout *titleContainer = new QHBoxLayout;
     QSvgButton *backButton = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(24,24));
-    titleLabel = new QLabel("Мои группы");
+    titleLabel = new QLabel(tr("My Groups"));
 
     //QFrame *loadingContaiter = new QFrame;
     // loading = new WaitingSpinnerWidget(loadingContaiter, true, false);
@@ -713,33 +713,35 @@ void Groups::addGroupButtonPressed() {
 
 
 
+
+
+
     GroupContainer2 = new QHBoxLayout;
     QLabel *GroupImageLabel2 = new QLabel("");
     QPixmap GroupImage2(":/resc/resc/group3.svg");
     GroupImageLabel2->setPixmap(GroupImage2);
     GroupImageLabel2->setStyleSheet(GROUP_IMAGE);
 
-
-
-
-
     GroupNameButton = new QPushButton(addGroupEdit->text());
 
-    connect(GroupNameButton, &QPushButton::clicked, this, &Groups::goToGroup);
 
-    addGroupEdit->setText("");
+    connect(GroupNameButton, &QPushButton::clicked, this, &Groups::goToGroup);
 
     GroupNameButton->setStyleSheet(FRIEND_NAME_SURNAME);
 
     GroupNameButton->setStyleSheet(BUTTON_WHITE);
 
     GroupNameButton->setMaximumWidth(300);
-    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    //QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
 
     stack = new QStackedWidget;
 
+
     QFrame *inviteButtonWidjet = new QFrame;
     QVBoxLayout *inviteButtonLayout = new QVBoxLayout;
+
 
 
     QFrame *backWidget = new QFrame;
@@ -747,12 +749,12 @@ void Groups::addGroupButtonPressed() {
 
     stack->addWidget(inviteButtonWidjet);
     stack->addWidget(backWidget);
+    backWidget->setStyleSheet("QFrame {""background: transparent""}");
+
 
     stack->setCurrentIndex(0);
 
-    stack->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-
+    //stack->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
 
     inviteButtonWidjet->setLayout(inviteButtonLayout);
@@ -761,7 +763,9 @@ void Groups::addGroupButtonPressed() {
     backWidget->setLayout(backLayout);
 
 
-    QPushButton *inviteGroupButton2 = new QPushButton(tr("              Invite to group          "));
+
+
+    QPushButton *inviteGroupButton2 = new QPushButton(tr("                 Invite to group         "));
 
     QPixmap pixmapinviteGroup(":/resc/resc/arrow_right.svg");
     QIcon ButtonIconinviteGroup(pixmapinviteGroup);
@@ -770,7 +774,6 @@ void Groups::addGroupButtonPressed() {
     inviteGroupButton2 -> setLayoutDirection ( Qt :: RightToLeft );
 
     inviteGroupButton2->setIconSize(QSize(20,20));
-
     inviteGroupButton2->setMaximumWidth(300);
     inviteGroupButton2->setStyleSheet(BUTTON_SOLID);
 
@@ -778,34 +781,51 @@ void Groups::addGroupButtonPressed() {
 
     inviteButtonLayout->addWidget(inviteGroupButton2);
 
-    backAddtoGroup = new QPushButton("Отмена");
+    backAddtoGroup = new QPushButton(tr("Cancel"));
 
     backAddtoGroup->setMaximumWidth(200);
 
     backAddtoGroup->setStyleSheet(BUTTON_PROFILE_RED);
 
     backLayout->addWidget(backAddtoGroup);
+    backLayout->setAlignment(Qt::AlignRight);
 
     connect(backAddtoGroup, &QPushButton::clicked, this, &Groups::backAddtoGroupPressed);
 
 
-    //        QHBoxLayout *GroupButtonContainer2 = new QHBoxLayout;
+    //GroupContainer2->setAlignment(Qt::AlignCenter);
 
 
-    //        //GroupButtonContainer2->addWidget(inviteGroupButton2);
-    //        //GroupButtonContainer2->addWidget(inviteGroupButton2);
+    //QHBoxLayout *GroupButtonContainer2 = new QHBoxLayout;
 
 
+    //GroupButtonContainer2->addWidget(inviteGroupButton2);
+    //GroupButtonContainer2->addWidget(inviteGroupButton2);
+
+
+    GroupImageLabel2->setStyleSheet("QFrame {""background: transparent""}");
+    stack->setStyleSheet("QFrame {""background: transparent""}");
+    GroupImageLabel2->setContentsMargins(0,0,200,0);
+    stack->setContentsMargins(0,30,0,0);
+    //                    GroupNameButton->setContentsMargins(0,10,0,0);
 
     GroupContainer2->addWidget(GroupImageLabel2);
     GroupContainer2->addWidget(GroupNameButton);
 
 
+
     //        GroupContainer2->addLayout(GroupButtonContainer2);
 
+    //////////////////////// добавление друзей в слой
 
 
-    //str = "{\"userID\":\"213564544\",\"Friends\":[\"mars123456\", \"user666666\",  \"Alex\",  \"qwe\", \"piotr\"]}";
+    //std::cout<< "aaaaaaaaaaaaaaaaaaaaaaa  eto yaaa" << str << endl;
+
+    // std::string strFriend = "{\"get_contacts\":[\"bogdan111\",\"Alex12345\",\"Kostya44\",\"Danzan_45\"]}";
+
+    //std::string strFriend = *str;
+
+
 
 
 
@@ -816,25 +836,12 @@ void Groups::addGroupButtonPressed() {
 
     } else {
 
-        std::cout << j.size() << std::endl;
-        std::cout << j << std::endl;
 
-        nlohmann::json::iterator it = j.begin();
-        std::cout << it.key() << std::endl;
-
-        std::string key = it.key();
-
-        nlohmann::json value = j[key];
-
-        std::cout << value << std::endl;
-
-
-        std::set<std::string> s_friends;
 
         friendContainer2 = new QVBoxLayout;
 
-        innerScrollFriends = new QVBoxLayout;
-        QLabel *friendNamesTitle = new QLabel(tr("Выберите кого пригласить:"));
+        //                 innerScrollFriends = new QVBoxLayout;
+        //                 QLabel *friendNamesTitle = new QLabel("Выберите кого пригласить:");
 
         //friendNamesTitle->setAlignment(Qt::AlignCenter);
         //innerScroll->addWidget(friendNamesTitle);
@@ -843,24 +850,29 @@ void Groups::addGroupButtonPressed() {
         //         innerScrollFriends->setAlignment(Qt::AlignRight);
 
 
-        //         QScrollArea *deskScrollArea = new QScrollArea;
+        QScrollArea *deskScrollAreaFriends = new QScrollArea;
 
-        //         deskScrollArea->setMaximumHeight(250);
-        //         deskScrollArea->setMaximumWidth(300);
-        //         deskScrollArea->setAlignment(Qt::AlignHCenter);
-        //         //deskScrollArea->setFrameShape(QFrame::NoFrame);
-        //         QWidget *scrolContainer = new QWidget;
-        //         scrolContainer->setObjectName("container");
+        deskScrollAreaFriends->setMaximumHeight(200);
+        deskScrollAreaFriends->setMinimumHeight(200);
+        deskScrollAreaFriends->setMaximumWidth(300);
+        deskScrollAreaFriends->setMinimumWidth(300);
+        deskScrollAreaFriends->setAlignment(Qt::AlignHCenter);
+        //deskScrollAreaFriends->setFrameShape(QFrame::NoFrame);
+        QWidget *scrolContainer = new QWidget;
 
 
-        //         scrolContainer->setStyleSheet(GLOBAL_BACK_WHITE);
-        //         deskScrollArea->setStyleSheet(SCROL_BAR);
-        //         QHBoxLayout *content = new QHBoxLayout;
-        //         content->setAlignment(Qt::AlignCenter);
-        //         scrolContainer->setLayout(content);
-        //         deskScrollArea->setWidget(scrolContainer);
-        //         deskScrollArea->setWidgetResizable(true);
-        //         deskScrollArea->horizontalScrollBar()->setEnabled(false);
+
+
+        scrolContainer->setStyleSheet("QFrame {""background: transparent""}");
+        deskScrollAreaFriends->setStyleSheet(SCROL_BAR);
+        QHBoxLayout *content = new QHBoxLayout;
+        content->setAlignment(Qt::AlignHCenter);
+        scrolContainer->setLayout(content);
+        //scrolContainer->setMaximumWidth(500);
+        deskScrollAreaFriends->setWidget(scrolContainer);
+        deskScrollAreaFriends->setWidgetResizable(true);
+        deskScrollAreaFriends->horizontalScrollBar()->setEnabled(false);
+        //content->setContentsMargins(0,0,0,0);
 
 
         //         QSvgWidget *done = new QSvgWidget(":/resc/resc/done_outline.svg");
@@ -871,31 +883,39 @@ void Groups::addGroupButtonPressed() {
 
             friendName2 = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
 
-            friendName2->setStyleSheet(FRIEND_NAME_SURNAME);
-
 
             friendName2->setStyleSheet(BUTTON_SOLID);
-            friendName2->setMinimumWidth(200);
+            friendName2->setMinimumWidth(290);
             friendName2->setMaximumWidth(300);
 
 
 
-            friendContainer2->addWidget(friendNamesTitle);
+            //friendContainer2->addWidget(friendNamesTitle);
             friendContainer2->addWidget(friendName2);
+
+            //friendName2->setStyleSheet("QFrame {""background: transparent""}");
+
+
 
 
             connect(friendName2, &QPushButton::clicked, this, &Groups::friendName2Pressed);
 
 
-            innerScrollFriends->addWidget(friendName2);
+            //innerScrollFriends->addWidget(friendName2);
 
-            //content->addLayout(friendContainer2);
+            content->addLayout(friendContainer2);
 
             ///innerScroll->addLayout(friendContainer2);
 
 
 
-            backLayout->addLayout(innerScrollFriends);
+            // backLayout->addLayout(innerScrollFriends);
+
+            backLayout->addWidget(deskScrollAreaFriends);
+            deskScrollAreaFriends->setStyleSheet("QFrame {""background: transparent""}");
+
+
+
 
 
         }
@@ -906,12 +926,21 @@ void Groups::addGroupButtonPressed() {
 
 
 
-    QWidget *controlsRestrictorWidget = new QWidget();
-    controlsRestrictorWidget->setLayout(GroupContainer2);
-    controlsRestrictorWidget->setMaximumWidth(1120);
-    GroupContainer2->setContentsMargins(50,0,50,0);
+    QFrame  *GroupsFrame = new QFrame;
 
-    inputContainerGroups->addWidget(controlsRestrictorWidget);
+    GroupsFrame->setStyleSheet(GROUPS_FRAME);
+
+    GroupsFrame->setLayout(GroupContainer2);
+
+
+
+
+
+
+    inputContainerGroups->addWidget(GroupsFrame);
+
+
+    inputContainerGroups->setContentsMargins(100,0,100,0);
 
 
 
@@ -920,13 +949,16 @@ void Groups::addGroupButtonPressed() {
     GroupContainer2->addWidget(stack);
 
 
+    inputContainerGroups->setAlignment(Qt::AlignVCenter);
 
     mButtonBackToLayoutMap.insert(backAddtoGroup,GroupContainer2);
 
 
     mButtonToLayoutMap.insert(inviteGroupButton2,GroupContainer2);
 
-    //////////////
+    addGroupEdit->setText("");
+    checkData();
+
 
 }
 

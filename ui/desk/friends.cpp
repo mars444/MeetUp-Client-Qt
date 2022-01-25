@@ -316,7 +316,8 @@ void Friends::onHttpResult(QNetworkReply *reply) {
                 friendImageLabel2->setContentsMargins(0,15,0,0);
                 //friendName2->setStyleSheet(TASK_PADDING);
                // friendName2->setContentsMargins(0,15,0,0);
-                friendName2->setAlignment(Qt::AlignCenter);
+                friendName2->setAlignment(Qt::AlignRight);
+                friendName2->setAlignment(Qt::AlignVCenter);
                 friendOnlineStatusLabel2->setStyleSheet("QFrame {""background: transparent""}");
                 friendOnlineStatusLabel2->setContentsMargins(0,15,0,0);
 
@@ -471,7 +472,8 @@ void Friends::onHttpResultAddFriend(QNetworkReply *reply) {
             friendImageLabel2->setContentsMargins(0,15,0,0);
            // friendName2->setStyleSheet(TASK_PADDING);
             //friendName2->setContentsMargins(0,15,0,0);
-            friendName2->setAlignment(Qt::AlignCenter);
+            friendName2->setAlignment(Qt::AlignRight);
+            friendName2->setAlignment(Qt::AlignVCenter);
             friendOnlineStatusLabel2->setStyleSheet("QFrame"
                                                     " {""background: transparent""}");
             friendOnlineStatusLabel2->setContentsMargins(0,15,0,0);

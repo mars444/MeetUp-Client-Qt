@@ -41,7 +41,7 @@ namespace styles{
     static const QString GROUPS_FRAME =
               "QFrame {"
               "   border-radius:50px;"
-              "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #fff, stop:1 #8046A4);"
+              "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #c4b1ff, stop:1 #A184F9);"
 
               "   margin-bottom:15px;"
 
@@ -51,7 +51,7 @@ namespace styles{
     static const QString EVENT_STYLE_LOAD =
             "QFrame {"
             "   border-radius:20px;"
-            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #ff0005, stop:1 #8046A4);"
+            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #c4b1ff, stop:1 #A184F9);"
             "   margin-bottom:15px;"
             "   padding:10px 0px;"
 
@@ -61,7 +61,7 @@ namespace styles{
     static const QString EVENT_READY_STYLE =
             "QFrame {"
             "   border-radius:20px;"
-            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #A184F9, stop:1 #8046A4);"
+            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #c4b1ff, stop:1 #A184F9);"
 
             "   padding-left:10px;"
             "   padding-right:10px;"
@@ -73,13 +73,12 @@ namespace styles{
     static const QString SETTING_LEFT_STYLE =
             "QFrame {"
             "   border-radius:20px;"
-            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #A184F9, stop:1 #8046A4);"
+            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #c4b1ff, stop:1 #A184F9);"
 
-            "   padding-left:10px;"
-            "   padding-right:10px;"
-            "   padding-bottom:15px;"
+            "   padding:30px 50px;"
+            "   text-align: center;"
 
-            "   margin-right:75px;"
+
 
 
             "}";
@@ -87,12 +86,14 @@ namespace styles{
     static const QString SETTING_RIGHT_STYLE =
             "QFrame {"
             "   border-radius:20px;"
-            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #A184F9, stop:1 #8046A4);"
+            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #c4b1ff, stop:1 #A184F9);"
 
-            "   padding-left:10px;"
-            "   padding-right:10px;"
-            "   margin-left:75px;"
-            "   padding-bottom:15px;"
+
+            "   padding:30px 50px;"
+            "   text-align: center;"
+
+
+
 
 
             "}";
@@ -206,9 +207,48 @@ namespace styles{
     static const QString FRIEND_NAME_SURNAME  =
             "QLabel {"
             "   font-size: 25px;"
+            "   text-align: right;"
+
+            "   color: #fff;"
+
+            "}"
+            "QFrame {""background: transparent""}";
+
+    static const QString PROFILE_LABEL  =
+            "QLabel {"
+            "   font-size: 20px;"
             "   text-align: center;"
 
-            "   color: "+COLOR_PRIMARY+";"
+            "   padding: 10px 20px;"
+            "   border-radius: 10px;"
+            "   margin-right: 20px;"
+
+            "   color: #000;"
+
+            "}"
+            "QFrame {""background: #fff""}";
+
+
+    static const QString PROFILE_LABEL_TITLE  =
+            "QLabel {"
+            "   font-size: 25px;"
+            "   text-align: center;"
+            "   padding: 20px 30px;"
+            "   border-radius: 15px;"
+            "   color: #000;"
+
+            "}"
+            "QFrame {""background: #fff""}";
+
+
+    static const QString PROFILE_GENERAL_DESCRIPTION =
+            "QLabel {"
+            "   font-size: 20px;"
+            "   text-align: center;"
+            "   padding: 20px;"
+            "   border-radius: 15px;"
+            "   margin-bottom: 20px;"
+            "   color: #000;"
 
             "}"
             "QFrame {""background: #fff""}";
@@ -279,14 +319,13 @@ namespace styles{
     static const QString BUTTON_SOLID_DELETE =
             "QPushButton {"
             "color: "+COLOR_BACKGROUND+";"
-            "background-color:"+COLOR_PRIMARY+";"
+            "background-color:#fff;"
             "border:none;"
-            "padding:12px;"
+            "padding:15px;"
             "border-radius:25px;"
-            "font-size:16px;"
             "}"
             "QPushButton:hover {"
-            "background-color:"+COLOR_TEXT_RED+";"
+            "background-color:#000;"
             "}";
 
 
@@ -303,7 +342,7 @@ namespace styles{
                 "font-size:25px;"
                 "}"
                 "QPushButton:hover {"
-                "background-color:red;"
+                "background-color:#8046A4;"
 
                 "}"
                 "QFrame {""background: transparent""}";

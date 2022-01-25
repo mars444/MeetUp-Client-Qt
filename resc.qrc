@@ -46,6 +46,8 @@
         <file>resc/upload_photo.svg</file>
         <file>resc/check.svg</file>
         <file>resc/profile.svg</file>
+        <file>resc/chevron-left-disabled.svg</file>
+        <file>resc/chevron-right-disabled.svg</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

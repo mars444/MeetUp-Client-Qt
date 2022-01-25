@@ -9,6 +9,9 @@
 #include <QLabel>
 #include <QStackedWidget>
 
+
+#include <ui/view/qsvgbutton.h>
+
 #include <common/base/basefragment.h>
 
 #include <ui/view/waitingspinnerwidget.h>
@@ -19,6 +22,10 @@ class profile : public BaseFragment{
     Q_OBJECT
 
 private:
+
+    int stack_lay_acc = 0;
+
+    QStackedWidget *stackProfile;
 
     QLineEdit *userNameEdit;
     QLabel *userNameLabel;
@@ -31,8 +38,9 @@ private:
     QLabel *userAgeLabel;
     QString ID_QSTRING;
 
+    QPushButton *setprofileGeneralButton;
 
-    QStackedWidget stackprofile;
+
 
     QLineEdit *userPhoneNumberEdit;
     QLabel *userPhoneNumberLabel;
@@ -65,6 +73,15 @@ private:
     QLineEdit *userStatusEdit;
     QLabel *userStatusLabel;
 
+    QLineEdit *userGeneralDescriptionEdit;
+    QLabel *userGeneralDescriptionLabel;
+
+    QLineEdit *userStatusGeneralEdit;
+    QLabel *userStatusGeneralLabel;
+
+    QLineEdit *userNickNameEdit;
+    QLabel *userNickNameLabel;
+
     QLineEdit *userLabelEdit;
     QLabel *userLabelLabel;
 
@@ -74,6 +91,17 @@ private:
 
     QPushButton *setprofileButton;
     QPushButton *setprofileRightButton;
+
+
+    QSvgButton *leftButton;
+    QSvgButton *rightButton;
+
+    QHBoxLayout *innerDataSettigs;
+
+
+
+    QString left_btn;
+    QString right_btn;
 
 
 
@@ -107,6 +135,14 @@ public slots:
     void checkprofile();
 
     void checkprofileRight();
+
+    void leftButtonClicked();
+    void rightButtonClicked();
+
+    void setprofileGeneralPressed();
+
+
+    void check_stack_lay_acc();
 
 
     void setprofile();

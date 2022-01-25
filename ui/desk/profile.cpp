@@ -17,6 +17,7 @@ using namespace styles;
 #include <QSettings>
 #include <QMessageBox>
 #include <QMovie>
+#include <QStackedWidget>
 
 #include "ui/auth/user_data.h"
 
@@ -24,6 +25,7 @@ using namespace styles;
 #include <ui/view/waitingspinnerwidget.h>
 using namespace screens;
 profile::profile() {
+
 
 
     std::string IDstd = GetId();
@@ -43,11 +45,101 @@ profile::profile() {
 
 
 
-    QHBoxLayout *innerDataSettigs = new QHBoxLayout;
+    innerDataSettigs = new QHBoxLayout;
+
+  //////////////
+
+    QVBoxLayout *personalGeneral = new QVBoxLayout;
+
+
+    QHBoxLayout *inputNickNameInner = new QHBoxLayout;
+    userNickNameEdit = new QLineEdit;
+    userNickNameLabel = new QLabel(tr("NickName:"));
+    userNickNameLabel->setMaximumWidth(300);
+    userNickNameLabel->setStyleSheet(PROFILE_LABEL);
+    userNickNameEdit->setMinimumHeight(50);
+    userNickNameEdit->setMaximumHeight(50);
+    userNickNameEdit->setStyleSheet(EDIT_TEXT);
+    userNickNameEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    inputNickNameInner->addWidget(userNickNameLabel);
+    inputNickNameInner->addWidget(userNickNameEdit);
+
+    qDebug()<<"2"<<endl;
+
+    QHBoxLayout *inputStatusGeneralInner = new QHBoxLayout;
+    userStatusGeneralEdit = new QLineEdit;
+    userStatusGeneralLabel = new QLabel(tr("Status:"));
+    userStatusGeneralLabel->setMaximumWidth(300);
+    userStatusGeneralLabel->setStyleSheet(PROFILE_LABEL);
+    userStatusGeneralEdit->setMinimumHeight(50);
+    userStatusGeneralEdit->setMaximumHeight(50);
+    userStatusGeneralEdit->setStyleSheet(EDIT_TEXT);
+    userStatusGeneralEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    inputStatusGeneralInner->addWidget(userStatusGeneralLabel);
+    inputStatusGeneralInner->addWidget(userStatusGeneralEdit);
+
+    QVBoxLayout *inputGeneralDescriptionInner = new QVBoxLayout;
+    userGeneralDescriptionEdit = new QLineEdit;
+    userGeneralDescriptionEdit->setMinimumHeight(220);
+    userGeneralDescriptionEdit->setMaximumHeight(220);
+    userGeneralDescriptionEdit->setAlignment(Qt::AlignCenter);
+    userGeneralDescriptionEdit->setStyleSheet(EDIT_TEXT);
+    userGeneralDescriptionEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+
+    QHBoxLayout *personalGeneralDescriptionLayout = new QHBoxLayout;
+
+    QLabel *personalGeneralDescriptionLabel = new QLabel(tr("Description"));
+    personalGeneralDescriptionLabel->setAlignment(Qt::AlignCenter);
+    personalGeneralDescriptionLabel->setStyleSheet(PROFILE_GENERAL_DESCRIPTION);
+    personalGeneralDescriptionLabel->setMaximumWidth(400);
+    personalGeneralDescriptionLabel->setMinimumWidth(400);
+
+    personalGeneralDescriptionLayout->setAlignment(Qt::AlignCenter);
+
+    personalGeneralDescriptionLayout->addWidget(personalGeneralDescriptionLabel);
+
+    inputGeneralDescriptionInner->addLayout(personalGeneralDescriptionLayout);
+    inputGeneralDescriptionInner->addWidget(userGeneralDescriptionEdit);
 
 
 
-    QVBoxLayout *profileInnerRight = new QVBoxLayout;
+    qDebug()<<"3"<<endl;
+
+
+    qDebug()<<"4aaaaaaa"<<endl;
+
+
+    inputNickNameInner->setContentsMargins(0,25,0,0);
+    inputGeneralDescriptionInner->setContentsMargins(0,25,0,0);
+    inputStatusGeneralInner->setContentsMargins(0,25,0,0);
+
+
+    QHBoxLayout *personalGeneralLayout = new QHBoxLayout;
+
+    QLabel *personalGeneralLabel = new QLabel(tr("General"));
+    personalGeneralLabel->setAlignment(Qt::AlignCenter);
+    personalGeneralLabel->setStyleSheet(PROFILE_LABEL_TITLE);
+    personalGeneralLabel->setMaximumWidth(400);
+    personalGeneralLabel->setMinimumWidth(400);
+
+    personalGeneralLayout->setAlignment(Qt::AlignCenter);
+
+    personalGeneralLayout->addWidget(personalGeneralLabel);
+
+
+    personalGeneral->addLayout(personalGeneralLayout);
+    personalGeneral->addLayout(inputNickNameInner);
+    personalGeneral->addLayout(inputStatusGeneralInner);
+    personalGeneral->addLayout(inputGeneralDescriptionInner);
+
+
+
+
+
+
+    QVBoxLayout *personalAddress = new QVBoxLayout;
 
 
     QHBoxLayout *inputcountryInner = new QHBoxLayout;
@@ -143,26 +235,39 @@ profile::profile() {
     qDebug()<<"4"<<endl;
 
 
-    inputcountryInner->setContentsMargins(0,10,0,0);
-    inputdistrictInner->setContentsMargins(0,10,0,0);
-    inputcityInner->setContentsMargins(0,10,0,0);
-    inputstreetInner->setContentsMargins(0,10,0,0);
-    inputhousingInner->setContentsMargins(0,10,0,0);
-    inputindexInner->setContentsMargins(0,10,0,0);
+    inputcountryInner->setContentsMargins(0,30,0,0);
+    inputdistrictInner->setContentsMargins(0,30,0,0);
+    inputcityInner->setContentsMargins(0,30,0,0);
+    inputstreetInner->setContentsMargins(0,30,0,0);
+    inputhousingInner->setContentsMargins(0,30,0,0);
+    inputindexInner->setContentsMargins(0,30,0,0);
 
 
-    profileInnerRight->addLayout(inputcountryInner);
-    profileInnerRight->addLayout(inputdistrictInner);
-    profileInnerRight->addLayout(inputcityInner);
-    profileInnerRight->addLayout(inputstreetInner);
-    profileInnerRight->addLayout(inputhousingInner);
-    //profileInnerRight->addLayout(inputbuildingInner);
-    profileInnerRight->addLayout(inputindexInner);
+    QHBoxLayout *personalAddressLayout = new QHBoxLayout;
+
+    QLabel *personalAddressLabel = new QLabel(tr("Address"));
+    personalAddressLabel->setAlignment(Qt::AlignCenter);
+    personalAddressLabel->setStyleSheet(PROFILE_LABEL_TITLE);
+    personalAddressLabel->setMaximumWidth(400);
+    personalAddressLabel->setMinimumWidth(400);
+
+    personalAddressLayout->setAlignment(Qt::AlignCenter);
+
+    personalAddressLayout->addWidget(personalAddressLabel);
+
+    personalAddress->addLayout(personalAddressLayout);
+    personalAddress->addLayout(inputcountryInner);
+    personalAddress->addLayout(inputdistrictInner);
+    personalAddress->addLayout(inputcityInner);
+    personalAddress->addLayout(inputstreetInner);
+    personalAddress->addLayout(inputhousingInner);
+    //personalAddress->addLayout(inputbuildingInner);
+    personalAddress->addLayout(inputindexInner);
 
 
 
 
-    QVBoxLayout *profileInner = new QVBoxLayout;
+    QVBoxLayout *personalData = new QVBoxLayout;
 
     QHBoxLayout *inputNameInner = new QHBoxLayout;
     userNameEdit = new QLineEdit;
@@ -193,7 +298,7 @@ profile::profile() {
     inputSurnameInner->addWidget(userSurnameLabel);
     inputSurnameInner->addWidget(userSurnameEdit);
 
-
+ qDebug()<<"6"<<endl;
 
     QHBoxLayout *inputAgeInner = new QHBoxLayout;
     userAgeEdit = new QLineEdit;
@@ -207,6 +312,8 @@ profile::profile() {
     inputAgeInner->addWidget(userAgeLabel);
     inputAgeInner->addWidget(userAgeEdit);
 
+     qDebug()<<"7"<<endl;
+
     QHBoxLayout *inputStatusInner = new QHBoxLayout;
     userStatusEdit = new QLineEdit;
     userStatusLabel = new QLabel(tr("Status:"));
@@ -218,6 +325,8 @@ profile::profile() {
     userStatusEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     inputStatusInner->addWidget(userStatusLabel);
     inputStatusInner->addWidget(userStatusEdit);
+
+     qDebug()<<"8"<<endl;
 
 
     QHBoxLayout *inputDescriptionInner = new QHBoxLayout;
@@ -232,6 +341,8 @@ profile::profile() {
     inputDescriptionInner->addWidget(userDescriptionLabel);
     inputDescriptionInner->addWidget(userDescriptionEdit);
 
+     qDebug()<<"9"<<endl;
+
     QHBoxLayout *inputLabelInner = new QHBoxLayout;
     userLabelEdit = new QLineEdit;
     userLabelLabel = new QLabel(tr("Label:"));
@@ -243,6 +354,8 @@ profile::profile() {
     userLabelEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     inputLabelInner->addWidget(userLabelLabel);
     inputLabelInner->addWidget(userLabelEdit);
+
+     qDebug()<<"10"<<endl;
 
 
     QHBoxLayout *inputPhoneNumberInner = new QHBoxLayout;
@@ -256,6 +369,8 @@ profile::profile() {
     userPhoneNumberEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     inputPhoneNumberInner->addWidget(userPhoneNumberLabel);
     inputPhoneNumberInner->addWidget(userPhoneNumberEdit);
+
+     qDebug()<<"11"<<endl;
 
 
     QHBoxLayout *inputMailInner = new QHBoxLayout;
@@ -271,6 +386,45 @@ profile::profile() {
     inputMailInner->addWidget(userMailLabel);
     inputMailInner->addWidget(userMailEdit);
 
+     qDebug()<<"12"<<endl;
+
+
+    usercountryLabel->setStyleSheet(PROFILE_LABEL);
+    userAgeLabel->setStyleSheet(PROFILE_LABEL);
+    userMailLabel->setStyleSheet(PROFILE_LABEL);
+    userNameLabel->setStyleSheet(PROFILE_LABEL);
+    usercityLabel->setStyleSheet(PROFILE_LABEL);
+    userLabelLabel->setStyleSheet(PROFILE_LABEL);
+    userindexLabel->setStyleSheet(PROFILE_LABEL);
+    userStatusLabel->setStyleSheet(PROFILE_LABEL);
+    userstreetLabel->setStyleSheet(PROFILE_LABEL);
+    userSurnameLabel->setStyleSheet(PROFILE_LABEL);
+    userPhoneNumberLabel->setStyleSheet(PROFILE_LABEL);
+    userDescriptionLabel->setStyleSheet(PROFILE_LABEL);
+    userhousingLabel->setStyleSheet(PROFILE_LABEL);
+    userdistrictLabel->setStyleSheet(PROFILE_LABEL);
+
+     qDebug()<<"13"<<endl;
+
+    usercountryLabel->setAlignment(Qt::AlignCenter);
+    userAgeLabel->setAlignment(Qt::AlignCenter);
+    userMailLabel->setAlignment(Qt::AlignCenter);
+    userNameLabel->setAlignment(Qt::AlignCenter);
+    usercityLabel->setAlignment(Qt::AlignCenter);
+    userLabelLabel->setAlignment(Qt::AlignCenter);
+    userindexLabel->setAlignment(Qt::AlignCenter);
+    userStatusLabel->setAlignment(Qt::AlignCenter);
+    userstreetLabel->setAlignment(Qt::AlignCenter);
+    userSurnameLabel->setAlignment(Qt::AlignCenter);
+    userPhoneNumberLabel->setAlignment(Qt::AlignCenter);
+    userDescriptionLabel->setAlignment(Qt::AlignCenter);
+    userhousingLabel->setAlignment(Qt::AlignCenter);
+    userdistrictLabel->setAlignment(Qt::AlignCenter);
+    userNickNameLabel->setAlignment(Qt::AlignCenter);
+    userStatusGeneralLabel->setAlignment(Qt::AlignCenter);
+
+
+     qDebug()<<"14"<<endl;
 
 
 
@@ -278,14 +432,14 @@ profile::profile() {
 
     QHBoxLayout *settingButtonContainer = new QHBoxLayout;
 
-    setprofileButton = new QPushButton(tr("                                       Save                       "));
+    setprofileButton = new QPushButton(tr("                  Save                "));
 
     setprofileButton->setStyleSheet(BUTTON_SOLID);
 
     setprofileButton->setDisabled(true);
 
-    setprofileButton->setMaximumWidth(355);
-    setprofileButton->setMinimumWidth(355);
+    setprofileButton->setMaximumWidth(250);
+    setprofileButton->setMinimumWidth(250);
 
 
 
@@ -321,18 +475,31 @@ profile::profile() {
     inputDescriptionInner->setContentsMargins(0,10,0,0);
     inputMailInner->setContentsMargins(0,10,0,0);
 
-    profileInner->addLayout(inputNameInner);
-    profileInner->addLayout(inputSurnameInner);
-    profileInner->addLayout(inputAgeInner);
-    profileInner->addLayout(inputPhoneNumberInner);
-    profileInner->addLayout(inputStatusInner);
-    profileInner->addLayout(inputLabelInner);
-    profileInner->addLayout(inputDescriptionInner);
-    profileInner->addLayout(inputMailInner);
+    QHBoxLayout *personalDataLayout = new QHBoxLayout;
+
+    QLabel *personalDataLabel = new QLabel(tr("Personal Data"));
+    personalDataLabel->setAlignment(Qt::AlignCenter);
+    personalDataLabel->setStyleSheet(PROFILE_LABEL_TITLE);
+    personalDataLabel->setMaximumWidth(400);
+    personalDataLabel->setMinimumWidth(400);
+
+    personalDataLayout->setAlignment(Qt::AlignCenter);
+
+    personalDataLayout->addWidget(personalDataLabel);
+
+    personalData->addLayout(personalDataLayout);
+    personalData->addLayout(inputNameInner);
+    personalData->addLayout(inputSurnameInner);
+    personalData->addLayout(inputAgeInner);
+    personalData->addLayout(inputPhoneNumberInner);
+    personalData->addLayout(inputStatusInner);
+    personalData->addLayout(inputLabelInner);
+    personalData->addLayout(inputDescriptionInner);
+    personalData->addLayout(inputMailInner);
 
 
     QIcon *ico;
-    ico = new QIcon(":/resc/resc/cog.svg");
+    ico = new QIcon(":/resc/resc/profile.svg");
 
     userMailEdit->addAction(*ico, QLineEdit::LeadingPosition);
     userNameEdit->addAction(*ico, QLineEdit::LeadingPosition);
@@ -356,62 +523,121 @@ profile::profile() {
 
     settingButtonContainer->addWidget(setprofileButton);
 
-    settingButtonContainer->setAlignment(Qt::AlignRight);
+    settingButtonContainer->setAlignment(Qt::AlignCenter);
 
-    settingButtonContainer->setContentsMargins(30,10,0,0);
+    settingButtonContainer->setContentsMargins(50,50,0,0);
 
 
 
 
     QHBoxLayout *settingButtonRightContainer = new QHBoxLayout;
-    setprofileRightButton = new QPushButton(tr("                                Save address              "));
+    setprofileRightButton = new QPushButton(tr("                Save address      "));
 
     setprofileRightButton->setStyleSheet(BUTTON_DISABLED);
 
     setprofileRightButton->setDisabled(true);
 
-    setprofileRightButton->setMaximumWidth(355);
-    setprofileRightButton->setMinimumWidth(355);
+    setprofileRightButton->setMaximumWidth(250);
+    setprofileRightButton->setMinimumWidth(250);
     connect(setprofileRightButton, &QPushButton::clicked, this, &profile::setprofileRightPressed);
     settingButtonRightContainer->addWidget(setprofileRightButton);
-    settingButtonRightContainer->setAlignment(Qt::AlignRight);
-    settingButtonRightContainer->setContentsMargins(30,10,0,0);
+    settingButtonRightContainer->setAlignment(Qt::AlignCenter);
+    settingButtonRightContainer->setContentsMargins(50,50,0,0);
+
+
+    QHBoxLayout *settingButtonGeneralContainer = new QHBoxLayout;
+    setprofileGeneralButton = new QPushButton(tr("            Save General      "));
+
+    setprofileGeneralButton->setStyleSheet(BUTTON_DISABLED);
+
+    setprofileGeneralButton->setDisabled(true);
+
+    setprofileGeneralButton->setMaximumWidth(250);
+    setprofileGeneralButton->setMinimumWidth(250);
+    connect(setprofileGeneralButton, &QPushButton::clicked, this, &profile::setprofileGeneralPressed);
+    settingButtonGeneralContainer->addWidget(setprofileGeneralButton);
+    settingButtonGeneralContainer->setAlignment(Qt::AlignCenter);
+    settingButtonGeneralContainer->setContentsMargins(50,50,0,0);
 
 
 
     QPixmap pixmapShedule(":/resc/resc/arrow_up.svg");
     QIcon ButtonIconShedule(pixmapShedule);
+
+    setprofileGeneralButton->setIcon(ButtonIconShedule);
+    setprofileGeneralButton->setIconSize(QSize(30,30));
+    setprofileGeneralButton -> setLayoutDirection ( Qt :: RightToLeft );
+
     setprofileRightButton->setIcon(ButtonIconShedule);
     setprofileRightButton->setIconSize(QSize(30,30));
     setprofileRightButton -> setLayoutDirection ( Qt :: RightToLeft );
+
     setprofileButton -> setLayoutDirection ( Qt :: RightToLeft );
     setprofileButton->setIcon(ButtonIconShedule);
     setprofileButton->setIconSize(QSize(30,30));
 
-
-    profileInnerRight->addLayout(settingButtonRightContainer);
-    profileInner->addLayout(settingButtonContainer);
-
-    profileInner->setAlignment(Qt::AlignCenter);
-
-    profileInnerRight->setAlignment(Qt::AlignCenter);
-
-    QFrame *profileInnerFrame = new QFrame;
-
-    profileInnerFrame->setStyleSheet(SETTING_LEFT_STYLE);
-
-    profileInnerFrame->setLayout(profileInner);
-
-    QFrame *profileInnerRightFrame = new QFrame;
-
-    profileInnerRightFrame->setStyleSheet(SETTING_RIGHT_STYLE);
-
-    profileInnerRightFrame->setLayout(profileInnerRight);
+    personalGeneral->addLayout(settingButtonGeneralContainer);
 
 
-    innerDataSettigs->addWidget(profileInnerFrame);
+    personalAddress->addLayout(settingButtonRightContainer);
 
-    innerDataSettigs->addWidget(profileInnerRightFrame);
+    personalData->addLayout(settingButtonContainer);
+
+    personalData->setAlignment(Qt::AlignCenter);
+
+    personalAddress->setAlignment(Qt::AlignCenter);
+
+
+    check_stack_lay_acc();
+
+
+
+    leftButton = new QSvgButton(left_btn, QSize(67,75));
+    rightButton = new QSvgButton(right_btn, QSize(67,75));
+
+    leftButton->setStyleSheet("border-radius:25px;");
+    rightButton->setStyleSheet("border-radius:25px;");
+
+    connect(leftButton, &QPushButton::clicked, this, &profile::leftButtonClicked);
+    connect(rightButton, &QPushButton::clicked, this, &profile::rightButtonClicked);
+
+
+    QFrame *personalGeneralFrame = new QFrame;
+
+    personalGeneralFrame->setStyleSheet(SETTING_LEFT_STYLE);
+
+    personalGeneralFrame->setLayout(personalGeneral);
+
+    QFrame *personalDataFrame = new QFrame;
+
+    personalDataFrame->setStyleSheet(SETTING_LEFT_STYLE);
+
+    personalDataFrame->setLayout(personalData);
+
+    QFrame *personalAddressFrame = new QFrame;
+
+    personalAddressFrame->setStyleSheet(SETTING_LEFT_STYLE);
+
+    personalAddressFrame->setLayout(personalAddress);
+
+
+    stackProfile = new QStackedWidget;
+
+
+
+
+    stackProfile->addWidget(personalGeneralFrame);
+
+    stackProfile->addWidget(personalDataFrame);
+
+    stackProfile->addWidget(personalAddressFrame);
+    stackProfile->setCurrentIndex(0);
+
+    innerDataSettigs->addWidget(leftButton);
+
+    innerDataSettigs->addWidget(stackProfile);
+
+    innerDataSettigs->addWidget(rightButton);
 
     innerDataSettigs->setAlignment(Qt::AlignJustify);
     innerDataSettigs->setAlignment(Qt::AlignTop);
@@ -881,6 +1107,74 @@ void profile::onHttpResultSetprofileRight(QNetworkReply *reply) {
     networkManagerSetprofileRight->clearAccessCache();
 
 }
+
+void profile::leftButtonClicked() {
+
+
+    if(stack_lay_acc > 0){
+
+        stack_lay_acc--;
+    }
+
+    check_stack_lay_acc();
+
+    innerDataSettigs->update();
+
+    stackProfile->setCurrentIndex(stack_lay_acc);
+
+}
+
+void profile::rightButtonClicked() {
+
+
+
+    if(stack_lay_acc < 2){
+
+        stack_lay_acc++;
+    }
+
+    check_stack_lay_acc();
+
+    innerDataSettigs->update();
+
+    stackProfile->setCurrentIndex(stack_lay_acc);
+
+
+}
+
+void profile::setprofileGeneralPressed() {
+
+
+}
+
+void profile::check_stack_lay_acc() {
+
+    if(stack_lay_acc == 0){
+
+        left_btn = ":/resc/resc/chevron-left-disabled.svg";
+        right_btn = ":/resc/resc/chevron-right.svg";
+
+
+
+
+    } else if (stack_lay_acc == 2){
+
+        left_btn = ":/resc/resc/chevron-left.svg";
+
+        right_btn = ":/resc/resc/chevron-right-disabled.svg";
+
+
+    } else {
+        left_btn = ":/resc/resc/chevron-left.svg";
+        right_btn = ":/resc/resc/chevron-right.svg";
+}
+
+}
+
+
+
+
+
 
 void profile::setData(BaseModel *model) {
 
