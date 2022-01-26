@@ -40,6 +40,19 @@ bool WriteGroupTitle  (std::string& nn) {
     }
 };
 
+bool WriteGroupID  (std::string& nn) {
+    std::ofstream output("group_id.txt", std::ios::trunc);
+
+    if (output.is_open()) {
+        output << "groupID: " << nn << std::endl;
+        output.close();
+        return true;
+    } else {
+        output.close();
+        return false;
+    }
+};
+
 
 std::string GetId() {
     std::ifstream input("client_id.txt");
@@ -89,6 +102,26 @@ std::string GetGroupTitle() {
         while(!input.eof()){
             input >> buf;
             if (buf == "groupTitle:") {
+                input >> gtoupTitle;
+                return gtoupTitle;
+            };
+        }
+    } else {
+        std::cout << "file is missing!" << std::endl;
+    }
+    input.close();
+    return "null";
+};
+
+
+std::string GetGroupID() {
+    std::ifstream input("group_id.txt");
+    std::string gtoupTitle;
+    std::string buf;
+    if (input) {
+        while(!input.eof()){
+            input >> buf;
+            if (buf == "groupID:") {
                 input >> gtoupTitle;
                 return gtoupTitle;
             };

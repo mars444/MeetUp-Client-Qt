@@ -27,6 +27,8 @@ private:
 
     QHash<QPushButton*,QHBoxLayout*> deleteTaskButtonToLayoutMap;
 
+    QHash<QPushButton*,QHBoxLayout*> updateTaskButtonToLayoutMap;
+
     QHash<QPushButton*,QPushButton*> doneButtonToLayoutMap;
 
     QHash<QPushButton*,QPushButton*> doneButtonYesToLayoutMap;
@@ -78,6 +80,9 @@ private:
     QString time_begin_string;
 
     QString time_end_string;
+
+    QTime begin_time;
+    QTime end_time;
 
 
     QVBoxLayout *verticalLayout;

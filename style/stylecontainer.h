@@ -78,8 +78,18 @@ namespace styles{
             "   padding:30px 50px;"
             "   text-align: center;"
 
+            "}";
 
 
+    static const QString MEETS_FRAME_STYLE =
+            "QFrame {"
+            "   border-radius:30px;"
+            "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #c4b1ff, stop:1 #A184F9);"
+
+            "   text-align: center;"
+            "   margin-top:20px;"
+
+            "   width:400px;"
 
             "}";
 
@@ -222,6 +232,21 @@ namespace styles{
             "   padding: 10px 20px;"
             "   border-radius: 10px;"
             "   margin-right: 20px;"
+
+            "   color: #000;"
+
+            "}"
+            "QFrame {""background: #fff""}";
+
+
+    static const QString MEET_TIME  =
+            "QLabel {"
+            "   font-size: 20px;"
+            "   text-align: center;"
+
+            "   padding: 10px 20px;"
+            "   border-radius: 10px;"
+            "   margin-right: 30px;"
 
             "   color: #000;"
 

@@ -20,6 +20,8 @@ using namespace styles;
 #include <QMessageBox>
 #include <QJsonArray>
 
+#include <ui/view/waitingspinnerwidget.h>
+
 #include <iostream>
 #include <set>
 
@@ -38,6 +40,12 @@ Group::Group() {
 
     std::string GroupTitil = GetGroupTitle();
 
+    std::string GroupID = GetGroupID();
+
+    GROUP_ID = QString::fromUtf8(GroupID.c_str());
+
+    group_id_label = new QLabel(GROUP_ID);
+
     GROUP_TITLE_QSTRING = QString::fromUtf8(GroupTitil.c_str());
 
     mainVLayout = new QVBoxLayout;
@@ -45,6 +53,7 @@ Group::Group() {
 
     QHBoxLayout *titleContainer = new QHBoxLayout;
     QSvgButton *backButton = new QSvgButton(":/resc/resc/arrow_back.svg", QSize(24,24));
+
     GrouptitleLabel = new QLabel(GROUP_TITLE_QSTRING);
 
     createButton = new QPushButton(tr("Add Friends"));
@@ -53,14 +62,18 @@ Group::Group() {
 
     QHBoxLayout *GroupContainerMain = new QHBoxLayout;
 
+    GroupContainerMain->setAlignment(Qt::AlignCenter);
+
+    GroupContainerMain->setContentsMargins(0,20,0,0);
 
 
-    QLabel *groupEventDateLabelMain = new QLabel(tr("Date"));
+
+
     QLabel *groupEventMain = new QLabel(tr("Meeting start"));
-    QLabel *groupEventendMain = new QLabel(tr("meeting end"));
+    QLabel *groupEventendMain = new QLabel(tr("Meeting end"));
 
 
-    groupEventDateLabelMain->setStyleSheet(SETTINGS_LABEL);
+
     groupEventMain->setStyleSheet(SETTINGS_LABEL);
     groupEventendMain->setStyleSheet(SETTINGS_LABEL);
 
@@ -191,23 +204,6 @@ Group::Group() {
     connect(day7Button, &QPushButton::clicked, this, &Group::getIventsDatePressed);
 
 
-    QHBoxLayout *GroupContainer = new QHBoxLayout;
-
-    groupEventDateLabel = new QLabel("12-12-21");
-    groupEventDateLabel->setStyleSheet(SETTINGS_LABEL);
-    groupEventstart = new QLabel("11:00");
-    groupEventstart->setStyleSheet(SETTINGS_LABEL);
-    groupEventend = new QLabel("15:00");
-    groupEventend->setStyleSheet(SETTINGS_LABEL);
-
-    //GroupContainer->addWidget(groupEventDateLabel);
-    GroupContainer->addWidget(groupEventstart);
-    GroupContainer->addWidget(groupEventend);
-
-
-
-
-
 
 
 
@@ -221,6 +217,7 @@ Group::Group() {
     GrouptitleLabel->setStyleSheet(TITLE_LABLE);
     connect(backButton, &QSvgButton::clicked, this, &Group::onBackPressed);
 
+    titleContainer->addWidget(group_id_label);
     titleContainer->addWidget(backButton);
     titleContainer->addWidget(GrouptitleLabel);
     titleContainer->setContentsMargins(0,24,0,16);
@@ -234,12 +231,29 @@ Group::Group() {
     inputContainer->setAlignment(Qt::AlignTop);
     inputContainer->addLayout(titleContainer);
 
-    QVBoxLayout *stackMeets = new QVBoxLayout;
+    stackMeets = new QVBoxLayout;
 
     stackMeets->addLayout(daysButtonsContainer);
     stackMeets->addLayout(GroupContainerMain);
 
-    stackMeets->addLayout(GroupContainer);
+    stackMeets->setAlignment(Qt::AlignCenter);
+
+
+    QWidget *loadWidget = new QWidget;
+
+
+    loading = new WaitingSpinnerWidget(loadWidget, true, false);
+
+    loading->setColor(QT_COLOR_PRIMARY);
+
+    loading->start();
+
+    stackMeets->addWidget(loadWidget);
+
+
+
+
+
 
 
     stackList = new QVBoxLayout;
@@ -247,6 +261,7 @@ Group::Group() {
     stack = new QStackedWidget;
 
     QFrame *stackMeetsWidget = new QFrame;
+
     stackMeetsWidget->setLayout(stackMeets);
 
 
@@ -261,12 +276,14 @@ Group::Group() {
     stack->setCurrentIndex(0);
 
 
-    mainVLayout->setAlignment(Qt::AlignLeft);
+    mainVLayout->setAlignment(Qt::AlignCenter);
     inputContainer->setAlignment(Qt::AlignTop);
     groupButtonsContainer->setAlignment(Qt::AlignTop);
     daysButtonsContainer->setAlignment(Qt::AlignTop);
     stackList->setAlignment(Qt::AlignTop);
+
     stackMeets->setAlignment(Qt::AlignTop);
+
 
     mainVLayout->addLayout(inputContainer);
 
@@ -306,7 +323,7 @@ Group::Group() {
 
 
     getMeets();
-    loadFriends();
+
 }
 
 Group::~Group() {
@@ -316,12 +333,14 @@ Group::~Group() {
 
 void Group::getMeets() {
 
+    QDate curDate = QDate::currentDate();
 
     QJsonObject getMeetsJson;
     QJsonObject bodyJson;
-    bodyJson.insert("groupName", (GrouptitleLabel->text()));
+    bodyJson.insert("date", (curDate.toString("yyyy-MM-dd")));
+    bodyJson.insert("group_id", (GROUP_ID));
 
-    getMeetsJson.insert("getMeets", bodyJson);
+    getMeetsJson.insert("get_meetup", bodyJson);
 
     qDebug() << "create request" << endl;
 
@@ -331,6 +350,8 @@ void Group::getMeets() {
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       QStringLiteral("application/json"));
     qDebug() << "request data"<< QJsonDocument(getMeetsJson).toJson(QJsonDocument::Compact) << endl;
+
+    request.setRawHeader("JSON_DATA", QJsonDocument(getMeetsJson).toJson(QJsonDocument::Compact));
     networkManagerGetMeets->post(
                 request,
                 QJsonDocument(getMeetsJson).toJson(QJsonDocument::Compact)
@@ -386,8 +407,8 @@ void Group::loadFriends() {
 
     // nlohmann::json aaa = nlohmann::json::parse(loadFriendsJson);
 
-    usernameGroupJson.insert("title", GROUP_TITLE_QSTRING);
-    loadFriendsGroupJson.insert("get_data_group", usernameGroupJson);
+    usernameGroupJson.insert("group_id", GROUP_ID);
+    loadFriendsGroupJson.insert("get_group_members", usernameGroupJson);
 
     qDebug() << "create request" << endl;
 
@@ -426,6 +447,9 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
 
 
         nlohmann::json j = nlohmann::json::parse(str);
+
+
+
 
         nlohmann::json::iterator it = j.begin();
 
@@ -546,6 +570,116 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
 }
 
 void Group::onHttpResultnetworkManagerGetMeets(QNetworkReply *reply) {
+
+
+    qDebug() << "http finished meeeets" << endl;
+
+    if(!reply->error()) {
+        QByteArray resp = reply->readAll();
+        qDebug() <<"ETO OTVET SERVERA GET MEETS :  " + resp  << endl;
+        QJsonDocument doc = QJsonDocument::fromJson(resp);
+        QJsonObject obj;
+
+        std::string str = resp.toStdString();
+
+        std::cout << "str  " + str << std::endl;
+
+        nlohmann::json j = nlohmann::json::parse(str);
+
+
+
+        if(j["get_meetup"] != "Not found events"){
+
+            nlohmann::json::iterator it = j.begin();
+
+            nlohmann::json value = j[it.key()];
+
+            for (auto& element : value)
+            {
+
+                std::string time_end_str;
+                std::string time_begin_str;
+
+
+                if(element.contains("time_begin"))
+                {
+                    time_begin_str = element["time_begin"].get<std::string>();
+
+
+                }
+
+                if(element.contains("time_end"))
+                {
+                    time_end_str = element["time_end"].get<std::string>();
+
+
+                }
+
+
+
+        groupEventstart = new QLabel(time_begin_str.c_str());
+        groupEventstart->setAlignment(Qt::AlignCenter);
+        groupEventstart->setStyleSheet(MEET_TIME);
+
+        groupEventend = new QLabel(time_end_str.c_str());
+        groupEventend->setAlignment(Qt::AlignCenter);
+        groupEventend->setStyleSheet(MEET_TIME);
+
+
+        GroupContainer = new QHBoxLayout;
+
+        GroupContainer->setAlignment(Qt::AlignCenter);
+
+        QFrame *GroupContainerFrame = new QFrame;
+
+        GroupContainer->setContentsMargins(0,0,0,20);
+
+        GroupContainerFrame->setStyleSheet(MEETS_FRAME_STYLE);
+
+        GroupContainer->addWidget(groupEventstart);
+
+        GroupContainer->addWidget(groupEventend);
+
+        GroupContainerFrame->setLayout(GroupContainer);
+
+
+
+
+        stackMeets->addWidget(GroupContainerFrame);
+
+
+
+
+
+}
+
+
+
+
+
+    } else {
+
+        qDebug() << reply->errorString();
+
+        qDebug() <<  reply->readAll() << endl;
+
+        qDebug () << reply -> error ();
+
+        QMessageBox::warning(this, tr("Error"),
+                             "Connection ERROR!\n");
+
+
+    }
+    reply->deleteLater();
+
+
+    networkManagerGetMeets->clearAccessCache();
+
+        loadFriends();
+
+
+
+}
 
 }
 
@@ -704,7 +838,7 @@ void Group::groupDeleteYesPressed(){
 
     QJsonObject deleteGroupJson;
     QJsonObject bodyJson;
-    bodyJson.insert("title", GrouptitleLabel->text());
+    bodyJson.insert("group_id", GROUP_ID);
 
 
     deleteGroupJson.insert("delete_group", bodyJson);

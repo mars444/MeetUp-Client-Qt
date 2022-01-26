@@ -24,6 +24,8 @@ private:
     QHash<QPushButton*,QHBoxLayout*> mButtonToLayoutMap;
     QHash<QPushButton*,QHBoxLayout*>mButtonBackToLayoutMap;
 
+    QHash<QPushButton*,QHBoxLayout*>groupNamesLayoutMap;
+
 
     QLabel *noGroupsLabel;
 
@@ -45,6 +47,8 @@ private:
     QHBoxLayout *GroupContainer2;
 
     QPushButton *inviteGroupButton2;
+
+    QPushButton *NameGroupButton;
 
     QPushButton *deleteGroupButton2;
 
@@ -74,6 +78,8 @@ private:
 
 
     QString groupNameString;
+
+    QString groupIDString;
 
     QNetworkAccessManager *addManagerGroup;
 

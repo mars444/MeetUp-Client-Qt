@@ -709,10 +709,6 @@ void Shedule::clearTasks() {
 void Shedule::onBoxTitleAdd() {  // добавление ивента
 
 
-
-
-
-
     checkData();
 
 
@@ -760,10 +756,6 @@ void Shedule::onBoxTitleAdd() {  // добавление ивента
 
 
 
-    cardTitleEdit->setText("");
-    cardDescriptionEdit->setText("");
-
-
 }
 
 
@@ -785,12 +777,19 @@ void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
 
         nlohmann::json j = nlohmann::json::parse(str);
 
-        std::string add_event_id = j["event_id"].get<std::string>();
+        nlohmann::json::iterator it = j.begin();
 
-        if(j["event_id"] != nullptr) {
+        nlohmann::json value = j[it.key()];
+
+        std::string add_event_id;
 
 
-            std::cout << "add event id: " << add_event_id << std::endl;
+        for(auto  &elem : value) {
+                add_event_id =  elem["event_id"].get<std::string>();
+        }
+
+
+        std::cout << "add event id: " << add_event_id << std::endl;
 
 
             deleteTaskButton = new QSvgButton(":/resc/resc/cross.svg", QSize(25,25));
@@ -815,7 +814,7 @@ void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
 
             QLabel *idLabel  = new QLabel(add_event_id.c_str());
 
-            //idLabel->hide();
+            idLabel->hide();
 
             QLineEdit *cardTitleEditAdd = new QLineEdit;
 
@@ -890,13 +889,14 @@ void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
 
             deleteTaskButtonToLayoutMap.insert(deleteTaskButton,form);
 
+            updateTaskButtonToLayoutMap.insert(updateTaskButton,form);
+
             taskFrameDeleteLayoutMap.insert(deleteTaskButton,formFrame);
 
             doneButtonToLayoutMap.insert(doneButton,doneButtonYes);
 
             doneButtonYesToLayoutMap.insert(doneButtonYes,doneButton);
 
-        }
 
     } else {
 
@@ -911,6 +911,9 @@ void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
 
     }
 
+    cardTitleEdit->setText("");
+    cardDescriptionEdit->setText("");
+
     reply->deleteLater();
 
 
@@ -921,6 +924,146 @@ void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
 
 
 void Shedule::updateTaskButton_pressed() {
+
+
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+
+
+    qDebug()<<"qqqqqq1111111111"<<endl;
+
+    QHBoxLayout *layout = updateTaskButtonToLayoutMap.take(button);
+
+    qDebug()<<"qqqqqq2222222"<<endl;
+
+
+    QWidget *event_end = layout->takeAt(6)->widget();
+    qDebug()<<"q32342323232"<<endl;
+
+    QTimeEdit* event_end_time_edit = dynamic_cast<QTimeEdit*>(event_end);
+
+    qDebug()<<"q654321"<<endl;
+
+    end_time = event_end_time_edit->time();
+
+    qDebug()<<"q1111111"<<endl;
+
+    time_end_string = begin_time.toString("hh:mm");
+
+    qDebug()<<"qqwerty"<<endl;
+
+    qDebug() <<"TIME END"  <<  time_end_string  << endl;
+
+
+    QWidget *event_begin = layout->takeAt(5)->widget();
+    qDebug()<<"q32342323232"<<endl;
+
+    QTimeEdit* event_begin_time_edit = dynamic_cast<QTimeEdit*>(event_begin);
+
+    qDebug()<<"q654321"<<endl;
+
+    begin_time = event_begin_time_edit->time();
+
+    qDebug()<<"q1111111"<<endl;
+
+    time_begin_string = begin_time.toString("hh:mm");
+
+    qDebug()<<"qqwerty"<<endl;
+
+    qDebug() <<"TIME BEGIN"  <<  time_begin_string  << endl;
+
+
+
+
+      qDebug()<<"q33333333"<<endl;
+
+//    QWidget *event_name = layout->takeAt(6)->widget();
+//    QLabel* event_nameLabel = dynamic_cast<QLabel*>(event_name);
+//    QString event_nameString = event_nameLabel->text();
+//    qDebug() <<"deleteeeeeee event"  <<  event_nameString  << endl;
+
+//    QWidget *event_name = layout->takeAt(5)->widget();
+//    QLabel* event_nameLabel = dynamic_cast<QLabel*>(event_name);
+//    QString event_nameString = event_nameLabel->text();
+//    qDebug() <<"deleteeeeeee event"  <<  event_nameString  << endl;
+
+
+
+        QWidget *event_name = layout->takeAt(4)->widget();
+        QLabel* event_nameLabel = dynamic_cast<QLabel*>(event_name);
+        QString event_nameString = event_nameLabel->text();
+        qDebug() <<"deleteeeeeee event"  <<  event_nameString  << endl;
+
+
+
+    //    qDebug() <<"timeeeeee  begin  "  <<  begin_str  << endl;
+
+    //    qDebug() <<"timeeeeee  end  "  <<  end_str  << endl;
+
+    QWidget *event_id = layout->takeAt(2)->widget();
+
+    qDebug()<<"qqqqqq333333333333"<<endl;
+
+
+    QLabel* event_idLabel = dynamic_cast<QLabel*>(event_id);
+
+    qDebug()<<"qqqqqq444444444"<<endl;
+
+    QString event_idString = event_idLabel->text();
+
+    qDebug()<<"qqqqqq5555555555"<<endl;
+
+    qDebug() <<"Event ID===  "  <<  event_idString  << endl;
+
+
+
+
+    dateToHTTP = calendar->selectedDate().toString("MM-dd-yyyy");
+
+    QJsonObject deleteEventJson;
+    QJsonObject bodyJson;
+    bodyJson.insert("user_id", ID_QSTRING);
+    bodyJson.insert("event_id", event_idString);
+    bodyJson.insert("event_date", dateToHTTP);
+
+
+
+    QJsonArray eventArray;
+
+    eventArray.push_back(bodyJson);
+
+    deleteEventJson.insert("delete_event", eventArray);
+
+    qDebug() << "create request" << endl;
+
+
+
+    QNetworkRequest request(QUrl(SERVER_URL + ""));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/json;charset=utf-8"));
+
+    request.setRawHeader("JSON_DATA", QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact));
+    qDebug() << "request data"<< QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact) << endl;
+    networkManagerDeleteEvent->post(
+                request,
+                QJsonDocument(deleteEventJson).toJson(QJsonDocument::Compact)
+                );
+    qDebug() << "request send" << endl;
+
+
+    while(QLayoutItem *tmpItem = layout->itemAt(0)) {
+
+        layout->removeItem(tmpItem);
+        layout->removeWidget(tmpItem->widget());
+        delete tmpItem->widget();
+        delete tmpItem;
+
+
+    }
+
+    layout->update();
+
+    delete event_id;
+
 
 
 
@@ -1883,6 +2026,8 @@ void Shedule::onHttpResultGetEvents(QNetworkReply *reply) {
                 task_container_inner->addWidget(formFrame);
 
                 deleteTaskButtonToLayoutMap.insert(deleteTaskButton,form);
+
+                updateTaskButtonToLayoutMap.insert(updateTaskButton,form);
 
                 taskFrameDeleteLayoutMap.insert(deleteTaskButton,formFrame);
 

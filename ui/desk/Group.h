@@ -32,6 +32,19 @@ private:
 
     QHBoxLayout *deleteLayout;
 
+    WaitingSpinnerWidget *loading;
+
+    QLabel *group_id_label;
+
+    QHBoxLayout *GroupContainer;
+
+
+    QVBoxLayout *stackMeets;
+
+
+
+     QString GROUP_ID;
+
     QString GROUP_TITLE_QSTRING;
 
     QVBoxLayout *inputContainerGroups;

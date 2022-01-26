@@ -466,14 +466,14 @@ profile::profile() {
 
     titleContainer->setAlignment(Qt::AlignCenter);
 
-    inputNameInner->setContentsMargins(0,10,0,0);
-    inputSurnameInner->setContentsMargins(0,10,0,0);
-    inputAgeInner->setContentsMargins(0,10,0,0);
-    inputPhoneNumberInner->setContentsMargins(0,10,0,0);
-    inputStatusInner->setContentsMargins(0,10,0,0);
-    inputLabelInner->setContentsMargins(0,10,0,0);
-    inputDescriptionInner->setContentsMargins(0,10,0,0);
-    inputMailInner->setContentsMargins(0,10,0,0);
+    inputNameInner->setContentsMargins(0,40,0,0);
+    inputSurnameInner->setContentsMargins(0,40,0,0);
+    inputAgeInner->setContentsMargins(0,40,0,0);
+    inputPhoneNumberInner->setContentsMargins(0,40,0,0);
+    inputStatusInner->setContentsMargins(0,40,0,0);
+    inputLabelInner->setContentsMargins(0,40,0,0);
+    inputDescriptionInner->setContentsMargins(0,40,0,0);
+    inputMailInner->setContentsMargins(0,40,0,0);
 
     QHBoxLayout *personalDataLayout = new QHBoxLayout;
 
@@ -492,9 +492,9 @@ profile::profile() {
     personalData->addLayout(inputSurnameInner);
     personalData->addLayout(inputAgeInner);
     personalData->addLayout(inputPhoneNumberInner);
-    personalData->addLayout(inputStatusInner);
-    personalData->addLayout(inputLabelInner);
-    personalData->addLayout(inputDescriptionInner);
+//    personalData->addLayout(inputStatusInner);
+//    personalData->addLayout(inputLabelInner);
+//    personalData->addLayout(inputDescriptionInner);
     personalData->addLayout(inputMailInner);
 
 
@@ -903,11 +903,8 @@ void profile::onHttpResult(QNetworkReply *reply) {
 
             userPhoneNumberEdit->setText(QString::fromStdString(value["phone_number"]).remove('"'));
             userAgeEdit->setText(QString::fromStdString(value["age"]).remove('"'));
-            userLabelEdit->setText(QString::fromStdString(value["label"]).remove('"'));
-            userStatusEdit->setText(QString::fromStdString(value["status"]).remove('"'));
             userSurnameEdit->setText(QString::fromStdString(value["surname"]).remove('"'));
             userNameEdit->setText(QString::fromStdString(value["first_name"]).remove('"'));
-            userDescriptionEdit->setText(QString::fromStdString(value["description"]).remove('"'));
             userMailEdit->setText(QString::fromStdString(value["email"]).remove('"'));
 
             qDebug() << "5555555555555555 \n";
