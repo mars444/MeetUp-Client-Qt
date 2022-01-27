@@ -48,6 +48,7 @@ SOURCES += \
     ui/auth/user_data.cpp \
     ui/desk/Layouts/friendlayout.cpp \
     ui/desk/Layouts/shedule_generation.cpp \
+    ui/desk/customlineedit.cpp \
     ui/desk/friends.cpp \
     ui/desk/group.cpp \
     ui/desk/groups.cpp \
@@ -130,6 +131,7 @@ HEADERS += \
     ui/auth/loginfragment.h \
     ui/auth/registrationfragment.h \
     ui/auth/startfragment.h \
+    ui/desk/customlineedit.h \
     ui/desk/mytimeedit.h \
     ui/desk/switch.h \
     ui/mainfragment.h \

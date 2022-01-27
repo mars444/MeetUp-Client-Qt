@@ -36,7 +36,7 @@ SplashFragment::SplashFragment() {
     this->setObjectName("fragment");
     this->setLayout(mainVLayout);
 
-    QTimer::singleShot(00, this, SLOT(openStartScreen()));
+    QTimer::singleShot(4000, this, SLOT(openStartScreen()));
     qDebug("SplashFragment crete finished!!");
 }
 

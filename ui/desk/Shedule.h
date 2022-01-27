@@ -37,6 +37,10 @@ private:
 
     QHBoxLayout *mainHLayout;
 
+
+    TimeEdit *leftAdd;
+    TimeEdit *rightAdd;
+
     QFrame *formFrame;
 
     QFrame *formFrameq;

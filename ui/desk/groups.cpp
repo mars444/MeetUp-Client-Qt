@@ -82,8 +82,6 @@ Groups::Groups() {
 
 
     connect(addGroupEdit, &QLineEdit::textChanged, this, &Groups::checkNameGroup);
-
-    addGroupEdit->setMaximumWidth(355);
     addGroupEdit->setStyleSheet(EDIT_TEXT);
     addGroupEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     addGroupEdit->setPlaceholderText(tr("group name"));
@@ -333,11 +331,10 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
                 connect(GroupNameButton, &QPushButton::clicked, this, &Groups::goToGroup);
 
-                GroupNameButton->setStyleSheet(FRIEND_NAME_SURNAME);
 
                 GroupNameButton->setStyleSheet(BUTTON_WHITE);
 
-                GroupNameButton->setMaximumWidth(300);
+                //GroupNameButton->setMaximumWidth(300);
 
 
                 //QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
@@ -399,7 +396,6 @@ void Groups::onHttpResult(QNetworkReply *reply) {
                 connect(backAddtoGroup, &QPushButton::clicked, this, &Groups::backAddtoGroupPressed);
 
 
-                //GroupContainer2->setAlignment(Qt::AlignCenter);
 
 
                 //QHBoxLayout *GroupButtonContainer2 = new QHBoxLayout;
@@ -411,11 +407,11 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
                 GroupImageLabel2->setStyleSheet("QFrame {""background: transparent""}");
                 stack->setStyleSheet("QFrame {""background: transparent""}");
-                GroupImageLabel2->setContentsMargins(0,0,200,0);
+                GroupImageLabel2->setContentsMargins(0,0,250,0);
                 stack->setContentsMargins(0,30,0,0);
                 //                    GroupNameButton->setContentsMargins(0,10,0,0);
 
-                //groupID->hide();
+                groupID->hide();
 
                 GroupContainer2->addWidget(groupID);
                 GroupContainer2->addWidget(GroupImageLabel2);
@@ -461,8 +457,8 @@ void Groups::onHttpResult(QNetworkReply *reply) {
 
                     QScrollArea *deskScrollAreaFriends = new QScrollArea;
 
-                    deskScrollAreaFriends->setMaximumHeight(200);
-                    deskScrollAreaFriends->setMinimumHeight(200);
+                    deskScrollAreaFriends->setMaximumHeight(150);
+                    deskScrollAreaFriends->setMinimumHeight(150);
                     deskScrollAreaFriends->setMaximumWidth(300);
                     deskScrollAreaFriends->setMinimumWidth(300);
                     deskScrollAreaFriends->setAlignment(Qt::AlignHCenter);
@@ -481,7 +477,9 @@ void Groups::onHttpResult(QNetworkReply *reply) {
                     deskScrollAreaFriends->setWidget(scrolContainer);
                     deskScrollAreaFriends->setWidgetResizable(true);
                     deskScrollAreaFriends->horizontalScrollBar()->setEnabled(false);
-                    //content->setContentsMargins(0,0,0,0);
+                    content->setContentsMargins(5,5,5,5);
+
+
 
 
                     //         QSvgWidget *done = new QSvgWidget(":/resc/resc/done_outline.svg");
@@ -542,27 +540,13 @@ void Groups::onHttpResult(QNetworkReply *reply) {
                 GroupsFrame->setLayout(GroupContainer2);
 
 
-
-
-
-
                 inputContainerGroups->addWidget(GroupsFrame);
-
-
-                inputContainerGroups->setContentsMargins(100,0,100,0);
-
-
-
 
 
                 GroupContainer2->addWidget(stack);
 
 
-
-
-
-
-                inputContainerGroups->setAlignment(Qt::AlignVCenter);
+                inputContainerGroups->setAlignment(Qt::AlignTop);
 
                 mButtonBackToLayoutMap.insert(backAddtoGroup,GroupContainer2);
 
@@ -625,7 +609,7 @@ void Groups::onHttpResultAddGroup(QNetworkReply *reply) {
         }
 
 
-        QLabel *idGroupLabel  = new QLabel(group_id.c_str());
+        QLabel *groupID  = new QLabel(group_id.c_str());
 
 
             std::cout << "ADD GROUP: " << group_id << std::endl;
@@ -641,11 +625,10 @@ void Groups::onHttpResultAddGroup(QNetworkReply *reply) {
 
             connect(GroupNameButton, &QPushButton::clicked, this, &Groups::goToGroup);
 
-            GroupNameButton->setStyleSheet(FRIEND_NAME_SURNAME);
 
             GroupNameButton->setStyleSheet(BUTTON_WHITE);
 
-            GroupNameButton->setMaximumWidth(300);
+            //GroupNameButton->setMaximumWidth(300);
 
 
             //QPushButton *inviteGroupButton2 = new QPushButton("Пригласить в группу");
@@ -707,7 +690,6 @@ void Groups::onHttpResultAddGroup(QNetworkReply *reply) {
             connect(backAddtoGroup, &QPushButton::clicked, this, &Groups::backAddtoGroupPressed);
 
 
-            //GroupContainer2->setAlignment(Qt::AlignCenter);
 
 
             //QHBoxLayout *GroupButtonContainer2 = new QHBoxLayout;
@@ -719,11 +701,13 @@ void Groups::onHttpResultAddGroup(QNetworkReply *reply) {
 
             GroupImageLabel2->setStyleSheet("QFrame {""background: transparent""}");
             stack->setStyleSheet("QFrame {""background: transparent""}");
-            GroupImageLabel2->setContentsMargins(0,0,200,0);
+            GroupImageLabel2->setContentsMargins(0,0,250,0);
             stack->setContentsMargins(0,30,0,0);
             //                    GroupNameButton->setContentsMargins(0,10,0,0);
 
-            GroupContainer2->addWidget(idGroupLabel);
+            groupID->hide();
+
+            GroupContainer2->addWidget(groupID);
             GroupContainer2->addWidget(GroupImageLabel2);
             GroupContainer2->addWidget(GroupNameButton);
 
@@ -767,8 +751,8 @@ void Groups::onHttpResultAddGroup(QNetworkReply *reply) {
 
                 QScrollArea *deskScrollAreaFriends = new QScrollArea;
 
-                deskScrollAreaFriends->setMaximumHeight(200);
-                deskScrollAreaFriends->setMinimumHeight(200);
+                deskScrollAreaFriends->setMaximumHeight(150);
+                deskScrollAreaFriends->setMinimumHeight(150);
                 deskScrollAreaFriends->setMaximumWidth(300);
                 deskScrollAreaFriends->setMinimumWidth(300);
                 deskScrollAreaFriends->setAlignment(Qt::AlignHCenter);
@@ -787,14 +771,16 @@ void Groups::onHttpResultAddGroup(QNetworkReply *reply) {
                 deskScrollAreaFriends->setWidget(scrolContainer);
                 deskScrollAreaFriends->setWidgetResizable(true);
                 deskScrollAreaFriends->horizontalScrollBar()->setEnabled(false);
-                //content->setContentsMargins(0,0,0,0);
+                content->setContentsMargins(5,5,5,5);
+
+
 
 
                 //         QSvgWidget *done = new QSvgWidget(":/resc/resc/done_outline.svg");
                 //        done->setMinimumSize(QSize(24,24));
                 //        done->setMaximumSize(QSize(24,24));
 
-                for (auto& element : j["get_contacts"]) {
+                for (auto& element : jj["get_contacts"]) {
 
                     friendName2 = new QPushButton(QString::fromStdString(element.dump()).remove('"'));
 
@@ -848,17 +834,13 @@ void Groups::onHttpResultAddGroup(QNetworkReply *reply) {
             GroupsFrame->setLayout(GroupContainer2);
 
 
-
             inputContainerGroups->addWidget(GroupsFrame);
-
-
-            inputContainerGroups->setContentsMargins(100,0,100,0);
 
 
             GroupContainer2->addWidget(stack);
 
 
-            inputContainerGroups->setAlignment(Qt::AlignVCenter);
+            inputContainerGroups->setAlignment(Qt::AlignTop);
 
             mButtonBackToLayoutMap.insert(backAddtoGroup,GroupContainer2);
 
@@ -866,6 +848,10 @@ void Groups::onHttpResultAddGroup(QNetworkReply *reply) {
             mButtonToLayoutMap.insert(inviteGroupButton2,GroupContainer2);
 
             groupNamesLayoutMap.insert(GroupNameButton,GroupContainer2);
+
+
+
+
 
 
 

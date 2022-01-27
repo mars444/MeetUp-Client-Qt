@@ -47,6 +47,15 @@ namespace styles{
 
               "}";
 
+    static const QString FRIENDS_IN_SCROL_FRAME =
+              "QFrame {"
+              "   border-radius:20px;"
+              "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #c4b1ff, stop:1 #A184F9);"
+
+
+
+              "}";
+
 
     static const QString EVENT_STYLE_LOAD =
             "QFrame {"
@@ -404,8 +413,9 @@ namespace styles{
                 "background-color:"+COLOR_BACKGROUND+";"
                 "padding:10px 20px;"
                 "border-radius:10px;"
+            "text-align:center;"
+            "margin:0 auto;"
 
-                 "text-transform:underline;"
 
                 "font-size:25px;"
                 "}"

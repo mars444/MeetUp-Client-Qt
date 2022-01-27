@@ -359,7 +359,7 @@ profile::profile() {
 
 
     QHBoxLayout *inputPhoneNumberInner = new QHBoxLayout;
-    userPhoneNumberEdit = new QLineEdit;
+    userPhoneNumberEdit = new CustomLineEdit;
     userPhoneNumberLabel = new QLabel(tr("PhoneNumber:"));
     userPhoneNumberEdit->setMaximumWidth(355);
     userPhoneNumberEdit->setMinimumWidth(355);
@@ -838,7 +838,7 @@ void profile::checkprofile() {
     if ((userMailEdit->text().length() >= 4) &&
             (userNameEdit->text().length() >= 4) &&
             (userSurnameEdit->text().length() >= 4) &&
-            (userPhoneNumberEdit->text().length() >= 4) &&
+            (userPhoneNumberEdit->text().length() == 16) &&
             (userAgeEdit->text().length() == 2 && userAgeEdit->text() >='0' && userAgeEdit->text() <= '9')) {
         setprofileButton->setStyleSheet(BUTTON_SOLID);
         setprofileButton->setDisabled(false);

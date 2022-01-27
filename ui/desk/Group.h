@@ -30,6 +30,8 @@ private:
 
     QString ID_QSTRING;
 
+    QHash<QPushButton*,QFrame*> mButtonToFrameMap;
+
     QHBoxLayout *deleteLayout;
 
     WaitingSpinnerWidget *loading;

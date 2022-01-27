@@ -9,6 +9,8 @@
 #include <QLabel>
 #include <QStackedWidget>
 
+#include "customlineedit.h"
+
 
 #include <ui/view/qsvgbutton.h>
 
@@ -42,7 +44,7 @@ private:
 
 
 
-    QLineEdit *userPhoneNumberEdit;
+    CustomLineEdit *userPhoneNumberEdit;
     QLabel *userPhoneNumberLabel;
 
     QLineEdit *userMailEdit;

@@ -46,6 +46,8 @@ Group::Group() {
 
     group_id_label = new QLabel(GROUP_ID);
 
+    group_id_label->hide();
+
     GROUP_TITLE_QSTRING = QString::fromUtf8(GroupTitil.c_str());
 
     mainVLayout = new QVBoxLayout;
@@ -171,13 +173,13 @@ Group::Group() {
     QDate date =   QDate::currentDate();
 
 
-    day1Button = new QPushButton(date.toString("dd-MM-yyyy"));
-    day2Button = new QPushButton(date.addDays(1).toString("dd-MM-yyyy"));
-    day3Button = new QPushButton(date.addDays(2).toString("dd-MM-yyyy"));
-    day4Button = new QPushButton(date.addDays(3).toString("dd-MM-yyyy"));
-    day5Button = new QPushButton(date.addDays(4).toString("dd-MM-yyyy"));
-    day6Button = new QPushButton(date.addDays(5).toString("dd-MM-yyyy"));
-    day7Button = new QPushButton(date.addDays(6).toString("dd-MM-yyyy"));
+    day1Button = new QPushButton(date.toString("dddd\n dd MMMM"));
+    day2Button = new QPushButton(date.addDays(1).toString("dddd\n dd MMMM"));
+    day3Button = new QPushButton(date.addDays(2).toString("dddd\n dd MMMM"));
+    day4Button = new QPushButton(date.addDays(3).toString("dddd\n dd MMMM"));
+    day5Button = new QPushButton(date.addDays(4).toString("dddd\n dd MMMM"));
+    day6Button = new QPushButton(date.addDays(5).toString("dddd\n dd MMMM"));
+    day7Button = new QPushButton(date.addDays(6).toString("dddd\n dd MMMM"));
 
     day1Button->setStyleSheet(BUTTON_SOLID);
     day2Button->setStyleSheet(BUTTON_DISABLED);
@@ -368,6 +370,7 @@ void Group::onBackPressed() {
 
 void Group::groupMeetsPressed() {
 
+   // getMeets();
 
 
     groupMeets->setStyleSheet(BUTTON_SOLID);
@@ -541,6 +544,7 @@ void Group::onHttpResultnetworkManagerGetList(QNetworkReply *reply) {
 
 
                 mButtonToLayoutMap.insert(deleteFriendButton2,friendContainer2);
+                mButtonToFrameMap.insert(deleteFriendButton2,FriendFrame);
 
 
 
@@ -740,6 +744,11 @@ void Group::deleteFriendPressed() {
     QHBoxLayout *layout = mButtonToLayoutMap.take(button);
 
 
+    QFrame *frame = mButtonToFrameMap.take(button);
+
+    frame->hide();
+
+
     QWidget * widget =  layout->itemAt(1)->widget();
 
 
@@ -764,7 +773,7 @@ void Group::deleteFriendPressed() {
     QJsonArray arrayUsers;
     arrayUsers.push_back(nameGroup);
 
-    bodyJson.insert("title", GROUP_TITLE_QSTRING);
+    bodyJson.insert("group_id", GROUP_ID);
     bodyJson.insert("members", arrayUsers);
 
     deleFromGroupJson.insert("kick", bodyJson);

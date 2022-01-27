@@ -708,8 +708,15 @@ void Shedule::clearTasks() {
 
 void Shedule::onBoxTitleAdd() {  // добавление ивента
 
+    leftAdd = new TimeEdit;
+    rightAdd = new TimeEdit;
 
-    checkData();
+
+    leftAdd->setTime(left->time());
+    rightAdd->setTime(right->time());
+
+
+    //checkData();
 
 
     dateToHTTP = calendar->selectedDate().toString("MM-dd-yyyy");
@@ -764,7 +771,6 @@ void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
 
     qDebug() << "http finished" << endl;
     loading->stop();
-    checkData();
     if(!reply->error()) {
         QByteArray resp = reply->readAll();
         qDebug() <<"ETO OTVET SERVERA ADD EVENT :  " + resp  << endl;
@@ -824,12 +830,7 @@ void Shedule::onHttpResultAddEvent(QNetworkReply *reply) {
 
             form = new QHBoxLayout;
 
-            TimeEdit *leftAdd = new TimeEdit;
-            TimeEdit *rightAdd = new TimeEdit;
 
-
-            leftAdd->setTime(left->time());
-            rightAdd->setTime(right->time());
 
             leftAdd->setStyleSheet(Qtimestyle);
             rightAdd->setStyleSheet(Qtimestyle);
