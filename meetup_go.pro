@@ -2,9 +2,9 @@ QT       += core gui
 QT += svg
 QT += network
 QT += sql
-QT += websockets
+#QT += websockets
 QT += widgets
-QT += networkauth
+#QT += networkauth
 
 TARGET = QtLanguage
 TEMPLATE = app
