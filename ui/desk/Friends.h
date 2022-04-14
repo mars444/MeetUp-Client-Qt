@@ -21,51 +21,15 @@ class Friends : public BaseFragment{
 
 private:
 
-    QHash<QPushButton*,QHBoxLayout*> mButtonToLayoutMap;
-    QHash<QPushButton*,QFrame*> mButtonToFrameMap;
-    QString ID_QSTRING;
+    QPushButton *userName;
 
+    QPushButton *deleteFriendYesBtn;
+    QPushButton *deleteFriendNoBtn;
+    QLabel *deleteFriendText;
+    QPushButton *deleteFriendBtn;
 
-    std::string str;
+    QHBoxLayout *friendInner;
 
-    int friendsCount = 0;
-
-    QMovie *movieloading;
-
-    QLabel *centerContainer;
-
-    QLabel *noFriendsLabel;
-
-    QHBoxLayout *Friend_inner;
-
-    QFrame *friendContainerFrame;
-
-    QVBoxLayout *mainVLayout;
-
-    QVBoxLayout *inputContainerFriends;
-
-    WaitingSpinnerWidget *loading;
-
-    QLabel *titleLabel;
-
-    QHBoxLayout *friendContainer2;
-
-    QPushButton *inviteGroupButton2;
-    QPushButton *deleteFriendButton2;
-
-    QLabel *friendImageLabel2;
-
-
-    QPushButton *addFriendButton;
-    QLineEdit *addFriendEdit;
-    QPlainTextEdit *descriptionEdit;
-    QPushButton *createButton;
-
-    QNetworkAccessManager *networkManager;
-
-    QNetworkAccessManager *addManagerFriend;
-
-    QNetworkAccessManager *deleteManagerFriend;
 
 public:
     Friends();
@@ -75,31 +39,11 @@ public:
 
 
 public slots:
+    void deleteFriendYesBtnPressed();
+    void deleteFriendNoBtnPressed();
 
-
-    void loadFriends();
 
     void onBackPressed();
+    void deleteFriendBtnPressed();
 
-    void deleteFriendPressed();
-
-
-
-    void addFriendButtonPressed();
-    void checkNameFriend();
-
-    void onHttpResult(QNetworkReply *reply);
-
-    void onHttpResultDeleteFriend(QNetworkReply *reply);
-
-    void onHttpResultAddFriend(QNetworkReply *reply);
-
-
-    /**
-     * @brief checkData
-     *
-     * проверка введенных данных
-     * на корректность.
-     */
-    void checkData();
 };

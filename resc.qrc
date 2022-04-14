@@ -48,6 +48,9 @@
         <file>resc/profile.svg</file>
         <file>resc/chevron-left-disabled.svg</file>
         <file>resc/chevron-right-disabled.svg</file>
+        <file>resc/arrow-left.svg</file>
+        <file>resc/search.svg</file>
+        <file>resc/person.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

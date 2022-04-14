@@ -33,6 +33,7 @@ SOURCES += \
     common/base/basefragment.cpp \
     common/base/basescreensfactory.cpp \
     common/navigator.cpp \
+    flowlayout.cpp \
     main.cpp \
     mainwindow.cpp \
     models/basemodel.cpp \
@@ -67,6 +68,7 @@ HEADERS += \
     common/base/basefragment.h \
     common/base/basescreensfactory.h \
     common/navigator.h \
+    flowlayout.h \
     mainwindow.h \
     models/basemodel.h \
     models/cardmodel.h \

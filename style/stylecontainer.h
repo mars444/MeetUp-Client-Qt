@@ -6,13 +6,16 @@
 
 namespace styles{
     /** объявления цветов */
-    static const QString COLOR_BACKGROUND = "#FFF";
+    static const QString COLOR_BACKGROUND = "#fff";
+    static const QString COLOR_BACKGROUND_GRAY = "#EDEEF0";
     static const QString COLOR_TEXT_PRIMARY = "#242424";
     static const QString COLOR_TEXT_HINT= "#A6A6A6";
     static const QString COLOR_PRIMARY = "#A184F9";
     static const QString COLOR_BORDER = "#E6EBF0";
     static const QString COLOR_TEXT_RED = "#FF6262";
     static const QString COLOR_BUTTON_PRESSED = "#8046A4";
+    static const QString BG_COLOR = "#20212b";
+
 
     static const QColor QT_COLOR_PRIMARY = QColor(72, 129, 183);
 
@@ -24,6 +27,39 @@ namespace styles{
 
     "selection-background-color: #A184F9;"
     "selection-color: #fff;";
+
+
+    static const QString TITLE_STYLE  =
+            "QLabel {"
+            "   color: #242424;"
+            "   font-size:35px;"
+            "   text-align:center;"
+            "   padding-right:30px;"
+
+            "}"
+            "QFrame {""background: transparent""}";
+
+
+
+
+    static const QString HEADER_FRAME_STYLE =
+              "QFrame {"
+//             /*"border-bottom-left-radius:20px;"
+//              "border-bottom-right-radius:20px;"*/
+              "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #fff, stop:1 #A184F9);"
+
+              "}";
+
+    static const QString HEADER_FRIEND_FRAME_STYLE =
+              "QFrame {"
+             "border-radius:20px;"
+            "margin-bottom:20px;"
+            "margin-right:20px;"
+
+              "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #fff, stop:1 #A184F9);"
+
+              "}";
+
 
 
 
@@ -40,7 +76,7 @@ namespace styles{
 
     static const QString GROUPS_FRAME =
               "QFrame {"
-              "   border-radius:50px;"
+              "   border-bottom-radius:10px;"
               "background: qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #c4b1ff, stop:1 #A184F9);"
 
               "   margin-bottom:15px;"
@@ -157,6 +193,8 @@ namespace styles{
             "   border-radius:5px;"
 
             "}";
+
+
 
 
 
@@ -405,6 +443,22 @@ namespace styles{
             "background-color:#000;"
             "}";
 
+    static const QString FRIEND_NAME_STYLE =
+            "QPushButton {"
+            "color: "+COLOR_TEXT_PRIMARY+";"
+            "background-color:transparent;"
+            "border:none;"
+            "font-size:25px;"
+            "padding-bottom:5px;"
+            "border-bottom:2px solid transparent;"
+            "}"
+            "QPushButton:hover {"
+            "border-color:#000;"
+            "color:#000;"
+            "}";
+
+
+
 
 
     static const QString BUTTON_WHITE =
@@ -511,6 +565,11 @@ namespace styles{
             "background-color:"+COLOR_BACKGROUND+";"
                                                  "}";
 
+    static const QString BACK_BG_INNER =
+            "QFrame#BG{"
+            "background-color:"+COLOR_BACKGROUND_GRAY+";"
+                                                 "}";
+
     static const QString DESK_WIDGET =
             "QFrame#desk {"
             "background-color:"+COLOR_BACKGROUND+";"
@@ -523,10 +582,13 @@ namespace styles{
     static const QString SCROL_BAR =
 
             "QFrame {"
-            "   border-radius: 10px;""}"
+            "   border-radius: 10px;"
+            "   background: #fff;"
+            "}"
+
             "QScrollBar:vertical {"
             "   border: 0px solid "+COLOR_BORDER+";"
-            "   background: "+COLOR_BORDER+";"
+            "   background: #fff;"
             "   width: 4px;"
             "   margin: 0px 0px 0px 0px;"
             "}"

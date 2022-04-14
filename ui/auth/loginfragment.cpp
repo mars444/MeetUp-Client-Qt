@@ -153,6 +153,8 @@ LoginFragment::~LoginFragment() {
 
 void LoginFragment::onLoginPressed() {
 
+    newRootScreen(MAIN_TAG);
+
     //     QNetworkRequest request(QUrl(SERVER_URL + ""));
 
     //     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -245,6 +247,8 @@ void LoginFragment::onLoginPressed() {
     //            qDebug() << err;
     //        }
     //    });
+
+
 
 
 }

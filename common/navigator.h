@@ -5,7 +5,7 @@
 #include <common/base/basescreensfactory.h>
 
 #include <QStackedWidget>
-#include <QLinkedList>
+#include <QList>
 
 /**
  * @brief The Navigator class
@@ -23,7 +23,7 @@ class Navigator: public QObject {
 private:
     QStackedWidget *currentContainer;
     BaseScreensFactory *screensFactory;
-    QLinkedList<BaseFragment*> stack;
+    QList<BaseFragment*> stack;
 
     /**
      * @brief createAndConnect
