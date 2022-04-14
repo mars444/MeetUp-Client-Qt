@@ -36,10 +36,6 @@ SOURCES += \
     flowlayout.cpp \
     main.cpp \
     mainwindow.cpp \
-    models/basemodel.cpp \
-    models/cardmodel.cpp \
-    models/checkboxmodel.cpp \
-    models/usermodel.cpp \
     screensfactory.cpp \
     style/stylecontainer.cpp \
     ui/auth/googleauth.cpp \
@@ -70,12 +66,8 @@ HEADERS += \
     common/navigator.h \
     flowlayout.h \
     mainwindow.h \
-    models/basemodel.h \
-    models/cardmodel.h \
-    models/checkboxmodel.h \
     models/deskmodel.h \
     models/historymodel.h \
-    models/usermodel.h \
     nlohmann/adl_serializer.hpp \
     nlohmann/byte_container_with_subtype.hpp \
     nlohmann/detail/conversions/from_json.hpp \
